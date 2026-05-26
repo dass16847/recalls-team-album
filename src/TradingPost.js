@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, addDoc, deleteDoc, doc, query, where, updateDoc } from 'firebase/firestore';
 import { db, auth } from './firebase';
 import LoadingSpinner from './components/LoadingSpinner';
+import { getCardImage } from './utils/cardImages'; // ADD THIS LINE
 
 const TradingPost = () => {
   const [userCards, setUserCards] = useState([]);
@@ -91,42 +92,23 @@ const TradingPost = () => {
     }
   };
 
-  // Helper function to get card image URL with proper fallbacks
-  const getCardImageUrl = (cardData) => {
-    if (!cardData) return '/cards/placeholder.png';
+// Helper function to get card image URL with proper fallbacks
+const getCardImageUrl = (cardData) => {
+  if (!cardData) return null;
 
-    console.log('Trading Post - Getting image URL for:', cardData.name); // Debug log
+  console.log('Trading Post - Getting image URL for:', cardData.name);
 
-    // Special case for Marypaz Mora
-    if (cardData.name === 'MARYPAZ MORA' || cardData.name === 'MARYPAZ CERDAS') {
-      console.log('Trading Post - Using marypaz-mora.png'); // Debug log
-      return '/cards/marypaz-mora.png';
-    }
+  // Use the main getCardImage function - it handles all mappings
+  const cardImage = getCardImage(cardData.name);
 
-    // Special case for SJO 16 AFZ - exact filename mapping
-    if (cardData.name === 'SJO 16 AFZ') {
-      console.log('Trading Post - Using amazon-sjo-16.png'); // Debug log
-      return '/cards/amazon-sjo-16.png';
-    }
+  if (cardImage) {
+    console.log('Trading Post - Using getCardImage result:', cardImage);
+    return cardImage;
+  }
 
-    // Special case for Pawel
-    if (cardData.name === 'PAWEL') {
-      console.log('Trading Post - Using pawel.png'); // Debug log
-      return '/cards/pawel.png';
-    }
-
-    // Use the image field if it exists
-    if (cardData.image) {
-      return `/cards/${cardData.image}`;
-    }
-
-    // Try alternative naming patterns as fallback
-    const normalizedName = cardData.name.toLowerCase().replace(/\s+/g, '-');
-    const fallbackUrl = `/cards/${normalizedName}.png`;
-    console.log('Trading Post - Using fallback URL:', fallbackUrl); // Debug log
-
-    return fallbackUrl;
-  };
+  console.log('Trading Post - No image found for:', cardData.name);
+  return null; // Return null if no image found
+};
 
   // Helper function to get card image style with proper sizing for AFZ SJO 16
   const getCardImageStyle = (cardData, containerType = 'default') => {
@@ -367,27 +349,21 @@ const TradingPost = () => {
                   borderRadius: '8px',
                   overflow: 'hidden'
                 }}>
-                  <img
-                    src={getCardImageUrl(card.cardData)}
-                    alt={card.cardData.name}
-                    style={getCardImageStyle(card.cardData, 'collection')}
-                    onError={(e) => {
-                      console.log('Trading Post image failed to load for:', card.cardData.name);
-                      // Try alternative URL
-                      const altUrl = `/cards/${card.cardData.name.toLowerCase().replace(/\s+/g, '-')}.png`;
-                      if (e.target.src !== altUrl) {
-                        console.log('Trading Post trying alternative URL:', altUrl);
-                        e.target.src = altUrl;
-                      } else {
-                        console.log('Trading Post all image URLs failed, showing fallback');
-                        e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
-                      }
-                    }}
-                    onLoad={() => {
-                      console.log('Trading Post image loaded successfully for:', card.cardData.name);
-                    }}
-                  />
+                  {getCardImageUrl(card.cardData) ? (
+  <img
+    src={getCardImageUrl(card.cardData)}
+    alt={card.cardData.name}
+    style={getCardImageStyle(card.cardData, 'collection')}
+    onError={(e) => {
+      console.log('Trading Post image failed to load for:', card.cardData.name);
+      e.target.style.display = 'none';
+      e.target.nextSibling.style.display = 'flex';
+    }}
+    onLoad={() => {
+      console.log('Trading Post image loaded successfully for:', card.cardData.name);
+    }}
+  />
+) : null}
                   <div style={{
                     display: 'none',
                     alignItems: 'center',

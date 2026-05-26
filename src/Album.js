@@ -107,8 +107,10 @@ const getCardImageStyle = (cardName, context = 'album') => {
       slots: [
         { name: "JP", position: { top: 447, left: 135, width: 296, height: 388 } },
         { name: "RAFA", position: { top: 447, left: 680, width: 296, height: 388 } },
+        { name: "RAFA AGUERO", position: { top: 447, left: 680, width: 296, height: 388 } },
         { name: "IRE", position: { top: 864, left: 135, width: 296, height: 388 } },
-        { name: "PAWEL", position: { top: 864, left: 680, width: 296, height: 388 } }
+        { name: "PAWEL", position: { top: 864, left: 680, width: 296, height: 388 } },
+        { name: "PAWEL PUDLIK", position: { top: 864, left: 680, width: 296, height: 388 } }
       ]
     },
     { 
