@@ -30,206 +30,206 @@ const Album = () => {
   const [isAnimating, setIsAnimating] = useState(false);
 
   // Define your album structure with exact Canva positions
-const albumPages = [
-  { 
-    id: 0, 
-    title: "Cover Page", 
-    type: "cover",
-    slots: [],
-    backgroundImage: page00
-  },
-  { 
-    id: 1, 
-    title: "REPRIR ALBUM", 
-    type: "special", 
-    backgroundImage: page01,
-    slots: [
-      { name: "JEFF BEZOS", position: { top: 43, left: 750, width: 296, height: 388 } },
-      { name: "SJO 16 AFZ", position: { top: 454, left: 74, width: 638, height: 388 } },
-      { name: "ANDY JASSY", position: { top: 447, left: 750, width: 296, height: 388 } }
-    ]
-  },
-  { 
-    id: 2, 
-    title: "Upper Leadership Team", 
-    type: "team",
-    backgroundImage: page02,
-    slots: [
-      { name: "JP", position: { top: 447, left: 135, width: 296, height: 388 } },
-      { name: "RAFA", position: { top: 447, left: 680, width: 296, height: 388 } },
-      { name: "IRE", position: { top: 864, left: 135, width: 296, height: 388 } },
-      { name: "PAWEL", position: { top: 864, left: 680, width: 296, height: 388 } }
-    ]
-  },
-  { 
-    id: 3, 
-    title: "Leadership Team", 
-    type: "team",
-    backgroundImage: page03,
-    slots: [
-      { name: "ANDREY SOTO", position: { top: 43, left: 750, width: 296, height: 388 } },
-      { name: "ISMA VINDAS", position: { top: 447, left: 74, width: 296, height: 388 } },
-      { name: "ARIEL BOLANOS", position: { top: 447, left: 412, width: 296, height: 388 } },
-      { name: "EIMY TORRES", position: { top: 447, left: 750, width: 296, height: 388 } },
-      { name: "MARYPAZ MORA", position: { top: 864, left: 74, width: 296, height: 388 } },
-      { name: "DARIO CAMPOS", position: { top: 864, left: 413, width: 296, height: 388 } },
-      { name: "JULIAN HERNANDEZ", position: { top: 864, left: 750, width: 296, height: 388 } }
-    ]
-  },
-  { 
-    id: 4, 
-    title: "Website Research", 
-    type: "team",
-    backgroundImage: page04,
-    slots: [
-      { name: "STEVEN GONZALEZ", position: { top: 447, left: 74, width: 296, height: 388 } },
-      { name: "DANIEL GUADAMUZ", position: { top: 447, left: 412, width: 296, height: 388 } },
-      { name: "JORGE BRENES", position: { top: 447, left: 750, width: 296, height: 388 } },
-      { name: "NICK NOVA", position: { top: 864, left: 74, width: 296, height: 388 } },
-      { name: "VERO DURAN", position: { top: 864, left: 413, width: 296, height: 388 } },
-      { name: "JOSE REYES", position: { top: 864, left: 750, width: 296, height: 388 } }
-    ]
-  },
-  { 
-    id: 5, 
-    title: "Website Research", 
-    type: "team",
-    backgroundImage: page05,
-    slots: [
-      { name: "PAULETTE RUIZ", position: { top: 447, left: 74, width: 296, height: 388 } },
-      { name: "JOSE MONGE", position: { top: 447, left: 412, width: 296, height: 388 } },
-      { name: "NATHALIE GONZALEZ", position: { top: 447, left: 750, width: 296, height: 388 } },
-      { name: "BRAYAN SALAZAR", position: { top: 864, left: 74, width: 296, height: 388 } },
-      { name: "YANIFEL ALVARADO", position: { top: 864, left: 413, width: 296, height: 388 } }
-    ]
-  },
-  { 
-    id: 6, 
-    title: "Rule Writing", 
-    type: "team",
-    backgroundImage: page06,
-    slots: [
-      { name: "VALERIA CUBERO", position: { top: 43, left: 750, width: 296, height: 388 } },
-      { name: "ANTONIO AMEZ", position: { top: 447, left: 74, width: 296, height: 388 } },
-      { name: "GREIVIN MEZA", position: { top: 447, left: 412, width: 296, height: 388 } },
-      { name: "PAOLA JIMENEZ", position: { top: 447, left: 750, width: 296, height: 388 } },
-      { name: "NATALIA ABARCA", position: { top: 864, left: 74, width: 296, height: 388 } },
-      { name: "ISAAC AVILA", position: { top: 864, left: 413, width: 296, height: 388 } },
-      { name: "ANDREINA CASTILLO", position: { top: 864, left: 750, width: 296, height: 388 } }
-    ]
-  },
-  { 
-    id: 7, 
-    title: "ASIN Review", 
-    type: "team",
-    backgroundImage: page07,
-    slots: [
-      { name: "WILBERT CEDENO", position: { top: 43, left: 750, width: 296, height: 388 } },
-      { name: "RAQUEL FERNANDEZ", position: { top: 447, left: 74, width: 296, height: 388 } },
-      { name: "FERGIE MONCADA", position: { top: 447, left: 412, width: 296, height: 388 } },
-      { name: "TOMAS SOLEY", position: { top: 447, left: 750, width: 296, height: 388 } },
-      { name: "MARIANELLA PEREZ", position: { top: 864, left: 74, width: 296, height: 388 } },
-      { name: "ALLAN HIDALGO", position: { top: 864, left: 413, width: 296, height: 388 } },
-      { name: "KATHERINE MORERA", position: { top: 864, left: 750, width: 296, height: 388 } }
-    ]
-  },
-  { 
-    id: 8, 
-    title: "ASIN Suppression", 
-    type: "team",
-    backgroundImage: page08,
-    slots: [
-      { name: "DANIELA JIMENEZ", position: { top: 447, left: 74, width: 296, height: 388 } },
-      { name: "PILAR HERNANDEZ", position: { top: 447, left: 412, width: 296, height: 388 } },
-      { name: "MAIKOL DIAZ", position: { top: 447, left: 750, width: 296, height: 388 } },
-      { name: "RAQUEL BLANCO", position: { top: 864, left: 74, width: 296, height: 388 } },
-      { name: "TAYRON DURAN", position: { top: 864, left: 413, width: 296, height: 388 } },
-      { name: "STEPH ANGULO", position: { top: 864, left: 750, width: 296, height: 388 } }
-    ]
-  },
-  { 
-    id: 9, 
-    title: "ASIN Suppression", 
-    type: "team",
-    backgroundImage: page09,
-    slots: [
-      { name: "GABRIELA GOMEZ", position: { top: 447, left: 74, width: 296, height: 388 } },
-      { name: "RAMIRO CHACON", position: { top: 447, left: 412, width: 296, height: 388 } },
-      { name: "HENRY RODRIGUEZ", position: { top: 447, left: 750, width: 296, height: 388 } },
-      { name: "NATALIA BLANCO", position: { top: 864, left: 74, width: 296, height: 388 } },
-      { name: "YEYLAN AGUIRRE", position: { top: 864, left: 413, width: 296, height: 388 } },
-      { name: "LY ANN HERRERA", position: { top: 864, left: 750, width: 296, height: 388 } }
-    ]
-  },
-  { 
-    id: 10, 
-    title: "Global Recalls", 
-    type: "team",
-    backgroundImage: page10,
-    slots: [
-      { name: "PABLO DELGADO", position: { top: 447, left: 74, width: 296, height: 388 } },
-      { name: "DAVID GONZALEZ", position: { top: 447, left: 412, width: 296, height: 388 } },
-      { name: "ARIANA ALCAZAR", position: { top: 447, left: 750, width: 296, height: 388 } },
-      { name: "PAOLA QUIROS", position: { top: 864, left: 74, width: 296, height: 388 } },
-      { name: "SHARON UMANA", position: { top: 864, left: 413, width: 296, height: 388 } },
-      { name: "DAVID LOAIZA", position: { top: 864, left: 750, width: 296, height: 388 } }
-    ]
-  },
-  { 
-    id: 11, 
-    title: "Warden ADC", 
-    type: "team",
-    backgroundImage: page11,
-    slots: [
-      { name: "LAURA MUNOZ", position: { top: 447, left: 135, width: 296, height: 388 } },
-      { name: "HENRY MOLINA", position: { top: 447, left: 680, width: 296, height: 388 } },
-      { name: "ESTEBAN VALERIO", position: { top: 864, left: 135, width: 296, height: 388 } },
-      { name: "JENSI PEINADO", position: { top: 864, left: 680, width: 296, height: 388 } }
-    ]
-  },
-  { 
-    id: 12, 
-    title: "Verification of Destruction", 
-    type: "team",
-    backgroundImage: page12,
-    slots: [
-      { name: "DAVID SEITZ", position: { top: 447, left: 135, width: 296, height: 388 } },
-      { name: "JAZMIN DELGADO", position: { top: 447, left: 680, width: 296, height: 388 } },
-      { name: "JOSE MASIS", position: { top: 864, left: 135, width: 296, height: 388 } },
-      { name: "MARIA PANA", position: { top: 864, left: 680, width: 296, height: 388 } }
-    ]
-  },
-  { 
-    id: 13, 
-    title: "Inventory Removals", 
-    type: "team",
-    backgroundImage: page13,
-    slots: [
-      { name: "JORDAN MORA", position: { top: 447, left: 74, width: 296, height: 388 } },
-      { name: "ADRIANA CRUZ", position: { top: 447, left: 412, width: 296, height: 388 } },
-      { name: "SHARON QUESADA", position: { top: 447, left: 750, width: 296, height: 388 } },
-      { name: "MITZY HERNANDEZ", position: { top: 864, left: 74, width: 296, height: 388 } },
-      { name: "KEVIN HIDALGO", position: { top: 864, left: 413, width: 296, height: 388 } },
-      { name: "MAYCOL MOREIRA", position: { top: 864, left: 750, width: 296, height: 388 } }
-    ]
-  },
-  { 
-    id: 14, 
-    title: "Closing Page", 
-    type: "closing",
-    backgroundImage: page14,
-    slots: []
-  }
-];
+  const albumPages = [
+    { 
+      id: 0, 
+      title: "Cover Page", 
+      type: "cover",
+      slots: [],
+      backgroundImage: page00
+    },
+    { 
+      id: 1, 
+      title: "REPRIR ALBUM", 
+      type: "special", 
+      backgroundImage: page01,
+      slots: [
+        { name: "JEFF BEZOS", position: { top: 43, left: 750, width: 296, height: 388 } },
+        { name: "SJO 16 AFZ", position: { top: 454, left: 74, width: 638, height: 388 } },
+        { name: "ANDY JASSY", position: { top: 447, left: 750, width: 296, height: 388 } }
+      ]
+    },
+    { 
+      id: 2, 
+      title: "Upper Leadership Team", 
+      type: "team",
+      backgroundImage: page02,
+      slots: [
+        { name: "JP", position: { top: 447, left: 135, width: 296, height: 388 } },
+        { name: "RAFA", position: { top: 447, left: 680, width: 296, height: 388 } },
+        { name: "IRE", position: { top: 864, left: 135, width: 296, height: 388 } },
+        { name: "PAWEL", position: { top: 864, left: 680, width: 296, height: 388 } }
+      ]
+    },
+    { 
+      id: 3, 
+      title: "Leadership Team", 
+      type: "team",
+      backgroundImage: page03,
+      slots: [
+        { name: "ANDREY SOTO", position: { top: 43, left: 750, width: 296, height: 388 } },
+        { name: "ISMA VINDAS", position: { top: 447, left: 74, width: 296, height: 388 } },
+        { name: "ARIEL BOLANOS", position: { top: 447, left: 412, width: 296, height: 388 } },
+        { name: "EIMY TORRES", position: { top: 447, left: 750, width: 296, height: 388 } },
+        { name: "MARYPAZ MORA", position: { top: 864, left: 74, width: 296, height: 388 } },
+        { name: "DARIO CAMPOS", position: { top: 864, left: 413, width: 296, height: 388 } },
+        { name: "JULIAN HERNANDEZ", position: { top: 864, left: 750, width: 296, height: 388 } }
+      ]
+    },
+    { 
+      id: 4, 
+      title: "Website Research", 
+      type: "team",
+      backgroundImage: page04,
+      slots: [
+        { name: "STEVEN GONZALEZ", position: { top: 447, left: 74, width: 296, height: 388 } },
+        { name: "DANIEL GUADAMUZ", position: { top: 447, left: 412, width: 296, height: 388 } },
+        { name: "JORGE BRENES", position: { top: 447, left: 750, width: 296, height: 388 } },
+        { name: "NICK NOVA", position: { top: 864, left: 74, width: 296, height: 388 } },
+        { name: "VERO DURAN", position: { top: 864, left: 413, width: 296, height: 388 } },
+        { name: "JOSE REYES", position: { top: 864, left: 750, width: 296, height: 388 } }
+      ]
+    },
+    { 
+      id: 5, 
+      title: "Website Research", 
+      type: "team",
+      backgroundImage: page05,
+      slots: [
+        { name: "PAULETTE RUIZ", position: { top: 447, left: 74, width: 296, height: 388 } },
+        { name: "JOSE MONGE", position: { top: 447, left: 412, width: 296, height: 388 } },
+        { name: "NATHALIE GONZALEZ", position: { top: 447, left: 750, width: 296, height: 388 } },
+        { name: "BRAYAN SALAZAR", position: { top: 864, left: 74, width: 296, height: 388 } },
+        { name: "YANIFEL ALVARADO", position: { top: 864, left: 413, width: 296, height: 388 } }
+      ]
+    },
+    { 
+      id: 6, 
+      title: "Rule Writing", 
+      type: "team",
+      backgroundImage: page06,
+      slots: [
+        { name: "VALERIA CUBERO", position: { top: 43, left: 750, width: 296, height: 388 } },
+        { name: "ANTONIO AMEZ", position: { top: 447, left: 74, width: 296, height: 388 } },
+        { name: "GREIVIN MEZA", position: { top: 447, left: 412, width: 296, height: 388 } },
+        { name: "PAOLA JIMENEZ", position: { top: 447, left: 750, width: 296, height: 388 } },
+        { name: "NATALIA ABARCA", position: { top: 864, left: 74, width: 296, height: 388 } },
+        { name: "ISAAC AVILA", position: { top: 864, left: 413, width: 296, height: 388 } },
+        { name: "ANDREINA CASTILLO", position: { top: 864, left: 750, width: 296, height: 388 } }
+      ]
+    },
+    { 
+      id: 7, 
+      title: "ASIN Review", 
+      type: "team",
+      backgroundImage: page07,
+      slots: [
+        { name: "WILBERT CEDENO", position: { top: 43, left: 750, width: 296, height: 388 } },
+        { name: "RAQUEL FERNANDEZ", position: { top: 447, left: 74, width: 296, height: 388 } },
+        { name: "FERGIE MONCADA", position: { top: 447, left: 412, width: 296, height: 388 } },
+        { name: "TOMAS SOLEY", position: { top: 447, left: 750, width: 296, height: 388 } },
+        { name: "MARIANELLA PEREZ", position: { top: 864, left: 74, width: 296, height: 388 } },
+        { name: "ALLAN HIDALGO", position: { top: 864, left: 413, width: 296, height: 388 } },
+        { name: "KATHERINE MORERA", position: { top: 864, left: 750, width: 296, height: 388 } }
+      ]
+    },
+    { 
+      id: 8, 
+      title: "ASIN Suppression", 
+      type: "team",
+      backgroundImage: page08,
+      slots: [
+        { name: "DANIELA JIMENEZ", position: { top: 447, left: 74, width: 296, height: 388 } },
+        { name: "PILAR HERNANDEZ", position: { top: 447, left: 412, width: 296, height: 388 } },
+        { name: "MAIKOL DIAZ", position: { top: 447, left: 750, width: 296, height: 388 } },
+        { name: "RAQUEL BLANCO", position: { top: 864, left: 74, width: 296, height: 388 } },
+        { name: "TAYRON DURAN", position: { top: 864, left: 413, width: 296, height: 388 } },
+        { name: "STEPH ANGULO", position: { top: 864, left: 750, width: 296, height: 388 } }
+      ]
+    },
+    { 
+      id: 9, 
+      title: "ASIN Suppression", 
+      type: "team",
+      backgroundImage: page09,
+      slots: [
+        { name: "GABRIELA GOMEZ", position: { top: 447, left: 74, width: 296, height: 388 } },
+        { name: "RAMIRO CHACON", position: { top: 447, left: 412, width: 296, height: 388 } },
+        { name: "HENRY RODRIGUEZ", position: { top: 447, left: 750, width: 296, height: 388 } },
+        { name: "NATALIA BLANCO", position: { top: 864, left: 74, width: 296, height: 388 } },
+        { name: "YEYLAN AGUIRRE", position: { top: 864, left: 413, width: 296, height: 388 } },
+        { name: "LY ANN HERRERA", position: { top: 864, left: 750, width: 296, height: 388 } }
+      ]
+    },
+    { 
+      id: 10, 
+      title: "Global Recalls", 
+      type: "team",
+      backgroundImage: page10,
+      slots: [
+        { name: "PABLO DELGADO", position: { top: 447, left: 74, width: 296, height: 388 } },
+        { name: "DAVID GONZALEZ", position: { top: 447, left: 412, width: 296, height: 388 } },
+        { name: "ARIANA ALCAZAR", position: { top: 447, left: 750, width: 296, height: 388 } },
+        { name: "PAOLA QUIROS", position: { top: 864, left: 74, width: 296, height: 388 } },
+        { name: "SHARON UMANA", position: { top: 864, left: 413, width: 296, height: 388 } },
+        { name: "DAVID LOAIZA", position: { top: 864, left: 750, width: 296, height: 388 } }
+      ]
+    },
+    { 
+      id: 11, 
+      title: "Warden ADC", 
+      type: "team",
+      backgroundImage: page11,
+      slots: [
+        { name: "LAURA MUNOZ", position: { top: 447, left: 135, width: 296, height: 388 } },
+        { name: "HENRY MOLINA", position: { top: 447, left: 680, width: 296, height: 388 } },
+        { name: "ESTEBAN VALERIO", position: { top: 864, left: 135, width: 296, height: 388 } },
+        { name: "JENSI PEINADO", position: { top: 864, left: 680, width: 296, height: 388 } }
+      ]
+    },
+    { 
+      id: 12, 
+      title: "Verification of Destruction", 
+      type: "team",
+      backgroundImage: page12,
+      slots: [
+        { name: "DAVID SEITZ", position: { top: 447, left: 135, width: 296, height: 388 } },
+        { name: "JAZMIN DELGADO", position: { top: 447, left: 680, width: 296, height: 388 } },
+        { name: "JOSE MASIS", position: { top: 864, left: 135, width: 296, height: 388 } },
+        { name: "MARIA PANA", position: { top: 864, left: 680, width: 296, height: 388 } }
+      ]
+    },
+    { 
+      id: 13, 
+      title: "Inventory Removals", 
+      type: "team",
+      backgroundImage: page13,
+      slots: [
+        { name: "JORDAN MORA", position: { top: 447, left: 74, width: 296, height: 388 } },
+        { name: "ADRIANA CRUZ", position: { top: 447, left: 412, width: 296, height: 388 } },
+        { name: "SHARON QUESADA", position: { top: 447, left: 750, width: 296, height: 388 } },
+        { name: "MITZY HERNANDEZ", position: { top: 864, left: 74, width: 296, height: 388 } },
+        { name: "KEVIN HIDALGO", position: { top: 864, left: 413, width: 296, height: 388 } },
+        { name: "MAYCOL MOREIRA", position: { top: 864, left: 750, width: 296, height: 388 } }
+      ]
+    },
+    { 
+      id: 14, 
+      title: "Closing Page", 
+      type: "closing",
+      backgroundImage: page14,
+      slots: []
+    }
+  ];
 
-useEffect(() => {
-  const loadData = async () => {
-    await Promise.all([loadPlacedCards(), loadUserCollection()]);
-    setLoading(false);
-  };
+  useEffect(() => {
+    const loadData = async () => {
+      await Promise.all([loadPlacedCards(), loadUserCollection()]);
+      setLoading(false);
+    };
 
-  loadData();
-}, []);
+    loadData();
+  }, []);
 
   const loadPlacedCards = async () => {
     try {
@@ -294,6 +294,44 @@ useEffect(() => {
     }
   };
 
+  // Completion tracking functions
+  const calculateTotalSlots = () => {
+    return albumPages.reduce((total, page) => {
+      return total + (page.slots ? page.slots.length : 0);
+    }, 0);
+  };
+
+  const calculateFilledSlots = () => {
+    return Object.keys(placedCards).length;
+  };
+
+  const calculateCompletionPercentage = () => {
+    const total = calculateTotalSlots();
+    const filled = calculateFilledSlots();
+    return total > 0 ? Math.round((filled / total) * 100) : 0;
+  };
+
+  const calculatePageCompletion = (pageId) => {
+    const page = albumPages.find(p => p.id === pageId);
+    if (!page || !page.slots) return 0;
+
+    const pageSlots = page.slots.length;
+    const filledSlots = page.slots.filter(slot => {
+      const slotKey = `${pageId}-${slot.name}`;
+      return placedCards[slotKey];
+    }).length;
+
+    return pageSlots > 0 ? Math.round((filledSlots / pageSlots) * 100) : 0;
+  };
+
+  const checkForCompletion = () => {
+    if (calculateCompletionPercentage() === 100) {
+      setTimeout(() => {
+        alert('🎉 CONGRATULATIONS! 🎉\n\nYou have completed the entire REPRIR Team Album!\n\nYou collected all team members! 🏆');
+      }, 500);
+    }
+  };
+
   const handleDrop = async (e, slotName, pageId) => {
     e.preventDefault();
 
@@ -319,6 +357,7 @@ useEffect(() => {
         await loadUserCollection();
 
         alert(`✅ ${cardData.cardData.name} placed successfully!`);
+        checkForCompletion();
       } else {
         alert(`❌ This card doesn't belong in the ${slotName} slot!`);
       }
@@ -403,8 +442,50 @@ useEffect(() => {
   return (
     <div className="album-container">
       <div className="album-header">
-        <h2>Team Album</h2>
-        <p>Page {currentPage + 1} of {albumPages.length}</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+          <h2>Team Album</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#28a745' }}>
+                {calculateCompletionPercentage()}% Complete
+              </div>
+              <div style={{ fontSize: '14px', color: '#666' }}>
+                {calculateFilledSlots()} of {calculateTotalSlots()} cards
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div style={{
+          width: '100%',
+          height: '20px',
+          backgroundColor: '#e9ecef',
+          borderRadius: '10px',
+          overflow: 'hidden',
+          marginBottom: '10px'
+        }}>
+          <div style={{
+            width: `${calculateCompletionPercentage()}%`,
+            height: '100%',
+            backgroundColor: calculateCompletionPercentage() === 100 ? '#28a745' : '#007bff',
+            transition: 'width 0.5s ease',
+            borderRadius: '10px'
+          }}></div>
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <p>Page {currentPage + 1} of {albumPages.length}</p>
+          {currentPageData.slots && currentPageData.slots.length > 0 && (
+            <p style={{ 
+              color: calculatePageCompletion(currentPageData.id) === 100 ? '#28a745' : '#007bff',
+              fontWeight: 'bold'
+            }}>
+              This page: {calculatePageCompletion(currentPageData.id)}% 
+              ({currentPageData.slots.filter(slot => placedCards[`${currentPageData.id}-${slot.name}`]).length}/{currentPageData.slots.length})
+            </p>
+          )}
+        </div>
       </div>
 
       <div 
