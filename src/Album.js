@@ -46,38 +46,38 @@ const Album = () => {
   };
 
   // Helper function to get proper styling for cards
-  const getCardImageStyle = (cardName, context = 'album') => {
-    const baseStyle = {
-      width: '100%',
-      height: '100%',
-      borderRadius: '8px'
-    };
-
-    // Special handling for AFZ SJO 16 card
-    if (cardName === 'SJO 16 AFZ') {
-      if (context === 'album') {
-        // In album slot: rotate 90 degrees and scale to fill horizontal slot
-        return {
-          ...baseStyle,
-          objectFit: 'cover',
-          transform: 'rotate(90deg) scale(2.0)', // Increased scale to fill slot
-          transformOrigin: 'center center'
-        };
-      } else {
-        // In collection, packs, trading: keep vertical (NO rotation)
-        return {
-          ...baseStyle,
-          objectFit: 'cover'
-          // No transform - stays vertical
-        };
-      }
-    }
-
-    return {
-      ...baseStyle,
-      objectFit: 'cover'
-    };
+const getCardImageStyle = (cardName, context = 'album') => {
+  const baseStyle = {
+    width: '100%',
+    height: '100%',
+    borderRadius: '8px'
   };
+
+  // Special handling for AFZ SJO 16 card
+  if (cardName === 'SJO 16 AFZ') {
+    if (context === 'album') {
+      // In album slot: rotate 90 degrees and scale with specific ratios
+      return {
+        ...baseStyle,
+        objectFit: 'fit', // Changed to contain for proper fitting
+        transform: 'rotate(90deg) scale(0.62, 1.70)', // Your preferred scaling
+        transformOrigin: 'center center'
+      };
+    } else {
+      // In collection, packs, trading: keep vertical (NO rotation)
+      return {
+        ...baseStyle,
+        objectFit: 'cover'
+        // No transform - stays vertical
+      };
+    }
+  }
+
+  return {
+    ...baseStyle,
+    objectFit: 'cover'
+  };
+};
 
   // Define your album structure with exact Canva positions
   const albumPages = [
