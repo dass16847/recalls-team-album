@@ -45,7 +45,7 @@ const Album = () => {
     return null; // Return null if no image found
   };
 
-  // Helper function to get proper styling for cards
+// Helper function to get proper styling for cards
 const getCardImageStyle = (cardName, context = 'album') => {
   const baseStyle = {
     width: '100%',
@@ -59,7 +59,7 @@ const getCardImageStyle = (cardName, context = 'album') => {
       // In album slot: rotate 90 degrees and scale with specific ratios
       return {
         ...baseStyle,
-        objectFit: 'fit', // Changed to contain for proper fitting
+        objectFit: 'contain', // FIXED: was 'fit', now 'contain'
         transform: 'rotate(90deg) scale(0.62, 1.70)', // Your preferred scaling
         transformOrigin: 'center center'
       };
@@ -99,20 +99,18 @@ const getCardImageStyle = (cardName, context = 'album') => {
         { name: "ANDY JASSY", position: { top: 447, left: 750, width: 296, height: 388 } }
       ]
     },
-    { 
-      id: 2, 
-      title: "Upper Leadership Team", 
-      type: "team",
-      backgroundImage: page02,
-      slots: [
-        { name: "JP", position: { top: 447, left: 135, width: 296, height: 388 } },
-        { name: "RAFA", position: { top: 447, left: 680, width: 296, height: 388 } },
-        { name: "RAFA AGUERO", position: { top: 447, left: 680, width: 296, height: 388 } },
-        { name: "IRE", position: { top: 864, left: 135, width: 296, height: 388 } },
-        { name: "PAWEL", position: { top: 864, left: 680, width: 296, height: 388 } },
-        { name: "PAWEL PUDLIK", position: { top: 864, left: 680, width: 296, height: 388 } }
-      ]
-    },
+   { 
+  id: 2, 
+  title: "Upper Leadership Team", 
+  type: "team",
+  backgroundImage: page02,
+  slots: [
+    { name: "JP", position: { top: 447, left: 135, width: 296, height: 388 } },
+    { name: "RAFA", position: { top: 447, left: 680, width: 296, height: 388 } },
+    { name: "IRE", position: { top: 864, left: 135, width: 296, height: 388 } },
+    { name: "PAWEL", position: { top: 864, left: 680, width: 296, height: 388 } }
+  ]
+},
     { 
       id: 3, 
       title: "Leadership Team", 

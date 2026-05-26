@@ -1,5 +1,9 @@
 // Helper function to get card image by name
 export const getCardImage = (cardName) => {
+  console.log('=== getCardImage DEBUG ===');
+  console.log('Input cardName:', cardName);
+  console.log('Uppercase:', cardName.toUpperCase());
+
   // Convert database name to filename
   const nameToFilename = {
     'ADRIANA CRUZ': 'adriana-cruz',
@@ -7,9 +11,11 @@ export const getCardImage = (cardName) => {
     'JP': 'jp',
     'SJO 16 AFZ': 'amazon-sjo-16',
     'ANDREY SOTO': 'andrey-soto',
-    'RAFA': 'rafa', // FIXED: was 'rafa-aguero', now 'rafa'
+    'RAFA': 'rafa',
+    'RAFA AGUERO': 'rafa',
     'IRE': 'ire-vargas',
     'PAWEL': 'pawel',
+    'PAWEL PUDLIK': 'pawel',
     'ISMA VINDAS': 'isma-vindas',
     'ARIEL BOLANOS': 'ariel-bolanos',
     'EIMY TORRES': 'eimy-torres',
@@ -76,6 +82,7 @@ export const getCardImage = (cardName) => {
   };
 
   const filename = nameToFilename[cardName.toUpperCase()];
+  console.log('Mapped filename:', filename);
 
   if (!filename) {
     console.warn(`No filename mapping found for: ${cardName}`);
@@ -83,9 +90,13 @@ export const getCardImage = (cardName) => {
   }
 
   try {
-    return require(`../images/cards/${filename}.png`);
+    const imagePath = `../images/cards/${filename}.png`;
+    console.log('Trying to require:', imagePath);
+    const result = require(imagePath);
+    console.log('Require successful:', result);
+    return result;
   } catch (error) {
-    console.warn(`Card image not found: ${filename}.png`);
+    console.error(`Card image not found: ${filename}.png`, error);
     return null;
   }
 };
