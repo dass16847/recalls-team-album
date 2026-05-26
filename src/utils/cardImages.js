@@ -7,7 +7,7 @@ export const getCardImage = (cardName) => {
     'JP': 'jp',
     'SJO 16 AFZ': 'amazon-sjo-16',
     'ANDREY SOTO': 'andrey-soto',
-    'RAFA': 'rafa-aguero',
+    'RAFA': 'rafa', // FIXED: was 'rafa-aguero', now 'rafa'
     'IRE': 'ire-vargas',
     'PAWEL': 'pawel',
     'ISMA VINDAS': 'isma-vindas',

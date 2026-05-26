@@ -31,64 +31,53 @@ const Album = () => {
 
   // Helper function to get card image URL with proper fallbacks
   const getCardImageUrl = (cardName) => {
-    console.log('Getting image URL for:', cardName); // Debug log
+    console.log('Getting image URL for:', cardName);
 
-    // Special case for Marypaz Mora - try multiple variations
-    if (cardName === 'MARYPAZ MORA' || cardName === 'MARYPAZ CERDAS') {
-      console.log('Using special case for MARYPAZ MORA'); // Debug log
-      return '/cards/marypaz-mora.png';
-    }
-
-    // Use existing getCardImage function
+    // Use the main getCardImage function - it handles all mappings
     const cardImage = getCardImage(cardName);
 
-    // If getCardImage returns a valid image, use it
-    if (cardImage && cardImage !== '/cards/placeholder.png') {
-      console.log('Using getCardImage result:', cardImage); // Debug log
+    if (cardImage) {
+      console.log('Using getCardImage result:', cardImage);
       return cardImage;
     }
 
-    // Try alternative naming patterns as fallback
-    const normalizedName = cardName.toLowerCase().replace(/\s+/g, '-');
-    const fallbackUrl = `/cards/${normalizedName}.png`;
-    console.log('Using fallback URL:', fallbackUrl); // Debug log
-
-    return fallbackUrl;
+    console.log('No image found for:', cardName);
+    return null; // Return null if no image found
   };
 
-// Helper function to get proper styling for cards
-const getCardImageStyle = (cardName, context = 'album') => {
-  const baseStyle = {
-    width: '100%',
-    height: '100%',
-    borderRadius: '8px'
-  };
+  // Helper function to get proper styling for cards
+  const getCardImageStyle = (cardName, context = 'album') => {
+    const baseStyle = {
+      width: '100%',
+      height: '100%',
+      borderRadius: '8px'
+    };
 
-  // Special handling for AFZ SJO 16 card (horizontal card)
-  if (cardName === 'SJO 16 AFZ') {
-    if (context === 'album') {
-      return {
-        ...baseStyle,
-        objectFit: 'cover',
-        objectPosition: 'center center', // Center the image
-        transform: 'rotate(90deg) scale(1.2)', // Rotate and scale up to fill width
-        transformOrigin: 'center center'
-      };
-    } else if (context === 'collection') {
-      return {
-        ...baseStyle,
-        objectFit: 'cover',
-        transform: 'rotate(90deg) scale(0.9)',
-        transformOrigin: 'center center'
-      };
+    // Special handling for AFZ SJO 16 card
+    if (cardName === 'SJO 16 AFZ') {
+      if (context === 'album') {
+        // In album slot: rotate 90 degrees and scale to fill horizontal slot
+        return {
+          ...baseStyle,
+          objectFit: 'cover',
+          transform: 'rotate(90deg) scale(2.0)', // Increased scale to fill slot
+          transformOrigin: 'center center'
+        };
+      } else {
+        // In collection, packs, trading: keep vertical (NO rotation)
+        return {
+          ...baseStyle,
+          objectFit: 'cover'
+          // No transform - stays vertical
+        };
+      }
     }
-  }
 
-  return {
-    ...baseStyle,
-    objectFit: 'cover'
+    return {
+      ...baseStyle,
+      objectFit: 'cover'
+    };
   };
-};
 
   // Define your album structure with exact Canva positions
   const albumPages = [
@@ -596,7 +585,7 @@ const getCardImageStyle = (cardName, context = 'album') => {
                     <div className="placed-card-with-image">
                       {(() => {
                         const cardImageUrl = getCardImageUrl(placedCard.cardData.name);
-                        console.log('Rendering card in album:', placedCard.cardData.name, 'URL:', cardImageUrl); // Debug log
+                        console.log('Rendering card in album:', placedCard.cardData.name, 'URL:', cardImageUrl);
 
                         return cardImageUrl ? (
                           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
@@ -606,17 +595,8 @@ const getCardImageStyle = (cardName, context = 'album') => {
                               style={getCardImageStyle(placedCard.cardData.name, 'album')}
                               onError={(e) => {
                                 console.log('Image failed to load for:', placedCard.cardData.name, 'URL:', cardImageUrl);
-                                // Try alternative URL patterns
-                                const altUrl = `/cards/${placedCard.cardData.name.toLowerCase().replace(/\s+/g, '-')}.png`;
-                                if (e.target.src !== altUrl) {
-                                  console.log('Trying alternative URL:', altUrl);
-                                  e.target.src = altUrl;
-                                } else {
-                                  // If alternative also fails, show fallback
-                                  console.log('All image URLs failed, showing fallback');
-                                  e.target.style.display = 'none';
-                                  e.target.nextSibling.style.display = 'flex';
-                                }
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'flex';
                               }}
                               onLoad={() => {
                                 console.log('Image loaded successfully for:', placedCard.cardData.name);
@@ -727,7 +707,7 @@ const getCardImageStyle = (cardName, context = 'album') => {
           <div className="collection-grid">
             {userCards.map((userCard) => {
               const cardImageUrl = getCardImageUrl(userCard.cardData.name);
-              console.log('Rendering card in collection:', userCard.cardData.name, 'URL:', cardImageUrl); // Debug log
+              console.log('Rendering card in collection:', userCard.cardData.name, 'URL:', cardImageUrl);
 
               return (
                 <div
@@ -762,16 +742,8 @@ const getCardImageStyle = (cardName, context = 'album') => {
                       }}
                       onError={(e) => {
                         console.log('Collection image failed to load for:', userCard.cardData.name, 'URL:', cardImageUrl);
-                        // Try alternative URL
-                        const altUrl = `/cards/${userCard.cardData.name.toLowerCase().replace(/\s+/g, '-')}.png`;
-                        if (e.target.src !== altUrl) {
-                          console.log('Trying alternative collection URL:', altUrl);
-                          e.target.src = altUrl;
-                        } else {
-                          console.log('All collection image URLs failed, showing fallback');
-                          e.target.style.display = 'none';
-                          e.target.nextSibling.style.display = 'flex';
-                        }
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
                       }}
                       onLoad={() => {
                         console.log('Collection image loaded successfully for:', userCard.cardData.name);
