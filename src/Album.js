@@ -446,7 +446,7 @@ const Album = () => {
           <h2>Team Album</h2>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#28a745' }}>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>
                 {calculateCompletionPercentage()}% Complete
               </div>
               <div style={{ fontSize: '14px', color: '#666' }}>
@@ -478,7 +478,7 @@ const Album = () => {
           <p>Page {currentPage + 1} of {albumPages.length}</p>
           {currentPageData.slots && currentPageData.slots.length > 0 && (
             <p style={{ 
-              color: calculatePageCompletion(currentPageData.id) === 100 ? '#28a745' : '#007bff',
+              color: 'white',
               fontWeight: 'bold'
             }}>
               This page: {calculatePageCompletion(currentPageData.id)}% 
