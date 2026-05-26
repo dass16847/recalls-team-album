@@ -4,6 +4,15 @@ import { db, auth } from './firebase';
 import './Album.css';
 import LoadingSpinner from './components/LoadingSpinner';
 import { getCardImage } from './utils/cardImages';
+// Add this after your imports in Album.js
+import testRafa from './images/cards/rafa.png';
+import testIre from './images/cards/ire-vargas.png';
+import testPawel from './images/cards/pawel.png';
+
+console.log('=== DIRECT IMPORT TEST ===');
+console.log('Direct RAFA import:', testRafa);
+console.log('Direct IRE import:', testIre);
+console.log('Direct PAWEL import:', testPawel);
 
 // Import all album page backgrounds
 import page00 from './images/album-pages/page-00-cover.png';
