@@ -91,6 +91,65 @@ const TradingPost = () => {
     }
   };
 
+  // Helper function to get card image URL with proper fallbacks
+  const getCardImageUrl = (cardData) => {
+    if (!cardData) return '/cards/placeholder.png';
+
+    console.log('Trading Post - Getting image URL for:', cardData.name); // Debug log
+
+    // Special case for Marypaz Mora
+    if (cardData.name === 'MARYPAZ MORA' || cardData.name === 'MARYPAZ CERDAS') {
+      console.log('Trading Post - Using marypaz-mora.png'); // Debug log
+      return '/cards/marypaz-mora.png';
+    }
+
+    // Special case for SJO 16 AFZ - exact filename mapping
+    if (cardData.name === 'SJO 16 AFZ') {
+      console.log('Trading Post - Using amazon-sjo-16.png'); // Debug log
+      return '/cards/amazon-sjo-16.png';
+    }
+
+    // Special case for Pawel
+    if (cardData.name === 'PAWEL') {
+      console.log('Trading Post - Using pawel.png'); // Debug log
+      return '/cards/pawel.png';
+    }
+
+    // Use the image field if it exists
+    if (cardData.image) {
+      return `/cards/${cardData.image}`;
+    }
+
+    // Try alternative naming patterns as fallback
+    const normalizedName = cardData.name.toLowerCase().replace(/\s+/g, '-');
+    const fallbackUrl = `/cards/${normalizedName}.png`;
+    console.log('Trading Post - Using fallback URL:', fallbackUrl); // Debug log
+
+    return fallbackUrl;
+  };
+
+  // Helper function to get card image style with proper sizing for AFZ SJO 16
+  const getCardImageStyle = (cardData, containerType = 'default') => {
+    const baseStyle = {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+      borderRadius: '8px'
+    };
+
+    // Special handling for AFZ SJO 16 card - keep it VERTICAL in trading post
+    if (cardData.name === 'SJO 16 AFZ') {
+      // In trading post, keep it vertical (no rotation)
+      return {
+        ...baseStyle,
+        objectFit: 'cover'
+        // No transform - stays vertical like other cards
+      };
+    }
+
+    return baseStyle;
+  };
+
   const createTrade = async () => {
     if (!selectedOfferingCard || !selectedWantingCard) {
       alert('Please select both cards for the trade!');
@@ -241,38 +300,6 @@ const TradingPost = () => {
     }
   };
 
-  // Helper function to get card image with proper rotation for AFZ SJO 16
-  const getCardImageStyle = (cardData) => {
-    const baseStyle = {
-      width: '100%',
-      height: '120px',
-      objectFit: 'cover',
-      borderRadius: '8px',
-      marginBottom: '10px'
-    };
-
-    // Special handling for AFZ SJO 16 card (horizontal card)
-    if (cardData.name === 'AFZ SJO 16' || cardData.image === 'amazon-sjo-16.png') {
-      return {
-        ...baseStyle,
-        transform: 'rotate(90deg)',
-        height: '160px',
-        objectFit: 'contain'
-      };
-    }
-
-    return baseStyle;
-  };
-
-  // Helper function to get card image URL
-  const getCardImageUrl = (cardData) => {
-    if (cardData.image) {
-      return `/cards/${cardData.image}`;
-    }
-    // Fallback for cards without image
-    return '/cards/placeholder.png';
-  };
-
   if (loading) {
     return <LoadingSpinner message="🔄 Loading Trading Post..." size="medium" />;
   }
@@ -343,10 +370,22 @@ const TradingPost = () => {
                   <img
                     src={getCardImageUrl(card.cardData)}
                     alt={card.cardData.name}
-                    style={getCardImageStyle(card.cardData)}
+                    style={getCardImageStyle(card.cardData, 'collection')}
                     onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
+                      console.log('Trading Post image failed to load for:', card.cardData.name);
+                      // Try alternative URL
+                      const altUrl = `/cards/${card.cardData.name.toLowerCase().replace(/\s+/g, '-')}.png`;
+                      if (e.target.src !== altUrl) {
+                        console.log('Trading Post trying alternative URL:', altUrl);
+                        e.target.src = altUrl;
+                      } else {
+                        console.log('Trading Post all image URLs failed, showing fallback');
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }
+                    }}
+                    onLoad={() => {
+                      console.log('Trading Post image loaded successfully for:', card.cardData.name);
                     }}
                   />
                   <div style={{
@@ -358,9 +397,11 @@ const TradingPost = () => {
                     backgroundColor: '#e9ecef',
                     color: '#6c757d',
                     fontSize: '12px',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    flexDirection: 'column'
                   }}>
-                    {card.cardData.name}
+                    <div>🎴</div>
+                    <div>{card.cardData.name}</div>
                   </div>
                 </div>
 

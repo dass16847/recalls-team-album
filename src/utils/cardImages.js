@@ -9,7 +9,7 @@ export const getCardImage = (cardName) => {
     'ANDREY SOTO': 'andrey-soto',
     'RAFA': 'rafa-aguero',
     'IRE': 'ire-vargas',
-    'PAWEL': 'pawel-pudlik',
+    'PAWEL': 'pawel',
     'ISMA VINDAS': 'isma-vindas',
     'ARIEL BOLANOS': 'ariel-bolanos',
     'EIMY TORRES': 'eimy-torres',
