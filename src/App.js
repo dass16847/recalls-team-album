@@ -8,6 +8,7 @@ import Album from './Album';
 import TradingPost from './TradingPost';
 import LoadingSpinner from './components/LoadingSpinner';
 import { NotificationProvider, NotificationBell } from './components/NotificationSystem';
+import { TradeHistoryDashboard } from './components/TradeHistoryDashboard';
 import './App.css';
 
 function App() {
@@ -656,6 +657,19 @@ return (
           >
             🔄 Trading Post
           </button>
+          <button
+            onClick={() => setActiveTab('history')}
+            style={{
+              padding: '10px 20px',
+              backgroundColor: activeTab === 'history' ? '#007bff' : 'transparent',
+              color: activeTab === 'history' ? 'white' : '#007bff',
+              border: '1px solid #007bff',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            📊 Trade History
+          </button>
 
           {user && adminEmails.includes(user.email) && (
             <button
@@ -690,6 +704,10 @@ return (
 
         {activeTab === 'trading' && (
           <TradingPost />
+        )}
+
+        {activeTab === 'history' && (
+          <TradeHistoryDashboard />
         )}
       </main>
 
