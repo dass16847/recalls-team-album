@@ -35,8 +35,8 @@ const Album = () => {
 
     // Special case for Marypaz Mora - try multiple variations
     if (cardName === 'MARYPAZ MORA' || cardName === 'MARYPAZ CERDAS') {
-      console.log('Using special case for MARYPAZ MORA/CERDAS'); // Debug log
-      return '/cards/marypaz-cerdas.png';
+      console.log('Using special case for MARYPAZ MORA'); // Debug log
+      return '/cards/marypaz-mora.png';
     }
 
     // Use existing getCardImage function
@@ -56,37 +56,39 @@ const Album = () => {
     return fallbackUrl;
   };
 
-  // Helper function to get proper styling for cards
-  const getCardImageStyle = (cardName, context = 'album') => {
-    const baseStyle = {
-      width: '100%',
-      height: '100%',
-      borderRadius: '8px'
-    };
-
-    // Special handling for AFZ SJO 16 card (horizontal card)
-    if (cardName === 'SJO 16 AFZ') {
-      if (context === 'album') {
-        return {
-          ...baseStyle,
-          objectFit: 'cover', // Changed from 'contain' to 'cover' to fill the slot
-          transform: 'rotate(90deg)'
-        };
-      } else if (context === 'collection') {
-        return {
-          ...baseStyle,
-          objectFit: 'cover', // Changed from 'contain' to 'cover'
-          transform: 'rotate(90deg) scale(0.8)',
-          transformOrigin: 'center center'
-        };
-      }
-    }
-
-    return {
-      ...baseStyle,
-      objectFit: 'cover'
-    };
+// Helper function to get proper styling for cards
+const getCardImageStyle = (cardName, context = 'album') => {
+  const baseStyle = {
+    width: '100%',
+    height: '100%',
+    borderRadius: '8px'
   };
+
+  // Special handling for AFZ SJO 16 card (horizontal card)
+  if (cardName === 'SJO 16 AFZ') {
+    if (context === 'album') {
+      return {
+        ...baseStyle,
+        objectFit: 'cover',
+        objectPosition: 'center center', // Center the image
+        transform: 'rotate(90deg) scale(1.2)', // Rotate and scale up to fill width
+        transformOrigin: 'center center'
+      };
+    } else if (context === 'collection') {
+      return {
+        ...baseStyle,
+        objectFit: 'cover',
+        transform: 'rotate(90deg) scale(0.9)',
+        transformOrigin: 'center center'
+      };
+    }
+  }
+
+  return {
+    ...baseStyle,
+    objectFit: 'cover'
+  };
+};
 
   // Define your album structure with exact Canva positions
   const albumPages = [
