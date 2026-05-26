@@ -12,6 +12,10 @@ const TradingPost = () => {
   const [selectedOfferingCard, setSelectedOfferingCard] = useState('');
   const [selectedWantingCard, setSelectedWantingCard] = useState('');
 
+  // New state for search functionality
+  const [wantingCardSearch, setWantingCardSearch] = useState('');
+  const [filteredAllCards, setFilteredAllCards] = useState([]);
+
   useEffect(() => {
     const loadData = async () => {
       await Promise.all([loadUserCollection(), loadAllCards(), loadAvailableTrades()]);
@@ -20,6 +24,20 @@ const TradingPost = () => {
 
     loadData();
   }, []);
+
+  // Filter cards based on search term
+  useEffect(() => {
+    if (wantingCardSearch.trim() === '') {
+      setFilteredAllCards(allCards);
+    } else {
+      const filtered = allCards.filter(card => 
+        card.name.toLowerCase().includes(wantingCardSearch.toLowerCase()) ||
+        card.team.toLowerCase().includes(wantingCardSearch.toLowerCase()) ||
+        card.rarity.toLowerCase().includes(wantingCardSearch.toLowerCase())
+      );
+      setFilteredAllCards(filtered);
+    }
+  }, [allCards, wantingCardSearch]);
 
   const loadUserCollection = async () => {
     try {
@@ -51,6 +69,7 @@ const TradingPost = () => {
         ...doc.data()
       }));
       setAllCards(cards);
+      setFilteredAllCards(cards);
     } catch (error) {
       console.error('Error loading all cards:', error);
     }
@@ -96,6 +115,7 @@ const TradingPost = () => {
       setShowCreateTrade(false);
       setSelectedOfferingCard('');
       setSelectedWantingCard('');
+      setWantingCardSearch('');
       await loadAvailableTrades();
     } catch (error) {
       console.error('Error creating trade:', error);
@@ -221,8 +241,40 @@ const TradingPost = () => {
     }
   };
 
+  // Helper function to get card image with proper rotation for AFZ SJO 16
+  const getCardImageStyle = (cardData) => {
+    const baseStyle = {
+      width: '100%',
+      height: '120px',
+      objectFit: 'cover',
+      borderRadius: '8px',
+      marginBottom: '10px'
+    };
+
+    // Special handling for AFZ SJO 16 card (horizontal card)
+    if (cardData.name === 'AFZ SJO 16' || cardData.image === 'amazon-sjo-16.png') {
+      return {
+        ...baseStyle,
+        transform: 'rotate(90deg)',
+        height: '160px',
+        objectFit: 'contain'
+      };
+    }
+
+    return baseStyle;
+  };
+
+  // Helper function to get card image URL
+  const getCardImageUrl = (cardData) => {
+    if (cardData.image) {
+      return `/cards/${cardData.image}`;
+    }
+    // Fallback for cards without image
+    return '/cards/placeholder.png';
+  };
+
   if (loading) {
-  return <LoadingSpinner message="🔄 Loading Trading Post..." size="medium" />;
+    return <LoadingSpinner message="🔄 Loading Trading Post..." size="medium" />;
   }
 
   return (
@@ -274,6 +326,42 @@ const TradingPost = () => {
                   fontWeight: 'bold'
                 }}>
                   {card.count}
+                </div>
+
+                {/* Fixed Card Image Display */}
+                <div style={{ 
+                  width: '100%', 
+                  height: '120px', 
+                  marginBottom: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#f8f9fa',
+                  borderRadius: '8px',
+                  overflow: 'hidden'
+                }}>
+                  <img
+                    src={getCardImageUrl(card.cardData)}
+                    alt={card.cardData.name}
+                    style={getCardImageStyle(card.cardData)}
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />
+                  <div style={{
+                    display: 'none',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: '#e9ecef',
+                    color: '#6c757d',
+                    fontSize: '12px',
+                    textAlign: 'center'
+                  }}>
+                    {card.cardData.name}
+                  </div>
                 </div>
 
                 <h4 style={{ margin: '0 0 8px 0', color: '#28a745' }}>
@@ -379,7 +467,7 @@ const TradingPost = () => {
         )}
       </div>
 
-      {/* Create Trade Form */}
+      {/* Enhanced Create Trade Form */}
       {showCreateTrade && (
         <div style={{
           position: 'fixed',
@@ -397,7 +485,7 @@ const TradingPost = () => {
             backgroundColor: 'white',
             padding: '30px',
             borderRadius: '15px',
-            maxWidth: '500px',
+            maxWidth: '600px',
             width: '90%',
             maxHeight: '80vh',
             overflow: 'auto'
@@ -432,6 +520,25 @@ const TradingPost = () => {
               <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
                 I want:
               </label>
+
+              {/* Search Input */}
+              <input
+                type="text"
+                placeholder="🔍 Search for a card by name, team, or rarity..."
+                value={wantingCardSearch}
+                onChange={(e) => setWantingCardSearch(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  border: '1px solid #007bff',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  marginBottom: '10px',
+                  backgroundColor: '#f8f9ff'
+                }}
+              />
+
+              {/* Filtered Dropdown */}
               <select
                 value={selectedWantingCard}
                 onChange={(e) => setSelectedWantingCard(e.target.value)}
@@ -440,16 +547,35 @@ const TradingPost = () => {
                   padding: '10px',
                   border: '1px solid #ddd',
                   borderRadius: '6px',
-                  fontSize: '14px'
+                  fontSize: '14px',
+                  maxHeight: '200px'
                 }}
+                size={Math.min(filteredAllCards.length + 1, 8)}
               >
-                <option value="">Select a card you want...</option>
-                {allCards.map((card) => (
+                <option value="">
+                  {wantingCardSearch ? 
+                    `Select from ${filteredAllCards.length} filtered cards...` : 
+                    'Select a card you want...'
+                  }
+                </option>
+                {filteredAllCards.map((card) => (
                   <option key={card.id} value={card.name}>
-                    {card.name} ({card.rarity})
+                    {card.name} ({card.team} - {card.rarity})
                   </option>
                 ))}
               </select>
+
+              {wantingCardSearch && filteredAllCards.length === 0 && (
+                <p style={{ color: '#dc3545', fontSize: '12px', margin: '5px 0' }}>
+                  No cards found matching "{wantingCardSearch}"
+                </p>
+              )}
+
+              {wantingCardSearch && filteredAllCards.length > 0 && (
+                <p style={{ color: '#28a745', fontSize: '12px', margin: '5px 0' }}>
+                  Found {filteredAllCards.length} card(s) matching "{wantingCardSearch}"
+                </p>
+              )}
             </div>
 
             <div style={{ display: 'flex', gap: '10px' }}>
@@ -469,7 +595,12 @@ const TradingPost = () => {
                 ✅ Create Trade
               </button>
               <button
-                onClick={() => setShowCreateTrade(false)}
+                onClick={() => {
+                  setShowCreateTrade(false);
+                  setWantingCardSearch('');
+                  setSelectedOfferingCard('');
+                  setSelectedWantingCard('');
+                }}
                 style={{
                   flex: 1,
                   padding: '12px',

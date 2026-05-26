@@ -29,6 +29,50 @@ const Album = () => {
   const [loading, setLoading] = useState(true);
   const [isAnimating, setIsAnimating] = useState(false);
 
+  // Helper function to get card image URL with proper fallbacks
+  const getCardImageUrl = (cardName) => {
+    // Special case for Marypaz Mora
+    if (cardName === 'MARYPAZ MORA') {
+      return '/cards/marypaz-cerdas.png';
+    }
+
+    // Use existing getCardImage function
+    const cardImage = getCardImage(cardName);
+    return cardImage || '/cards/placeholder.png';
+  };
+
+  // Helper function to get proper styling for AFZ SJO 16 card
+  const getCardImageStyle = (cardName, context = 'album') => {
+    const baseStyle = {
+      width: '100%',
+      height: '100%',
+      borderRadius: '8px'
+    };
+
+    // Special handling for AFZ SJO 16 card (horizontal card)
+    if (cardName === 'SJO 16 AFZ') {
+      if (context === 'album') {
+        return {
+          ...baseStyle,
+          objectFit: 'contain',
+          transform: 'rotate(90deg)'
+        };
+      } else if (context === 'collection') {
+        return {
+          ...baseStyle,
+          objectFit: 'contain',
+          transform: 'rotate(90deg) scale(0.8)',
+          transformOrigin: 'center center'
+        };
+      }
+    }
+
+    return {
+      ...baseStyle,
+      objectFit: 'cover'
+    };
+  };
+
   // Define your album structure with exact Canva positions
   const albumPages = [
     { 
@@ -534,19 +578,41 @@ const Album = () => {
                   {placedCard ? (
                     <div className="placed-card-with-image">
                       {(() => {
-                        const cardImage = getCardImage(placedCard.cardData.name);
-                        return cardImage ? (
+                        const cardImageUrl = getCardImageUrl(placedCard.cardData.name);
+                        return cardImageUrl && cardImageUrl !== '/cards/placeholder.png' ? (
                           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
                             <img 
-                              src={cardImage} 
+                              src={cardImageUrl} 
                               alt={placedCard.cardData.name}
-                              style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover',
-                                borderRadius: '8px'
+                              style={getCardImageStyle(placedCard.cardData.name, 'album')}
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'flex';
                               }}
                             />
+                            <div style={{
+                              display: 'none',
+                              width: '100%',
+                              height: '100%',
+                              background: 'linear-gradient(145deg, #e8f5e8, #d4edda)',
+                              border: '2px solid #28a745',
+                              borderRadius: '8px',
+                              flexDirection: 'column',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              color: '#155724',
+                              position: 'relative'
+                            }}>
+                              <h4 style={{ margin: '0 0 5px 0', fontSize: '0.9em' }}>
+                                {placedCard.cardData.name}
+                              </h4>
+                              <p style={{ margin: '2px 0', fontSize: '0.8em' }}>
+                                {placedCard.cardData.team}
+                              </p>
+                              <p style={{ margin: '2px 0', fontSize: '0.7em', fontWeight: 'bold' }}>
+                                {placedCard.cardData.rarity}
+                              </p>
+                            </div>
                             <div className="placed-indicator">✅</div>
                           </div>
                         ) : (
@@ -628,7 +694,7 @@ const Album = () => {
         ) : (
           <div className="collection-grid">
             {userCards.map((userCard) => {
-              const cardImage = getCardImage(userCard.cardData.name);
+              const cardImageUrl = getCardImageUrl(userCard.cardData.name);
 
               return (
                 <div
@@ -651,32 +717,37 @@ const Album = () => {
                   )}
                   <div className="drag-label">DRAG ME</div>
 
-                  {cardImage ? (
+                  {cardImageUrl && cardImageUrl !== '/cards/placeholder.png' ? (
                     <img 
-                      src={cardImage} 
+                      src={cardImageUrl} 
                       alt={userCard.cardData.name}
                       style={{
+                        ...getCardImageStyle(userCard.cardData.name, 'collection'),
                         width: '100%',
                         height: 'auto',
                         display: 'block'
                       }}
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
                     />
-                  ) : (
-                    <div style={{
-                      aspectRatio: '241/305',
-                      background: '#007bff',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      color: 'white',
-                      padding: '15px'
-                    }}>
-                      <h4>{userCard.cardData.name}</h4>
-                      <p>{userCard.cardData.team}</p>
-                      <p className="card-rarity">{userCard.cardData.rarity}</p>
-                    </div>
-                  )}
+                  ) : null}
+
+                  <div style={{
+                    aspectRatio: '241/305',
+                    background: '#007bff',
+                    display: cardImageUrl && cardImageUrl !== '/cards/placeholder.png' ? 'none' : 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    color: 'white',
+                    padding: '15px'
+                  }}>
+                    <h4>{userCard.cardData.name}</h4>
+                    <p>{userCard.cardData.team}</p>
+                    <p className="card-rarity">{userCard.cardData.rarity}</p>
+                  </div>
                 </div>
               );
             })}
