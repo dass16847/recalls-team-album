@@ -1,0 +1,631 @@
+.album-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+}
+
+.album-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 10px;
+}
+
+.album-header h2 {
+  margin: 0 0 10px 0;
+  font-size: 2.5em;
+}
+
+.album-header p {
+  margin: 0;
+  font-size: 1.2em;
+  opacity: 0.9;
+}
+
+.album-page {
+  background: #f8f9fa;
+  border: 3px solid #dee2e6;
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 30px;
+  min-height: 600px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+  /* ANIMATION PROPERTIES */
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: left center;
+  backface-visibility: hidden;
+}
+
+/* Background image for album pages - exact Canva dimensions */
+.album-page-with-background {
+  width: 1080px;
+  height: 1350px;
+  background-size: 1080px 1350px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #f8f9fa;
+  position: relative;
+  margin: 0 auto;
+  border: 3px solid #dee2e6;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 25px rgba(0,0,0,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+  /* ANIMATION PROPERTIES */
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: left center;
+  backface-visibility: hidden;
+}
+
+/* PAGE FLIP ANIMATIONS - NO SHINE EFFECTS */
+.album-page.flipping-next,
+.album-page-with-background.flipping-next {
+  animation: flip-page-next 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards !important;
+  transform-origin: left center !important;
+}
+
+.album-page.flipping-prev,
+.album-page-with-background.flipping-prev {
+  animation: flip-page-prev 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards !important;
+  transform-origin: left center !important;
+}
+
+@keyframes flip-page-next {
+  0% {
+    transform: scale(0.8) rotateY(0deg) !important;
+  }
+  25% {
+    transform: scale(0.8) rotateY(-45deg) !important;
+  }
+  50% {
+    transform: scale(0.8) rotateY(-90deg) !important;
+  }
+  75% {
+    transform: scale(0.8) rotateY(-135deg) !important;
+  }
+  100% {
+    transform: scale(0.8) rotateY(-180deg) !important;
+  }
+}
+
+@keyframes flip-page-prev {
+  0% {
+    transform: scale(0.8) rotateY(-180deg) !important;
+  }
+  25% {
+    transform: scale(0.8) rotateY(-135deg) !important;
+  }
+  50% {
+    transform: scale(0.8) rotateY(-90deg) !important;
+  }
+  75% {
+    transform: scale(0.8) rotateY(-45deg) !important;
+  }
+  100% {
+    transform: scale(0.8) rotateY(0deg) !important;
+  }
+}
+
+/* DISABLE ALL SHINE EFFECTS */
+.album-page::before,
+.album-page-with-background::before,
+.album-page.flipping-next::before,
+.album-page.flipping-prev::before,
+.album-page-with-background.flipping-next::before,
+.album-page-with-background.flipping-prev::before {
+  display: none !important;
+  content: none !important;
+  opacity: 0 !important;
+}
+
+/* Scale down for smaller screens */
+@media (max-width: 1200px) {
+  .album-page-with-background {
+    transform: scale(0.8);
+    transform-origin: top center;
+  }
+
+  .album-page-with-background.flipping-next,
+  .album-page-with-background.flipping-prev {
+    transform-origin: left center !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .album-page-with-background {
+    transform: scale(0.6);
+    transform-origin: top center;
+  }
+}
+
+@media (max-width: 700px) {
+  .album-page-with-background {
+    transform: scale(0.45);
+    transform-origin: top center;
+  }
+}
+
+/* Hide the title for pages with backgrounds since it's in the Canva design */
+.album-page-with-background h3 {
+  display: none;
+}
+
+/* Make card slots positioned absolutely with exact pixel positioning */
+.positioned-slots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1080px;
+  height: 1350px;
+}
+
+.positioned-card-slot {
+  border: 2px dashed transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.positioned-card-slot:hover {
+  border-color: rgba(102, 126, 234, 0.8);
+  background: rgba(102, 126, 234, 0.15);
+  box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+}
+
+.invisible-drop-zone {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border-radius: 8px;
+}
+
+/* Placed cards in positioned slots */
+.positioned-card-slot .placed-card {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #e8f5e8, #d4edda);
+  border: 3px solid #28a745;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  font-size: 0.9em;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.positioned-card-slot .placed-card h4 {
+  margin: 0 0 5px 0;
+  color: #155724;
+  font-size: 1em;
+  text-align: center;
+  font-weight: bold;
+}
+
+.positioned-card-slot .placed-card p {
+  margin: 2px 0;
+  color: #155724;
+  font-size: 0.8em;
+  text-align: center;
+}
+
+.positioned-card-slot .placed-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #28a745;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.album-page h3 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 30px;
+  color: #495057;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Cover and Closing Pages */
+.cover-page, .closing-page {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.cover-page h1 {
+  font-size: 4em;
+  margin-bottom: 20px;
+  color: #667eea;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.cover-page h2 {
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  color: #764ba2;
+}
+
+.cover-page p {
+  font-size: 1.5em;
+  color: #6c757d;
+}
+
+/* Card Grid Layouts */
+.card-grid {
+  display: grid;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Normal team pages */
+.card-grid.normal {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Special layout for REPRIR ALBUM page */
+.card-grid.mixed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.card-grid.mixed .epic-row {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+
+/* Card Slots */
+.card-slot {
+  position: relative;
+}
+
+.card-slot.vertical {
+  width: 200px;
+  height: 280px;
+}
+
+.card-slot.horizontal {
+  width: 400px;
+  height: 200px;
+  margin-top: 20px;
+}
+
+.empty-card {
+  width: 100%;
+  height: 100%;
+  border: 2px dashed rgba(173, 181, 189, 0.7);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+  backdrop-filter: blur(2px);
+}
+
+.empty-card:hover {
+  border-color: #667eea;
+  background: rgba(248, 249, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+.card-name {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #495057;
+  margin-bottom: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.drop-zone {
+  font-size: 0.9em;
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* Special styling for epic and stadium cards */
+.card-slot.epic .empty-card {
+  border-color: #ffd700;
+  background: linear-gradient(145deg, #fff9e6, #fff3cd);
+}
+
+.card-slot.epic .card-name {
+  color: #856404;
+}
+
+.card-slot.stadium .empty-card {
+  border-color: #28a745;
+  background: linear-gradient(145deg, #f1f8e9, #d4edda);
+}
+
+.card-slot.stadium .card-name {
+  color: #155724;
+}
+
+/* Enhanced Navigation with Animation Support */
+.album-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding: 20px;
+}
+
+.album-navigation button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 25px;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+  font-weight: 600;
+}
+
+.album-navigation button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.album-navigation button:hover::before {
+  left: 100%;
+}
+
+.album-navigation button:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.album-navigation button:active:not(:disabled) {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.album-navigation button:disabled {
+  background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 3px 10px rgba(108, 117, 125, 0.2);
+}
+
+.album-navigation span {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #495057;
+}
+
+/* Prevent interaction during animation */
+.album-container.animating {
+  pointer-events: none;
+}
+
+.album-container.animating .album-navigation button {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .album-container {
+    padding: 10px;
+  }
+
+  .album-page {
+    padding: 20px;
+  }
+
+  .card-grid.normal {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .card-slot.vertical {
+    width: 150px;
+    height: 210px;
+  }
+
+  .card-slot.horizontal {
+    width: 300px;
+    height: 150px;
+  }
+
+  .album-header h2 {
+    font-size: 2em;
+  }
+
+  .cover-page h1 {
+    font-size: 2.5em;
+  }
+}
+
+/* Collection Section at Bottom */
+.collection-section {
+  margin-top: 50px;
+  padding: 30px;
+  background: #f1f3f4;
+  border-radius: 15px;
+  border-top: 3px solid #667eea;
+}
+
+.collection-section h3 {
+  text-align: center;
+  color: #495057;
+  margin-bottom: 25px;
+  font-size: 1.5em;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+.collection-card {
+  background: white;
+  border: 2px solid #007bff;
+  border-radius: 10px;
+  padding: 15px;
+  cursor: grab;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.collection-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.collection-card:active {
+  cursor: grabbing;
+  opacity: 0.7;
+}
+
+.card-count {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #28a745;
+  color: white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.drag-label {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #17a2b8;
+  color: white;
+  border-radius: 8px;
+  padding: 2px 6px;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.collection-card h4 {
+  margin: 0 0 8px 0;
+  color: #007bff;
+  font-size: 1em;
+}
+
+.collection-card p {
+  margin: 4px 0;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.card-rarity {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #007bff !important;
+  font-size: 0.8em !important;
+}
+
+/* Placed Card Styling */
+.placed-card {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #e8f5e8, #d4edda);
+  border: 2px solid #28a745;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.placed-card h4 {
+  margin: 0 0 5px 0;
+  color: #155724;
+  font-size: 1em;
+  text-align: center;
+}
+
+.placed-card p {
+  margin: 2px 0;
+  color: #155724;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.placed-indicator {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #28a745;
+  color: white;
+  border-radius: 8px;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+/* Placed card with image styling */
+.placed-card-with-image {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.placed-card-with-image .placed-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #28a745;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
