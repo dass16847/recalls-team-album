@@ -7,6 +7,7 @@ import PackOpening from './components/PackOpening';
 import Album from './Album';
 import TradingPost from './TradingPost';
 import LoadingSpinner from './components/LoadingSpinner';
+import { NotificationProvider, NotificationBell } from './components/NotificationSystem';
 import './App.css';
 
 function App() {
@@ -591,8 +592,9 @@ function App() {
     return <Login onLogin={handleLogin} />;
   }
 
-  // MAIN APP
-  return (
+ // MAIN APP
+return (
+  <NotificationProvider>
     <div className="App">
       <header style={{ padding: '20px', backgroundColor: '#f8f9fa', borderBottom: '1px solid #dee2e6' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto' }}>
@@ -602,6 +604,7 @@ function App() {
             <span style={{ backgroundColor: '#28a745', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '14px' }}>
               {userPacks} packs
             </span>
+            <NotificationBell />
             <button 
               onClick={handleLogout}
               style={{ padding: '8px 16px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
@@ -1392,7 +1395,7 @@ function App() {
         </div>
       )}
     </div>
-  );
+  </NotificationProvider>
+);
 }
-
 export default App;
