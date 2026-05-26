@@ -31,17 +31,32 @@ const Album = () => {
 
   // Helper function to get card image URL with proper fallbacks
   const getCardImageUrl = (cardName) => {
-    // Special case for Marypaz Mora
-    if (cardName === 'MARYPAZ MORA') {
+    console.log('Getting image URL for:', cardName); // Debug log
+
+    // Special case for Marypaz Mora - try multiple variations
+    if (cardName === 'MARYPAZ MORA' || cardName === 'MARYPAZ CERDAS') {
+      console.log('Using special case for MARYPAZ MORA/CERDAS'); // Debug log
       return '/cards/marypaz-cerdas.png';
     }
 
     // Use existing getCardImage function
     const cardImage = getCardImage(cardName);
-    return cardImage || '/cards/placeholder.png';
+
+    // If getCardImage returns a valid image, use it
+    if (cardImage && cardImage !== '/cards/placeholder.png') {
+      console.log('Using getCardImage result:', cardImage); // Debug log
+      return cardImage;
+    }
+
+    // Try alternative naming patterns as fallback
+    const normalizedName = cardName.toLowerCase().replace(/\s+/g, '-');
+    const fallbackUrl = `/cards/${normalizedName}.png`;
+    console.log('Using fallback URL:', fallbackUrl); // Debug log
+
+    return fallbackUrl;
   };
 
-  // Helper function to get proper styling for AFZ SJO 16 card
+  // Helper function to get proper styling for cards
   const getCardImageStyle = (cardName, context = 'album') => {
     const baseStyle = {
       width: '100%',
@@ -54,13 +69,13 @@ const Album = () => {
       if (context === 'album') {
         return {
           ...baseStyle,
-          objectFit: 'contain',
+          objectFit: 'cover', // Changed from 'contain' to 'cover' to fill the slot
           transform: 'rotate(90deg)'
         };
       } else if (context === 'collection') {
         return {
           ...baseStyle,
-          objectFit: 'contain',
+          objectFit: 'cover', // Changed from 'contain' to 'cover'
           transform: 'rotate(90deg) scale(0.8)',
           transformOrigin: 'center center'
         };
@@ -579,15 +594,30 @@ const Album = () => {
                     <div className="placed-card-with-image">
                       {(() => {
                         const cardImageUrl = getCardImageUrl(placedCard.cardData.name);
-                        return cardImageUrl && cardImageUrl !== '/cards/placeholder.png' ? (
+                        console.log('Rendering card in album:', placedCard.cardData.name, 'URL:', cardImageUrl); // Debug log
+
+                        return cardImageUrl ? (
                           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
                             <img 
                               src={cardImageUrl} 
                               alt={placedCard.cardData.name}
                               style={getCardImageStyle(placedCard.cardData.name, 'album')}
                               onError={(e) => {
-                                e.target.style.display = 'none';
-                                e.target.nextSibling.style.display = 'flex';
+                                console.log('Image failed to load for:', placedCard.cardData.name, 'URL:', cardImageUrl);
+                                // Try alternative URL patterns
+                                const altUrl = `/cards/${placedCard.cardData.name.toLowerCase().replace(/\s+/g, '-')}.png`;
+                                if (e.target.src !== altUrl) {
+                                  console.log('Trying alternative URL:', altUrl);
+                                  e.target.src = altUrl;
+                                } else {
+                                  // If alternative also fails, show fallback
+                                  console.log('All image URLs failed, showing fallback');
+                                  e.target.style.display = 'none';
+                                  e.target.nextSibling.style.display = 'flex';
+                                }
+                              }}
+                              onLoad={() => {
+                                console.log('Image loaded successfully for:', placedCard.cardData.name);
                               }}
                             />
                             <div style={{
@@ -695,6 +725,7 @@ const Album = () => {
           <div className="collection-grid">
             {userCards.map((userCard) => {
               const cardImageUrl = getCardImageUrl(userCard.cardData.name);
+              console.log('Rendering card in collection:', userCard.cardData.name, 'URL:', cardImageUrl); // Debug log
 
               return (
                 <div
@@ -717,7 +748,7 @@ const Album = () => {
                   )}
                   <div className="drag-label">DRAG ME</div>
 
-                  {cardImageUrl && cardImageUrl !== '/cards/placeholder.png' ? (
+                  {cardImageUrl ? (
                     <img 
                       src={cardImageUrl} 
                       alt={userCard.cardData.name}
@@ -728,8 +759,20 @@ const Album = () => {
                         display: 'block'
                       }}
                       onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
+                        console.log('Collection image failed to load for:', userCard.cardData.name, 'URL:', cardImageUrl);
+                        // Try alternative URL
+                        const altUrl = `/cards/${userCard.cardData.name.toLowerCase().replace(/\s+/g, '-')}.png`;
+                        if (e.target.src !== altUrl) {
+                          console.log('Trying alternative collection URL:', altUrl);
+                          e.target.src = altUrl;
+                        } else {
+                          console.log('All collection image URLs failed, showing fallback');
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }
+                      }}
+                      onLoad={() => {
+                        console.log('Collection image loaded successfully for:', userCard.cardData.name);
                       }}
                     />
                   ) : null}
@@ -737,7 +780,7 @@ const Album = () => {
                   <div style={{
                     aspectRatio: '241/305',
                     background: '#007bff',
-                    display: cardImageUrl && cardImageUrl !== '/cards/placeholder.png' ? 'none' : 'flex',
+                    display: cardImageUrl ? 'none' : 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
