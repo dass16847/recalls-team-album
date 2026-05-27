@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, addDoc, deleteDoc, doc, query, where, updateDoc } from 'firebase/firestore';
 import { db, auth } from './firebase';
 import LoadingSpinner from './components/LoadingSpinner';
-import { getCardImage } from './utils/cardImages'; // ADD THIS LINE
+import { getCardImage } from './utils/cardImages';
 
 const TradingPost = () => {
   const [userCards, setUserCards] = useState([]);
@@ -26,15 +26,15 @@ const TradingPost = () => {
     loadData();
   }, []);
 
-  // Filter cards based on search term
+  // Filter cards based on search term - FIXED
   useEffect(() => {
     if (wantingCardSearch.trim() === '') {
       setFilteredAllCards(allCards);
     } else {
       const filtered = allCards.filter(card => 
-        card.name.toLowerCase().includes(wantingCardSearch.toLowerCase()) ||
-        card.team.toLowerCase().includes(wantingCardSearch.toLowerCase()) ||
-        card.rarity.toLowerCase().includes(wantingCardSearch.toLowerCase())
+        (card.name || '').toLowerCase().includes(wantingCardSearch.toLowerCase()) ||
+        (card.team || '').toLowerCase().includes(wantingCardSearch.toLowerCase()) ||
+        (card.rarity || '').toLowerCase().includes(wantingCardSearch.toLowerCase())
       );
       setFilteredAllCards(filtered);
     }
@@ -120,7 +120,7 @@ const getCardImageUrl = (cardData) => {
     };
 
     // Special handling for AFZ SJO 16 card - keep it VERTICAL in trading post
-    if (cardData.name === 'SJO 16 AFZ') {
+    if (cardData && cardData.name === 'SJO 16 AFZ') {
       // In trading post, keep it vertical (no rotation)
       return {
         ...baseStyle,
@@ -289,16 +289,16 @@ const getCardImageUrl = (cardData) => {
   return (
     <div style={{ 
       padding: '20px', 
-      backgroundColor: '#f8f9fa', 
+      background: 'linear-gradient(135deg, #f0f8ff 0%, #ffffff 50%, #e6f3ff 100%)',
       minHeight: '100vh' 
     }}>
       <div style={{ 
         textAlign: 'center', 
         marginBottom: '30px',
-        backgroundColor: '#474A4A',
+        backgroundColor: '#1e3a8a',
         padding: '30px',
         borderRadius: '15px',
-        border: '3px solid #2A398D'
+        border: '3px solid #1e3a8a'
       }}>
         <h2 style={{ 
           color: 'white', 
@@ -320,11 +320,11 @@ const getCardImageUrl = (cardData) => {
         backgroundColor: 'white',
         padding: '25px',
         borderRadius: '15px',
-        border: '3px solid #3CAC3B',
+        border: '3px solid #1e3a8a',
         boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
       }}>
         <h3 style={{ 
-          color: '#2A398D', 
+          color: '#1e3a8a', 
           marginBottom: '20px',
           fontSize: '1.8rem',
           textAlign: 'center'
@@ -333,12 +333,12 @@ const getCardImageUrl = (cardData) => {
           <div style={{
             textAlign: 'center',
             padding: '40px',
-            backgroundColor: '#D1D4D1',
+            backgroundColor: '#f0f8ff',
             borderRadius: '10px',
-            border: '2px solid #474A4A'
+            border: '2px solid #1e3a8a'
           }}>
             <p style={{ 
-              color: '#474A4A', 
+              color: '#1e3a8a', 
               fontStyle: 'italic',
               fontSize: '18px',
               fontWeight: 'bold',
@@ -358,10 +358,10 @@ const getCardImageUrl = (cardData) => {
               <div
                 key={card.id}
                 style={{
-                  border: '3px solid #3CAC3B',
+                  border: '3px solid #1e3a8a',
                   borderRadius: '12px',
                   padding: '18px',
-                  backgroundColor: '#D1D4D1',
+                  backgroundColor: '#f0f8ff',
                   boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
                   position: 'relative',
                   transition: 'transform 0.3s ease'
@@ -379,7 +379,7 @@ const getCardImageUrl = (cardData) => {
                   position: 'absolute',
                   top: '10px',
                   right: '10px',
-                  backgroundColor: '#3CAC3B',
+                  backgroundColor: '#1e3a8a',
                   color: 'white',
                   borderRadius: '50%',
                   width: '30px',
@@ -406,30 +406,30 @@ const getCardImageUrl = (cardData) => {
                   backgroundColor: 'white',
                   borderRadius: '10px',
                   overflow: 'hidden',
-                  border: '2px solid #474A4A'
+                  border: '2px solid #1e3a8a'
                 }}>
                   {getCardImageUrl(card.cardData) ? (
-  <img
-    src={getCardImageUrl(card.cardData)}
-    alt={card.cardData.name}
-    style={getCardImageStyle(card.cardData, 'collection')}
-    onError={(e) => {
-      console.log('Trading Post image failed to load for:', card.cardData.name);
-      e.target.style.display = 'none';
-      e.target.nextSibling.style.display = 'flex';
-    }}
-    onLoad={() => {
-      console.log('Trading Post image loaded successfully for:', card.cardData.name);
-    }}
-  />
-) : null}
+                    <img
+                      src={getCardImageUrl(card.cardData)}
+                      alt={card.cardData?.name || 'Card'}
+                      style={getCardImageStyle(card.cardData, 'collection')}
+                      onError={(e) => {
+                        console.log('Trading Post image failed to load for:', card.cardData?.name);
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                      onLoad={() => {
+                        console.log('Trading Post image loaded successfully for:', card.cardData?.name);
+                      }}
+                    />
+                  ) : null}
                   <div style={{
                     display: 'none',
                     alignItems: 'center',
                     justifyContent: 'center',
                     width: '100%',
                     height: '100%',
-                    backgroundColor: '#474A4A',
+                    backgroundColor: '#1e3a8a',
                     color: 'white',
                     fontSize: '14px',
                     textAlign: 'center',
@@ -437,44 +437,44 @@ const getCardImageUrl = (cardData) => {
                     fontWeight: 'bold'
                   }}>
                     <div style={{ fontSize: '24px', marginBottom: '8px' }}>🎴</div>
-                    <div>{card.cardData.name}</div>
+                    <div>{card.cardData?.name || 'Unknown Card'}</div>
                   </div>
                 </div>
 
                 <h4 style={{ 
                   margin: '0 0 10px 0', 
-                  color: '#2A398D',
+                  color: '#1e3a8a',
                   fontSize: '16px',
                   fontWeight: 'bold',
                   textAlign: 'center'
                 }}>
-                  {card.cardData.name}
+                  {card.cardData?.name || 'Unknown Card'}
                 </h4>
                 <p style={{ 
                   margin: '6px 0', 
                   fontSize: '14px', 
-                  color: '#474A4A',
+                  color: '#1e3a8a',
                   textAlign: 'center',
                   fontWeight: 'bold'
                 }}>
-                  {card.cardData.team}
+                  {card.cardData?.team || 'No Team'}
                 </p>
                 <p style={{ 
                   margin: '6px 0', 
                   fontSize: '13px', 
                   fontWeight: 'bold', 
-                  color: '#3CAC3B',
+                  color: '#1e3a8a',
                   textAlign: 'center',
-                  backgroundColor: 'rgba(60,172,59,0.1)',
+                  backgroundColor: 'rgba(30,58,138,0.1)',
                   padding: '4px 8px',
                   borderRadius: '8px'
                 }}>
-                  {card.cardData.rarity}
+                  {card.cardData?.rarity || 'Unknown'}
                 </p>
                 <p style={{ 
                   margin: '10px 0 0 0', 
                   fontSize: '13px', 
-                  color: '#E61D25',
+                  color: '#1e3a8a',
                   textAlign: 'center',
                   fontWeight: 'bold'
                 }}>
@@ -491,7 +491,7 @@ const getCardImageUrl = (cardData) => {
               onClick={() => setShowCreateTrade(!showCreateTrade)}
               style={{
                 padding: '15px 30px',
-                backgroundColor: showCreateTrade ? '#E61D25' : '#2A398D',
+                backgroundColor: showCreateTrade ? '#dc3545' : '#1e3a8a',
                 color: 'white',
                 border: 'none',
                 borderRadius: '10px',
@@ -521,11 +521,11 @@ const getCardImageUrl = (cardData) => {
         backgroundColor: 'white',
         padding: '25px',
         borderRadius: '15px',
-        border: '3px solid #2A398D',
+        border: '3px solid #1e3a8a',
         boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
       }}>
         <h3 style={{ 
-          color: '#2A398D', 
+          color: '#1e3a8a', 
           marginBottom: '20px',
           fontSize: '1.8rem',
           textAlign: 'center'
@@ -534,12 +534,12 @@ const getCardImageUrl = (cardData) => {
           <div style={{
             textAlign: 'center',
             padding: '40px',
-            backgroundColor: '#D1D4D1',
+            backgroundColor: '#f0f8ff',
             borderRadius: '10px',
-            border: '2px solid #474A4A'
+            border: '2px solid #1e3a8a'
           }}>
             <p style={{ 
-              color: '#474A4A', 
+              color: '#1e3a8a', 
               fontStyle: 'italic',
               fontSize: '18px',
               fontWeight: 'bold',
@@ -558,10 +558,10 @@ const getCardImageUrl = (cardData) => {
               <div
                 key={trade.id}
                 style={{
-                  border: '3px solid #2A398D',
+                  border: '3px solid #1e3a8a',
                   borderRadius: '12px',
                   padding: '25px',
-                  backgroundColor: '#D1D4D1',
+                  backgroundColor: '#f0f8ff',
                   boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
                   transition: 'transform 0.3s ease'
                 }}
@@ -576,14 +576,14 @@ const getCardImageUrl = (cardData) => {
               >
                 <div style={{ marginBottom: '20px', textAlign: 'center' }}>
                   <strong style={{ 
-                    color: '#2A398D', 
+                    color: '#1e3a8a', 
                     fontSize: '18px',
                     display: 'block',
                     marginBottom: '8px'
                   }}>Trade Offer</strong>
                   <p style={{ 
                     fontSize: '14px', 
-                    color: '#474A4A', 
+                    color: '#1e3a8a', 
                     margin: 0,
                     fontWeight: 'bold'
                   }}>
@@ -603,17 +603,17 @@ const getCardImageUrl = (cardData) => {
                     backgroundColor: 'white',
                     padding: '15px',
                     borderRadius: '10px',
-                    border: '2px solid #3CAC3B'
+                    border: '2px solid #22c55e'
                   }}>
                     <p style={{ 
                       fontSize: '12px', 
-                      color: '#474A4A', 
+                      color: '#1e3a8a', 
                       margin: '0 0 8px 0',
                       fontWeight: 'bold',
                       textTransform: 'uppercase'
                     }}>OFFERING</p>
                     <strong style={{ 
-                      color: '#3CAC3B',
+                      color: '#22c55e',
                       fontSize: '16px',
                       display: 'block'
                     }}>{trade.offeringCard}</strong>
@@ -621,7 +621,7 @@ const getCardImageUrl = (cardData) => {
 
                   <div style={{ 
                     fontSize: '24px',
-                    color: '#2A398D',
+                    color: '#1e3a8a',
                     fontWeight: 'bold'
                   }}>🔄</div>
 
@@ -631,17 +631,17 @@ const getCardImageUrl = (cardData) => {
                     backgroundColor: 'white',
                     padding: '15px',
                     borderRadius: '10px',
-                    border: '2px solid #E61D25'
+                    border: '2px solid #dc3545'
                   }}>
                     <p style={{ 
                       fontSize: '12px', 
-                      color: '#474A4A', 
+                      color: '#1e3a8a', 
                       margin: '0 0 8px 0',
                       fontWeight: 'bold',
                       textTransform: 'uppercase'
                     }}>WANTS</p>
                     <strong style={{ 
-                      color: '#E61D25',
+                      color: '#dc3545',
                       fontSize: '16px',
                       display: 'block'
                     }}>{trade.wantingCard}</strong>
@@ -653,7 +653,7 @@ const getCardImageUrl = (cardData) => {
                   style={{
                     width: '100%',
                     padding: '15px',
-                    backgroundColor: '#3CAC3B',
+                    backgroundColor: '#22c55e',
                     color: 'white',
                     border: 'none',
                     borderRadius: '8px',
@@ -664,12 +664,12 @@ const getCardImageUrl = (cardData) => {
                     boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#2e8b2e';
+                    e.target.style.backgroundColor = '#16a34a';
                     e.target.style.transform = 'translateY(-2px)';
                     e.target.style.boxShadow = '0 6px 16px rgba(0,0,0,0.3)';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#3CAC3B';
+                    e.target.style.backgroundColor = '#22c55e';
                     e.target.style.transform = 'translateY(0)';
                     e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
                   }}
@@ -690,7 +690,7 @@ const getCardImageUrl = (cardData) => {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(71,74,74,0.8)',
+          backgroundColor: 'rgba(30,58,138,0.8)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -704,11 +704,11 @@ const getCardImageUrl = (cardData) => {
             width: '95%',
             maxHeight: '85vh',
             overflow: 'auto',
-            border: '4px solid #2A398D',
+            border: '4px solid #1e3a8a',
             boxShadow: '0 12px 32px rgba(0,0,0,0.3)'
           }}>
             <h3 style={{ 
-              color: '#2A398D', 
+              color: '#1e3a8a', 
               textAlign: 'center',
               fontSize: '2rem',
               marginBottom: '25px'
@@ -719,7 +719,7 @@ const getCardImageUrl = (cardData) => {
                 display: 'block', 
                 marginBottom: '10px', 
                 fontWeight: 'bold',
-                color: '#474A4A',
+                color: '#1e3a8a',
                 fontSize: '16px'
               }}>
                 I'm offering:
@@ -730,18 +730,18 @@ const getCardImageUrl = (cardData) => {
                 style={{
                   width: '100%',
                   padding: '12px',
-                  border: '3px solid #3CAC3B',
+                  border: '3px solid #22c55e',
                   borderRadius: '8px',
                   fontSize: '16px',
                   backgroundColor: 'white',
-                  color: '#474A4A',
+                  color: '#1e3a8a',
                   fontWeight: 'bold'
                 }}
               >
                 <option value="">Select a card to offer...</option>
                 {userCards.map((card) => (
-                  <option key={card.id} value={card.cardData.name}>
-                    {card.cardData.name} (You have {card.count})
+                  <option key={card.id} value={card.cardData?.name || 'Unknown'}>
+                    {card.cardData?.name || 'Unknown Card'} (You have {card.count})
                   </option>
                 ))}
               </select>
@@ -752,7 +752,7 @@ const getCardImageUrl = (cardData) => {
                 display: 'block', 
                 marginBottom: '10px', 
                 fontWeight: 'bold',
-                color: '#474A4A',
+                color: '#1e3a8a',
                 fontSize: '16px'
               }}>
                 I want:
@@ -767,12 +767,12 @@ const getCardImageUrl = (cardData) => {
                 style={{
                   width: '100%',
                   padding: '12px',
-                  border: '3px solid #2A398D',
+                  border: '3px solid #1e3a8a',
                   borderRadius: '8px',
                   fontSize: '16px',
                   marginBottom: '12px',
-                  backgroundColor: '#f8f9ff',
-                  color: '#474A4A',
+                  backgroundColor: '#f0f8ff',
+                  color: '#1e3a8a',
                   fontWeight: 'bold'
                 }}
               />
@@ -784,12 +784,12 @@ const getCardImageUrl = (cardData) => {
                 style={{
                   width: '100%',
                   padding: '12px',
-                  border: '3px solid #E61D25',
+                  border: '3px solid #dc3545',
                   borderRadius: '8px',
                   fontSize: '16px',
                   maxHeight: '200px',
                   backgroundColor: 'white',
-                  color: '#474A4A',
+                  color: '#1e3a8a',
                   fontWeight: 'bold'
                 }}
                 size={Math.min(filteredAllCards.length + 1, 8)}
@@ -801,20 +801,20 @@ const getCardImageUrl = (cardData) => {
                   }
                 </option>
                 {filteredAllCards.map((card) => (
-                  <option key={card.id} value={card.name}>
-                    {card.name} ({card.team} - {card.rarity})
+                  <option key={card.id} value={card.name || 'Unknown'}>
+                    {card.name || 'Unknown'} ({card.team || 'No Team'} - {card.rarity || 'Unknown'})
                   </option>
                 ))}
               </select>
 
               {wantingCardSearch && filteredAllCards.length === 0 && (
                 <p style={{ 
-                  color: '#E61D25', 
+                  color: '#dc3545', 
                   fontSize: '14px', 
                   margin: '8px 0',
                   fontWeight: 'bold',
                   textAlign: 'center',
-                  backgroundColor: 'rgba(230,29,37,0.1)',
+                  backgroundColor: 'rgba(220,53,69,0.1)',
                   padding: '8px',
                   borderRadius: '6px'
                 }}>
@@ -824,12 +824,12 @@ const getCardImageUrl = (cardData) => {
 
               {wantingCardSearch && filteredAllCards.length > 0 && (
                 <p style={{ 
-                  color: '#3CAC3B', 
+                  color: '#22c55e', 
                   fontSize: '14px', 
                   margin: '8px 0',
                   fontWeight: 'bold',
                   textAlign: 'center',
-                  backgroundColor: 'rgba(60,172,59,0.1)',
+                  backgroundColor: 'rgba(34,197,94,0.1)',
                   padding: '8px',
                   borderRadius: '6px'
                 }}>
@@ -844,7 +844,7 @@ const getCardImageUrl = (cardData) => {
                 style={{
                   flex: 1,
                   padding: '15px',
-                  backgroundColor: '#3CAC3B',
+                  backgroundColor: '#22c55e',
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
@@ -855,11 +855,11 @@ const getCardImageUrl = (cardData) => {
                   boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#2e8b2e';
+                  e.target.style.backgroundColor = '#16a34a';
                   e.target.style.transform = 'translateY(-2px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = '#3CAC3B';
+                  e.target.style.backgroundColor = '#22c55e';
                   e.target.style.transform = 'translateY(0)';
                 }}
               >
@@ -875,7 +875,7 @@ const getCardImageUrl = (cardData) => {
                 style={{
                   flex: 1,
                   padding: '15px',
-                  backgroundColor: '#474A4A',
+                  backgroundColor: '#6b7280',
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
@@ -886,11 +886,11 @@ const getCardImageUrl = (cardData) => {
                   boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#3a3d3d';
+                  e.target.style.backgroundColor = '#4b5563';
                   e.target.style.transform = 'translateY(-2px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = '#474A4A';
+                  e.target.style.backgroundColor = '#6b7280';
                   e.target.style.transform = 'translateY(0)';
                 }}
               >
