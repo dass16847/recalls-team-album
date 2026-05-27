@@ -37,6 +37,8 @@ const Album = () => {
   const [userCards, setUserCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [selectedCards, setSelectedCards] = useState([]);
+  const [isSelectionMode, setIsSelectionMode] = useState(false);
 
   // Helper function to get card image URL with proper fallbacks
   const getCardImageUrl = (cardName) => {
@@ -350,6 +352,79 @@ const getCardImageStyle = (cardName, context = 'album') => {
       }
     } catch (error) {
       console.error('Error decreasing card count:', error);
+    }
+  };
+
+  // NEW: Helper functions for card selection
+  const toggleCardSelection = (userCardId) => {
+    setSelectedCards(prev => {
+      if (prev.includes(userCardId)) {
+        return prev.filter(id => id !== userCardId);
+      } else {
+        return [...prev, userCardId];
+      }
+    });
+  };
+
+  const selectAllCards = () => {
+    if (selectedCards.length === userCards.length) {
+      setSelectedCards([]);
+    } else {
+      setSelectedCards(userCards.map(card => card.id));
+    }
+  };
+
+  const deleteSelectedCards = async () => {
+    if (selectedCards.length === 0) {
+      alert('Please select cards to delete first.');
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete ${selectedCards.length} selected card(s)?\n\n` +
+      `This action cannot be undone!`
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      let successCount = 0;
+      let errorCount = 0;
+
+      for (const userCardId of selectedCards) {
+        try {
+          const userCard = userCards.find(card => card.id === userCardId);
+          if (userCard) {
+            const userCardRef = doc(db, 'userCollections', userCardId);
+            const userCardDoc = await getDoc(userCardRef);
+
+            if (userCardDoc.exists()) {
+              const currentCount = userCardDoc.data().count || 1;
+              const newCount = currentCount - 1;
+
+              if (newCount > 0) {
+                await updateDoc(userCardRef, { count: newCount });
+              } else {
+                await deleteDoc(userCardRef);
+              }
+              successCount++;
+            }
+          }
+        } catch (error) {
+          console.error(`Error deleting card ${userCardId}:`, error);
+          errorCount++;
+        }
+      }
+
+      // Clear selection and reload collection
+      setSelectedCards([]);
+      setIsSelectionMode(false);
+      await loadUserCollection();
+
+      alert(`✅ Successfully deleted ${successCount} card(s)!${errorCount > 0 ? ` ${errorCount} failed.` : ''}`);
+    } catch (error) {
+      console.error('Error deleting selected cards:', error);
+      alert('❌ Error deleting cards. Please try again.');
     }
   };
 
@@ -738,15 +813,97 @@ const handleDrop = async (e, slotName, pageId) => {
 
       {/* Collection Section at Bottom */}
       <div className="collection-section">
-        <h3>📚 Your Collection - Drag cards to album slots above</h3>
-        <p style={{ 
-          color: '#666', 
-          fontSize: '14px', 
-          marginBottom: '15px',
-          fontStyle: 'italic'
-        }}>
-          💡 Tip: All cards show a 🗑️ button to delete them from your collection if you don't want to keep them
-        </p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+          <h3>📚 Your Collection - Drag cards to album slots above</h3>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            {!isSelectionMode ? (
+              <button
+                onClick={() => setIsSelectionMode(true)}
+                style={{
+                  padding: '8px 16px',
+                  backgroundColor: '#007bff',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  fontSize: '14px'
+                }}
+              >
+                ☑️ Select Cards
+              </button>
+            ) : (
+              <>
+                <button
+                  onClick={selectAllCards}
+                  style={{
+                    padding: '8px 16px',
+                    backgroundColor: '#28a745',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    fontSize: '14px'
+                  }}
+                >
+                  {selectedCards.length === userCards.length ? '☐ Deselect All' : '☑️ Select All'}
+                </button>
+                <button
+                  onClick={deleteSelectedCards}
+                  disabled={selectedCards.length === 0}
+                  style={{
+                    padding: '8px 16px',
+                    backgroundColor: selectedCards.length > 0 ? '#dc3545' : '#6c757d',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: selectedCards.length > 0 ? 'pointer' : 'not-allowed',
+                    fontSize: '14px'
+                  }}
+                >
+                  🗑️ Delete Selected ({selectedCards.length})
+                </button>
+                <button
+                  onClick={() => {
+                    setIsSelectionMode(false);
+                    setSelectedCards([]);
+                  }}
+                  style={{
+                    padding: '8px 16px',
+                    backgroundColor: '#6c757d',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    fontSize: '14px'
+                  }}
+                >
+                  ❌ Cancel
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+
+        {!isSelectionMode ? (
+          <p style={{ 
+            color: '#666', 
+            fontSize: '14px', 
+            marginBottom: '15px',
+            fontStyle: 'italic'
+          }}>
+            💡 Tip: Click "Select Cards" to choose multiple cards for deletion
+          </p>
+        ) : (
+          <p style={{ 
+            color: '#007bff', 
+            fontSize: '14px', 
+            marginBottom: '15px',
+            fontStyle: 'italic',
+            fontWeight: 'bold'
+          }}>
+            ✅ Selection Mode: Click cards to select them, then use "Delete Selected" button
+          </p>
+        )}
 
         {loading ? (
           <LoadingSpinner type="pack" message="🎁 Loading your collection..." size="medium" />
@@ -779,61 +936,101 @@ const handleDrop = async (e, slotName, pageId) => {
               return (
                 <div
                   key={userCard.id}
-                  draggable={true}
+                  draggable={!isSelectionMode}
                   onDragStart={(e) => handleDragStart(e, userCard)}
                   className="collection-card"
                   style={{
                     position: 'relative',
-                    cursor: 'grab',
+                    cursor: isSelectionMode ? 'pointer' : 'grab',
                     transition: 'all 0.3s ease',
                     borderRadius: '8px',
                     overflow: 'hidden',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                    boxShadow: selectedCards.includes(userCard.id) 
+                      ? '0 4px 12px rgba(0,123,255,0.4)' 
+                      : '0 2px 8px rgba(0,0,0,0.1)',
+                    border: selectedCards.includes(userCard.id) 
+                      ? '3px solid #007bff' 
+                      : '3px solid transparent',
                     padding: '0'
                   }}
+                  onClick={isSelectionMode ? (e) => {
+                    e.stopPropagation();
+                    toggleCardSelection(userCard.id);
+                  } : undefined}
                 >
                   {userCard.count > 1 && (
                     <div className="card-count">{userCard.count}</div>
                   )}
                   <div className="drag-label">DRAG ME</div>
 
-                  {/* Delete button for all cards */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent drag from starting
-                      deleteCard(userCard.id, userCard.cardData.name, userCard.count);
-                    }}
-                    style={{
-                      position: 'absolute',
-                      top: '5px',
-                      left: '5px',
-                      backgroundColor: '#dc3545',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '50%',
-                      width: '25px',
-                      height: '25px',
-                      fontSize: '12px',
-                      cursor: 'pointer',
-                      zIndex: 10,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                      transition: 'all 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#c82333';
-                      e.target.style.transform = 'scale(1.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = '#dc3545';
-                      e.target.style.transform = 'scale(1)';
-                    }}
-                    title={`Delete ${userCard.count > 1 ? 'one copy of' : ''} ${userCard.cardData.name}`}
-                  >
-                    🗑️
-                  </button>
+                  {/* Selection checkbox or delete button */}
+                  {isSelectionMode ? (
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleCardSelection(userCard.id);
+                      }}
+                      style={{
+                        position: 'absolute',
+                        top: '5px',
+                        left: '5px',
+                        backgroundColor: selectedCards.includes(userCard.id) ? '#28a745' : 'rgba(255,255,255,0.9)',
+                        color: selectedCards.includes(userCard.id) ? 'white' : '#333',
+                        border: '2px solid #28a745',
+                        borderRadius: '4px',
+                        width: '25px',
+                        height: '25px',
+                        fontSize: '14px',
+                        cursor: 'pointer',
+                        zIndex: 10,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                        transition: 'all 0.2s ease'
+                      }}
+                      title={`${selectedCards.includes(userCard.id) ? 'Deselect' : 'Select'} ${userCard.cardData.name}`}
+                    >
+                      {selectedCards.includes(userCard.id) ? '✓' : '☐'}
+                    </div>
+                  ) : (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent drag from starting
+                        deleteCard(userCard.id, userCard.cardData.name, userCard.count);
+                      }}
+                      style={{
+                        position: 'absolute',
+                        top: '5px',
+                        left: '5px',
+                        backgroundColor: '#dc3545',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: '25px',
+                        height: '25px',
+                        fontSize: '12px',
+                        cursor: 'pointer',
+                        zIndex: 10,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                        transition: 'all 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#c82333';
+                        e.target.style.transform = 'scale(1.1)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#dc3545';
+                        e.target.style.transform = 'scale(1)';
+                      }}
+                      title={`Delete ${userCard.count > 1 ? 'one copy of' : ''} ${userCard.cardData.name}`}
+                    >
+                      🗑️
+                    </button>
+                  )}
 
                   {cardImageUrl ? (
                     <img 
