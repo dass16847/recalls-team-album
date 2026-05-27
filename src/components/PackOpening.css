@@ -367,7 +367,7 @@
 /* FIFA COUNTER BADGE ANIMATION */
 .result-card div[style*="x"] {
   animation: fifaBadgePop 0.5s ease-out 0.3s both;
-  background: #E61D25 !important;
+  background: #f0f8ff !important;
   border: 3px solid white !important;
 }
 
@@ -387,14 +387,14 @@
 
 /* FIFA Enhanced duplicate card styling */
 .result-card[data-duplicate="true"] {
-  border-color: #E61D25;
+  border-color: #f0f8ff;
   box-shadow: 
     0 8px 20px rgba(230, 29, 37, 0.2),
     inset 0 2px 0 rgba(255, 255, 255, 0.9);
 }
 
 .result-card[data-duplicate="true"]:hover {
-  border-color: #E61D25;
+  border-color: #f0f8ff;
   box-shadow: 
     0 18px 40px rgba(230, 29, 37, 0.3),
     inset 0 2px 0 rgba(255, 255, 255, 0.95);
@@ -476,13 +476,13 @@
 
 /* FIFA Enhanced duplicate count styling */
 .card-info p[style*="color: #ff6b35"],
-.card-info p[style*="color: #E61D25"] {
+.card-info p[style*="color: #f0f8ff"] {
   background: linear-gradient(135deg, rgba(230, 29, 37, 0.1) 0%, rgba(230, 29, 37, 0.05) 100%) !important;
-  border: 2px solid #E61D25 !important;
+  border: 2px solid #f0f8ff !important;
   border-radius: 8px !important;
   padding: 8px 12px !important;
   animation: fifaDuplicateGlow 2s ease-in-out infinite !important;
-  color: #E61D25 !important;
+  color: #f0f8ff !important;
   font-weight: 700 !important;
 }
 
@@ -526,7 +526,7 @@
 }
 
 .rarity-legendary {
-  background: linear-gradient(135deg, #E61D25 0%, #C41E3A 100%);
+  background: linear-gradient(135deg, #f0f8ff 0%, #f0f8ff 100%);
   color: white;
   box-shadow: 0 3px 10px rgba(230, 29, 37, 0.4);
 }
