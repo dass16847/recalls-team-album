@@ -389,8 +389,8 @@ function PackOpening({ userPacks, onPackOpened }) {
                       position: 'absolute',
                       top: '-10px',
                       right: '-10px',
-                      backgroundColor: '#ff6b35',
-                      color: 'white',
+                      backgroundColor: '#f0f8ff',
+                      color: '#1e3a8a',
                       borderRadius: '50%',
                       width: '35px',
                       height: '35px',
@@ -400,7 +400,7 @@ function PackOpening({ userPacks, onPackOpened }) {
                       fontSize: '16px',
                       fontWeight: 'bold',
                       zIndex: 20,
-                      border: '3px solid white',
+                      border: '2px solid #1e3a8a',
                       boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
                     }}>
                       x{card.count}
