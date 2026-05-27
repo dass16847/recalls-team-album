@@ -777,35 +777,53 @@ const getCardImageUrl = (cardData) => {
                 }}
               />
 
-              {/* Filtered Dropdown */}
-              <select
-                value={selectedWantingCard}
-                onChange={(e) => setSelectedWantingCard(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  border: '3px solid #dc3545',
-                  borderRadius: '8px',
-                  fontSize: '16px',
-                  maxHeight: '200px',
-                  backgroundColor: 'white',
-                  color: '#1e3a8a',
-                  fontWeight: 'bold'
-                }}
-                size={Math.min(filteredAllCards.length + 1, 8)}
-              >
-                <option value="">
-                  {wantingCardSearch ? 
-                    `Select from ${filteredAllCards.length} filtered cards...` : 
-                    'Select a card you want...'
-                  }
-                </option>
-                {filteredAllCards.map((card) => (
-                  <option key={card.id} value={card.name || 'Unknown'}>
-                    {card.name || 'Unknown'} ({card.team || 'No Team'} - {card.rarity || 'Unknown'})
-                  </option>
-                ))}
-              </select>
+{/* Filtered Dropdown */}
+<select
+  value={selectedWantingCard}
+  onChange={(e) => {
+    console.log('Selected card:', e.target.value); // Debug line
+    setSelectedWantingCard(e.target.value);
+  }}
+  style={{
+    width: '100%',
+    padding: '12px',
+    border: '3px solid #dc3545',
+    borderRadius: '8px',
+    fontSize: '16px',
+    backgroundColor: 'white',
+    color: '#1e3a8a',
+    fontWeight: 'bold',
+    cursor: 'pointer'
+  }}
+>
+  <option value="">
+    {wantingCardSearch ? 
+      `Select from ${filteredAllCards.length} filtered cards...` : 
+      'Select a card you want...'
+    }
+  </option>
+  {filteredAllCards.map((card) => (
+    <option key={card.id} value={card.name || 'Unknown'}>
+      {card.name || 'Unknown'} ({card.team || 'No Team'} - {card.rarity || 'Unknown'})
+    </option>
+  ))}
+</select>
+
+{/* Show selected card for confirmation */}
+{selectedWantingCard && (
+  <div style={{
+    marginTop: '10px',
+    padding: '10px',
+    backgroundColor: '#e6f3ff',
+    border: '2px solid #1e3a8a',
+    borderRadius: '8px',
+    textAlign: 'center'
+  }}>
+    <strong style={{ color: '#1e3a8a' }}>
+      Selected: {selectedWantingCard}
+    </strong>
+  </div>
+)}
 
               {wantingCardSearch && filteredAllCards.length === 0 && (
                 <p style={{ 
