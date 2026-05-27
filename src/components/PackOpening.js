@@ -389,7 +389,7 @@ function PackOpening({ userPacks, onPackOpened }) {
                       position: 'absolute',
                       top: '-10px',
                       right: '-10px',
-                      backgroundColor: '#f0f8ff',
+                      backgroundColor: '#ff6b35',
                       color: 'white',
                       borderRadius: '50%',
                       width: '35px',
@@ -484,7 +484,7 @@ function PackOpening({ userPacks, onPackOpened }) {
                     </span>
                     {isStacked && (
                       <p style={{ 
-                        color: '#f0f8ff', 
+                        color: '#1e3a8a', 
                         fontWeight: 'bold', 
                         fontSize: '16px',
                         margin: '10px 0 0 0',

@@ -712,7 +712,7 @@ const handleDrop = async (e, slotName, pageId) => {
   <div style={{
     width: `${calculateCompletionPercentage()}%`,
     height: '100%',
-    backgroundColor: calculateCompletionPercentage() === 100 ? '#22c55e' : '#1e3a8a',
+    backgroundColor: calculateCompletionPercentage() === 100 ? '#90ee90' : '#22c55e',
     transition: 'width 0.5s ease',
     borderRadius: '8px',
     boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
