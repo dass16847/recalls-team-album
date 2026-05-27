@@ -3,6 +3,7 @@ import { collection, getDocs, addDoc, deleteDoc, doc, query, where, updateDoc } 
 import { db, auth } from './firebase';
 import LoadingSpinner from './components/LoadingSpinner';
 import { getCardImage } from './utils/cardImages';
+import { createTradeNotification, notifyRelevantUsers } from './TradeNotifications';
 
 const TradingPost = () => {
   const [userCards, setUserCards] = useState([]);
@@ -132,93 +133,112 @@ const getCardImageUrl = (cardData) => {
     return baseStyle;
   };
 
-  const createTrade = async () => {
-    if (!selectedOfferingCard || !selectedWantingCard) {
-      alert('Please select both cards for the trade!');
+const createTrade = async () => {
+  if (!selectedOfferingCard || !selectedWantingCard) {
+    alert('Please select both cards for the trade!');
+    return;
+  }
+
+  if (selectedOfferingCard === selectedWantingCard) {
+    alert('You cannot trade a card for itself!');
+    return;
+  }
+
+  try {
+    console.log('Creating trade:', selectedOfferingCard, 'for', selectedWantingCard);
+
+    // Create the trade
+    const tradeRef = await addDoc(collection(db, 'trades'), {
+      userId: auth.currentUser.uid,
+      userEmail: auth.currentUser.email,
+      offeringCard: selectedOfferingCard,
+      wantingCard: selectedWantingCard,
+      createdAt: new Date()
+    });
+
+    console.log('Trade created with ID:', tradeRef.id);
+
+    // Notify relevant users
+    await notifyRelevantUsers({
+      id: tradeRef.id,
+      userId: auth.currentUser.uid,
+      userEmail: auth.currentUser.email,
+      offeringCard: selectedOfferingCard,
+      wantingCard: selectedWantingCard
+    });
+
+    alert('✅ Trade offer created successfully! Users who have that card have been notified.');
+    setShowCreateTrade(false);
+    setSelectedOfferingCard('');
+    setSelectedWantingCard('');
+    setWantingCardSearch('');
+    await loadAvailableTrades();
+  } catch (error) {
+    console.error('Error creating trade:', error);
+    alert('❌ Error creating trade. Please try again.');
+  }
+};
+
+const acceptTrade = async (trade) => {
+  try {
+    const currentUserId = auth.currentUser.uid;
+    const currentUserEmail = auth.currentUser.email;
+
+    // Check if current user has the card that the trade wants
+    const userCollectionQuery = query(
+      collection(db, 'userCollections'),
+      where('userId', '==', currentUserId),
+      where('cardData.name', '==', trade.wantingCard)
+    );
+
+    const userCardSnapshot = await getDocs(userCollectionQuery);
+
+    if (userCardSnapshot.empty) {
+      alert(`❌ You don't have ${trade.wantingCard} to trade!`);
       return;
     }
 
-    if (selectedOfferingCard === selectedWantingCard) {
-      alert('You cannot trade a card for itself!');
+    const userCardDoc = userCardSnapshot.docs[0];
+    const userCardData = userCardDoc.data();
+
+    if (userCardData.count < 1) {
+      alert(`❌ You don't have enough ${trade.wantingCard} cards to trade!`);
       return;
     }
 
-    try {
-      await addDoc(collection(db, 'trades'), {
-        userId: auth.currentUser.uid,
-        userEmail: auth.currentUser.email,
-        offeringCard: selectedOfferingCard,
-        wantingCard: selectedWantingCard,
-        createdAt: new Date()
-      });
+    // Execute the trade
+    await giveCardToUser(currentUserId, trade.offeringCard);
+    await giveCardToUser(trade.userId, trade.wantingCard);
+    await removeCardFromUser(currentUserId, trade.wantingCard);
+    await removeCardFromUser(trade.userId, trade.offeringCard);
+    await deleteDoc(doc(db, 'trades', trade.id));
 
-      alert('✅ Trade offer created successfully!');
-      setShowCreateTrade(false);
-      setSelectedOfferingCard('');
-      setSelectedWantingCard('');
-      setWantingCardSearch('');
-      await loadAvailableTrades();
-    } catch (error) {
-      console.error('Error creating trade:', error);
-      alert('❌ Error creating trade. Please try again.');
-    }
-  };
+    // Notify both users about the completed trade
+    await createTradeNotification(trade.userId, 'trade_completed', {
+      traderEmail: currentUserEmail,
+      receivedCard: trade.wantingCard,
+      givenCard: trade.offeringCard
+    });
 
-  const acceptTrade = async (trade) => {
-    try {
-      const currentUserId = auth.currentUser.uid;
+    await createTradeNotification(currentUserId, 'trade_completed', {
+      traderEmail: trade.userEmail,
+      receivedCard: trade.offeringCard,
+      givenCard: trade.wantingCard
+    });
 
-      // Check if current user has the card that the trade wants
-      const userCollectionQuery = query(
-        collection(db, 'userCollections'),
-        where('userId', '==', currentUserId),
-        where('cardData.name', '==', trade.wantingCard)
-      );
+    alert(`✅ Trade completed! You gave ${trade.wantingCard} and received ${trade.offeringCard}!`);
 
-      const userCardSnapshot = await getDocs(userCollectionQuery);
-
-      if (userCardSnapshot.empty) {
-        alert(`❌ You don't have ${trade.wantingCard} to trade!`);
-        return;
-      }
-
-      const userCardDoc = userCardSnapshot.docs[0];
-      const userCardData = userCardDoc.data();
-
-      if (userCardData.count < 1) {
-        alert(`❌ You don't have enough ${trade.wantingCard} cards to trade!`);
-        return;
-      }
-
-      // Execute the trade
-      // 1. Give the offering card to current user
-      await giveCardToUser(currentUserId, trade.offeringCard);
-
-      // 2. Give the wanting card to trade creator
-      await giveCardToUser(trade.userId, trade.wantingCard);
-
-      // 3. Remove one card from current user's collection
-      await removeCardFromUser(currentUserId, trade.wantingCard);
-
-      // 4. Remove one card from trade creator's collection
-      await removeCardFromUser(trade.userId, trade.offeringCard);
-
-      // 5. Delete the trade
-      await deleteDoc(doc(db, 'trades', trade.id));
-
-      alert(`✅ Trade completed! You gave ${trade.wantingCard} and received ${trade.offeringCard}!`);
-
-      // Reload data
-      const loadData = async () => {
-        await Promise.all([loadUserCollection(), loadAllCards(), loadAvailableTrades()]);
-        setLoading(false);
-      };
-      await loadData();
-    } catch (error) {
-      console.error('Error accepting trade:', error);
-      alert('❌ Error completing trade. Please try again.');
-    }
-  };
+    // Reload data
+    const loadData = async () => {
+      await Promise.all([loadUserCollection(), loadAllCards(), loadAvailableTrades()]);
+      setLoading(false);
+    };
+    await loadData();
+  } catch (error) {
+    console.error('Error accepting trade:', error);
+    alert('❌ Error completing trade. Please try again.');
+  }
+};
 
   const giveCardToUser = async (userId, cardName) => {
     try {

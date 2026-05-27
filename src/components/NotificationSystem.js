@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import { collection, query, where, onSnapshot, orderBy, limit } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import './NotificationSystem.css';
+import { collection, query, where, onSnapshot, orderBy, limit, updateDoc, doc } from 'firebase/firestore';
 
 // Create notification context
 const NotificationContext = createContext();
@@ -185,9 +186,15 @@ export const NotificationProvider = ({ children }) => {
   };
 
   const markAsRead = async (notificationId) => {
-    // We'll implement this in the next step
-    console.log('Mark as read:', notificationId);
-  };
+  try {
+    await updateDoc(doc(db, 'tradeNotifications', notificationId), {
+      read: true
+    });
+    console.log('Marked notification as read:', notificationId);
+  } catch (error) {
+    console.error('Error marking notification as read:', error);
+  }
+};
 
   const clearAllNotifications = async () => {
     // We'll implement this in the next step
