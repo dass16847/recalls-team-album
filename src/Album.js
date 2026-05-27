@@ -353,6 +353,43 @@ const getCardImageStyle = (cardName, context = 'album') => {
     }
   };
 
+  // NEW: Delete card function for duplicate management
+  const deleteCard = async (userCardId, cardName, currentCount) => {
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete one copy of "${cardName}"?\n\n` +
+      `Current count: ${currentCount}\n` +
+      `After deletion: ${currentCount - 1}\n\n` +
+      `This action cannot be undone!`
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      const userCardRef = doc(db, 'userCollections', userCardId);
+      const userCardDoc = await getDoc(userCardRef);
+
+      if (userCardDoc.exists()) {
+        const newCount = currentCount - 1;
+
+        if (newCount > 0) {
+          // Update count if more than 0 remaining
+          await updateDoc(userCardRef, { count: newCount });
+        } else {
+          // Delete the document if no cards remaining
+          await deleteDoc(userCardRef);
+        }
+
+        // Reload the collection to show updated counts
+        await loadUserCollection();
+
+        alert(`✅ Successfully deleted one copy of "${cardName}"!`);
+      }
+    } catch (error) {
+      console.error('Error deleting card:', error);
+      alert('❌ Error deleting card. Please try again.');
+    }
+  };
+
   // Completion tracking functions
   const calculateTotalSlots = () => {
     return albumPages.reduce((total, page) => {
@@ -703,6 +740,14 @@ const handleDrop = async (e, slotName, pageId) => {
       {/* Collection Section at Bottom */}
       <div className="collection-section">
         <h3>📚 Your Collection - Drag cards to album slots above</h3>
+        <p style={{ 
+          color: '#666', 
+          fontSize: '14px', 
+          marginBottom: '15px',
+          fontStyle: 'italic'
+        }}>
+          💡 Tip: Cards with duplicates show a 🗑️ button to delete extras you don't want to trade
+        </p>
 
         {loading ? (
           <LoadingSpinner type="pack" message="🎁 Loading your collection..." size="medium" />
@@ -752,6 +797,46 @@ const handleDrop = async (e, slotName, pageId) => {
                     <div className="card-count">{userCard.count}</div>
                   )}
                   <div className="drag-label">DRAG ME</div>
+
+                  {/* Delete button for duplicate cards */}
+                  {userCard.count > 1 && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent drag from starting
+                        deleteCard(userCard.id, userCard.cardData.name, userCard.count);
+                      }}
+                      style={{
+                        position: 'absolute',
+                        top: '5px',
+                        left: '5px',
+                        backgroundColor: '#dc3545',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: '25px',
+                        height: '25px',
+                        fontSize: '12px',
+                        cursor: 'pointer',
+                        zIndex: 10,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                        transition: 'all 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#c82333';
+                        e.target.style.transform = 'scale(1.1)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#dc3545';
+                        e.target.style.transform = 'scale(1)';
+                      }}
+                      title={`Delete one copy of ${userCard.cardData.name}`}
+                    >
+                      🗑️
+                    </button>
+                  )}
 
                   {cardImageUrl ? (
                     <img 
