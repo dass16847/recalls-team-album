@@ -374,6 +374,7 @@ const getCardImageStyle = (cardName, context = 'album') => {
     }
   };
 
+  // IMPROVED: Better bulk deletion with batching and progress
   const deleteSelectedCards = async () => {
     if (selectedCards.length === 0) {
       alert('Please select cards to delete first.');
@@ -388,43 +389,100 @@ const getCardImageStyle = (cardName, context = 'album') => {
     if (!confirmDelete) return;
 
     try {
+      // Show loading state
+      const deleteButton = document.querySelector('button[style*="E61D25"]') || document.querySelector('button[style*="dc3545"]');
+      if (deleteButton) {
+        deleteButton.textContent = '⏳ Deleting...';
+        deleteButton.disabled = true;
+      }
+
       let successCount = 0;
       let errorCount = 0;
 
-      for (const userCardId of selectedCards) {
-        try {
-          const userCard = userCards.find(card => card.id === userCardId);
-          if (userCard) {
+      // Process cards in smaller batches to avoid Firebase limits
+      const batchSize = 5; // Process 5 cards at a time
+      const cardBatches = [];
+
+      for (let i = 0; i < selectedCards.length; i += batchSize) {
+        cardBatches.push(selectedCards.slice(i, i + batchSize));
+      }
+
+      console.log(`Processing ${selectedCards.length} cards in ${cardBatches.length} batches`);
+
+      // Process each batch sequentially
+      for (let batchIndex = 0; batchIndex < cardBatches.length; batchIndex++) {
+        const batch = cardBatches[batchIndex];
+
+        console.log(`Processing batch ${batchIndex + 1}/${cardBatches.length} with ${batch.length} cards`);
+
+        // Update button to show progress
+        if (deleteButton) {
+          deleteButton.textContent = `⏳ Deleting... (${batchIndex + 1}/${cardBatches.length})`;
+        }
+
+        // Process current batch in parallel
+        const batchPromises = batch.map(async (userCardId) => {
+          try {
+            console.log(`Attempting to delete card: ${userCardId}`);
             const userCardRef = doc(db, 'userCollections', userCardId);
+
+            // Check if document exists before trying to delete
             const userCardDoc = await getDoc(userCardRef);
 
             if (userCardDoc.exists()) {
-              const currentCount = userCardDoc.data().count || 1;
-              const newCount = currentCount - 1;
-
-              if (newCount > 0) {
-                await updateDoc(userCardRef, { count: newCount });
-              } else {
-                await deleteDoc(userCardRef);
-              }
+              await deleteDoc(userCardRef);
+              console.log(`Successfully deleted card: ${userCardId}`);
               successCount++;
+            } else {
+              console.log(`Card ${userCardId} no longer exists`);
+              successCount++; // Count as success since it's already gone
             }
+          } catch (error) {
+            console.error(`Error deleting card ${userCardId}:`, error);
+            errorCount++;
           }
-        } catch (error) {
-          console.error(`Error deleting card ${userCardId}:`, error);
-          errorCount++;
+        });
+
+        // Wait for current batch to complete before moving to next
+        await Promise.all(batchPromises);
+
+        // Small delay between batches to avoid overwhelming Firebase
+        if (batchIndex < cardBatches.length - 1) {
+          await new Promise(resolve => setTimeout(resolve, 100));
         }
       }
+
+      console.log(`Deletion complete. Success: ${successCount}, Errors: ${errorCount}`);
 
       // Clear selection and reload collection
       setSelectedCards([]);
       setIsSelectionMode(false);
+
+      // Reload collection to reflect changes
       await loadUserCollection();
 
-      alert(`✅ Successfully deleted ${successCount} card(s)!${errorCount > 0 ? ` ${errorCount} failed.` : ''}`);
+      // Reset button
+      if (deleteButton) {
+        deleteButton.textContent = '🗑️ Delete Selected (0)';
+        deleteButton.disabled = false;
+      }
+
+      if (errorCount === 0) {
+        alert(`✅ Successfully deleted all ${successCount} selected cards!`);
+      } else {
+        alert(`⚠️ Deleted ${successCount} cards successfully. ${errorCount} failed to delete.`);
+      }
+
     } catch (error) {
-      console.error('Error deleting selected cards:', error);
+      console.error('Error in bulk deletion:', error);
       alert('❌ Error deleting cards. Please try again.');
+
+      // Reset button on error
+      const deleteButton = document.querySelector('button[style*="E61D25"]') || document.querySelector('button[style*="dc3545"]');
+      if (deleteButton) {
+        deleteButton.textContent = `🗑️ Delete Selected (${selectedCards.length})`;
+        deleteButton.disabled = false;
+      }
     }
   };
 
@@ -633,7 +691,7 @@ const handleDrop = async (e, slotName, pageId) => {
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>
                 {calculateCompletionPercentage()}% Complete
               </div>
-              <div style={{ fontSize: '14px', color: '#666' }}>
+              <div style={{ fontSize: '14px', color: 'white', fontWeight: 'bold' }}>
                 {calculateFilledSlots()} of {calculateTotalSlots()} cards
               </div>
             </div>
@@ -644,7 +702,7 @@ const handleDrop = async (e, slotName, pageId) => {
         <div style={{
           width: '100%',
           height: '20px',
-          backgroundColor: '#e9ecef',
+          backgroundColor: '#D1D4D1',
           borderRadius: '10px',
           overflow: 'hidden',
           marginBottom: '10px'
@@ -652,7 +710,7 @@ const handleDrop = async (e, slotName, pageId) => {
           <div style={{
             width: `${calculateCompletionPercentage()}%`,
             height: '100%',
-            backgroundColor: calculateCompletionPercentage() === 100 ? '#28a745' : '#007bff',
+            backgroundColor: calculateCompletionPercentage() === 100 ? '#3CAC3B' : '#2A398D',
             transition: 'width 0.5s ease',
             borderRadius: '10px'
           }}></div>
@@ -663,7 +721,8 @@ const handleDrop = async (e, slotName, pageId) => {
           {currentPageData.slots && currentPageData.slots.length > 0 && (
             <p style={{ 
               color: 'white',
-              fontWeight: 'bold'
+              fontWeight: 'bold',
+              textShadow: '1px 1px 2px rgba(0,0,0,0.7)'
             }}>
               This page: {calculatePageCompletion(currentPageData.id)}% 
               ({currentPageData.slots.filter(slot => placedCards[`${currentPageData.id}-${slot.name}`]).length}/{currentPageData.slots.length})
@@ -741,7 +800,7 @@ const handleDrop = async (e, slotName, pageId) => {
                               width: '100%',
                               height: '100%',
                               background: 'linear-gradient(145deg, #e8f5e8, #d4edda)',
-                              border: '2px solid #28a745',
+                              border: '2px solid #3CAC3B',
                               borderRadius: '8px',
                               flexDirection: 'column',
                               justifyContent: 'center',
@@ -766,7 +825,7 @@ const handleDrop = async (e, slotName, pageId) => {
                             width: '100%',
                             height: '100%',
                             background: 'linear-gradient(145deg, #e8f5e8, #d4edda)',
-                            border: '2px solid #28a745',
+                            border: '2px solid #3CAC3B',
                             borderRadius: '8px',
                             display: 'flex',
                             flexDirection: 'column',
@@ -821,12 +880,13 @@ const handleDrop = async (e, slotName, pageId) => {
                 onClick={() => setIsSelectionMode(true)}
                 style={{
                   padding: '8px 16px',
-                  backgroundColor: '#007bff',
+                  backgroundColor: '#2A398D',
                   color: 'white',
                   border: 'none',
                   borderRadius: '5px',
                   cursor: 'pointer',
-                  fontSize: '14px'
+                  fontSize: '14px',
+                  fontWeight: 'bold'
                 }}
               >
                 ☑️ Select Cards
@@ -837,12 +897,13 @@ const handleDrop = async (e, slotName, pageId) => {
                   onClick={selectAllCards}
                   style={{
                     padding: '8px 16px',
-                    backgroundColor: '#28a745',
+                    backgroundColor: '#3CAC3B',
                     color: 'white',
                     border: 'none',
                     borderRadius: '5px',
                     cursor: 'pointer',
-                    fontSize: '14px'
+                    fontSize: '14px',
+                    fontWeight: 'bold'
                   }}
                 >
                   {selectedCards.length === userCards.length ? '☐ Deselect All' : '☑️ Select All'}
@@ -852,12 +913,13 @@ const handleDrop = async (e, slotName, pageId) => {
                   disabled={selectedCards.length === 0}
                   style={{
                     padding: '8px 16px',
-                    backgroundColor: selectedCards.length > 0 ? '#dc3545' : '#6c757d',
+                    backgroundColor: selectedCards.length > 0 ? '#E61D25' : '#474A4A',
                     color: 'white',
                     border: 'none',
                     borderRadius: '5px',
                     cursor: selectedCards.length > 0 ? 'pointer' : 'not-allowed',
-                    fontSize: '14px'
+                    fontSize: '14px',
+                    fontWeight: 'bold'
                   }}
                 >
                   🗑️ Delete Selected ({selectedCards.length})
@@ -869,12 +931,13 @@ const handleDrop = async (e, slotName, pageId) => {
                   }}
                   style={{
                     padding: '8px 16px',
-                    backgroundColor: '#6c757d',
+                    backgroundColor: '#474A4A',
                     color: 'white',
                     border: 'none',
                     borderRadius: '5px',
                     cursor: 'pointer',
-                    fontSize: '14px'
+                    fontSize: '14px',
+                    fontWeight: 'bold'
                   }}
                 >
                   ❌ Cancel
@@ -895,7 +958,7 @@ const handleDrop = async (e, slotName, pageId) => {
           </p>
         ) : (
           <p style={{ 
-            color: '#007bff', 
+            color: '#2A398D', 
             fontSize: '14px', 
             marginBottom: '15px',
             fontStyle: 'italic',
@@ -916,12 +979,13 @@ const handleDrop = async (e, slotName, pageId) => {
               onClick={() => window.location.reload()} 
               style={{ 
                 padding: '10px 20px', 
-                background: '#007bff', 
+                background: '#2A398D', 
                 color: 'white', 
                 border: 'none', 
                 borderRadius: '5px',
                 cursor: 'pointer',
-                marginTop: '10px'
+                marginTop: '10px',
+                fontWeight: 'bold'
               }}
             >
               🔄 Refresh Data
@@ -946,10 +1010,10 @@ const handleDrop = async (e, slotName, pageId) => {
                     borderRadius: '8px',
                     overflow: 'hidden',
                     boxShadow: selectedCards.includes(userCard.id) 
-                      ? '0 4px 12px rgba(0,123,255,0.4)' 
+                      ? '0 4px 12px rgba(42,57,141,0.4)' 
                       : '0 2px 8px rgba(0,0,0,0.1)',
                     border: selectedCards.includes(userCard.id) 
-                      ? '3px solid #007bff' 
+                      ? '3px solid #2A398D' 
                       : '3px solid transparent',
                     padding: '0'
                   }}
@@ -974,9 +1038,9 @@ const handleDrop = async (e, slotName, pageId) => {
                         position: 'absolute',
                         top: '5px',
                         left: '5px',
-                        backgroundColor: selectedCards.includes(userCard.id) ? '#28a745' : 'rgba(255,255,255,0.9)',
+                        backgroundColor: selectedCards.includes(userCard.id) ? '#3CAC3B' : 'rgba(255,255,255,0.9)',
                         color: selectedCards.includes(userCard.id) ? 'white' : '#333',
-                        border: '2px solid #28a745',
+                        border: '2px solid #3CAC3B',
                         borderRadius: '4px',
                         width: '25px',
                         height: '25px',
@@ -1003,7 +1067,7 @@ const handleDrop = async (e, slotName, pageId) => {
                         position: 'absolute',
                         top: '5px',
                         left: '5px',
-                        backgroundColor: '#dc3545',
+                        backgroundColor: '#E61D25',
                         color: 'white',
                         border: 'none',
                         borderRadius: '50%',
@@ -1019,11 +1083,11 @@ const handleDrop = async (e, slotName, pageId) => {
                         transition: 'all 0.2s ease'
                       }}
                       onMouseEnter={(e) => {
-                        e.target.style.backgroundColor = '#c82333';
+                        e.target.style.backgroundColor = '#C41E3A';
                         e.target.style.transform = 'scale(1.1)';
                       }}
                       onMouseLeave={(e) => {
-                        e.target.style.backgroundColor = '#dc3545';
+                        e.target.style.backgroundColor = '#E61D25';
                         e.target.style.transform = 'scale(1)';
                       }}
                       title={`Delete ${userCard.count > 1 ? 'one copy of' : ''} ${userCard.cardData.name}`}
@@ -1055,7 +1119,7 @@ const handleDrop = async (e, slotName, pageId) => {
 
                   <div style={{
                     aspectRatio: '241/305',
-                    background: '#007bff',
+                    background: '#2A398D',
                     display: cardImageUrl ? 'none' : 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',

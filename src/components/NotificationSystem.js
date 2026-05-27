@@ -25,11 +25,11 @@ export const NotificationProvider = ({ children }) => {
 
     // Listen for real-time trade notifications
     const notificationsQuery = query(
-  collection(db, 'tradeNotifications'),
-  where('targetUserId', '==', auth.currentUser.uid),
-  where('read', '==', false),
-  limit(10)
-);
+      collection(db, 'tradeNotifications'),
+      where('targetUserId', '==', auth.currentUser.uid),
+      where('read', '==', false),
+      limit(10)
+    );
 
     const unsubscribe = onSnapshot(notificationsQuery, (snapshot) => {
       const newNotifications = snapshot.docs.map(doc => ({
@@ -53,26 +53,107 @@ export const NotificationProvider = ({ children }) => {
   }, []);
 
   const showToastNotification = (notification) => {
-    // Create toast notification element
+    // Create toast notification element with FIFA colors
     const toast = document.createElement('div');
     toast.className = 'trade-toast-notification';
+    toast.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #474A4A 0%, #2A398D 100%);
+      border: 3px solid #3CAC3B;
+      border-radius: 12px;
+      padding: 0;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      z-index: 10000;
+      min-width: 300px;
+      max-width: 400px;
+      animation: slideInRight 0.3s ease-out;
+    `;
+
     toast.innerHTML = `
-      <div class="toast-content">
-        <div class="toast-icon">🔔</div>
-        <div class="toast-message">
-          <strong>${notification.title}</strong>
-          <p>${notification.message}</p>
+      <div class="toast-content" style="
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        gap: 15px;
+        position: relative;
+      ">
+        <div class="toast-icon" style="
+          font-size: 24px;
+          background: #3CAC3B;
+          color: white;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 2px solid white;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        ">🔔</div>
+        <div class="toast-message" style="
+          flex: 1;
+          color: white;
+        ">
+          <strong style="
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+          ">${notification.title}</strong>
+          <p style="
+            margin: 0;
+            font-size: 14px;
+            color: #D1D4D1;
+            line-height: 1.4;
+          ">${notification.message}</p>
         </div>
-        <button class="toast-close" onclick="this.parentElement.parentElement.remove()">×</button>
+        <button class="toast-close" onclick="this.parentElement.parentElement.remove()" style="
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          background: #E61D25;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 24px;
+          height: 24px;
+          cursor: pointer;
+          font-size: 16px;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+        " onmouseover="this.style.backgroundColor='#C41E3A'; this.style.transform='scale(1.1)'" onmouseout="this.style.backgroundColor='#E61D25'; this.style.transform='scale(1)'">×</button>
       </div>
     `;
+
+    // Add CSS animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+    `;
+    document.head.appendChild(style);
 
     document.body.appendChild(toast);
 
     // Auto remove after 5 seconds
     setTimeout(() => {
       if (toast.parentElement) {
-        toast.remove();
+        toast.style.animation = 'slideInRight 0.3s ease-out reverse';
+        setTimeout(() => toast.remove(), 300);
       }
     }, 5000);
 
@@ -131,46 +212,287 @@ export const NotificationBell = () => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <div className="notification-bell-container">
+    <div style={{ position: 'relative', display: 'inline-block' }}>
       <button 
-        className="notification-bell"
         onClick={() => setShowDropdown(!showDropdown)}
+        style={{
+          background: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+          position: 'relative',
+          padding: '8px',
+          borderRadius: '8px',
+          transition: 'all 0.3s ease',
+          fontSize: '24px',
+          color: 'white',
+          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
+        }}
+        onMouseEnter={(e) => {
+          e.target.style.backgroundColor = 'rgba(255,255,255,0.1)';
+          e.target.style.transform = 'scale(1.1)';
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.backgroundColor = 'transparent';
+          e.target.style.transform = 'scale(1)';
+        }}
       >
         🔔
         {unreadCount > 0 && (
-          <span className="notification-badge">{unreadCount}</span>
+          <span style={{
+            position: 'absolute',
+            top: '2px',
+            right: '2px',
+            background: '#E61D25',
+            color: 'white',
+            borderRadius: '50%',
+            width: '20px',
+            height: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '12px',
+            fontWeight: 'bold',
+            border: '2px solid white',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            animation: unreadCount > 0 ? 'pulse 2s infinite' : 'none'
+          }}>
+            {unreadCount > 99 ? '99+' : unreadCount}
+          </span>
         )}
       </button>
 
       {showDropdown && (
-        <div className="notification-dropdown">
-          <div className="notification-header">
-            <h4>Trade Notifications</h4>
-            <button 
-              className="close-dropdown"
-              onClick={() => setShowDropdown(false)}
-            >
-              ×
-            </button>
-          </div>
+        <>
+          {/* Backdrop */}
+          <div 
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              zIndex: 999
+            }}
+            onClick={() => setShowDropdown(false)}
+          />
 
-          <div className="notification-list">
-            {notifications.length === 0 ? (
-              <p className="no-notifications">No new notifications</p>
-            ) : (
-              notifications.map(notification => (
-                <div key={notification.id} className="notification-item">
-                  <div className="notification-content">
-                    <strong>{notification.title}</strong>
-                    <p>{notification.message}</p>
-                    <small>{new Date(notification.createdAt?.toDate()).toLocaleString()}</small>
-                  </div>
+          {/* Dropdown */}
+          <div style={{
+            position: 'absolute',
+            top: '100%',
+            right: 0,
+            marginTop: '8px',
+            background: 'white',
+            border: '3px solid #2A398D',
+            borderRadius: '12px',
+            boxShadow: '0 12px 32px rgba(0,0,0,0.3)',
+            minWidth: '320px',
+            maxWidth: '400px',
+            zIndex: 1000,
+            animation: 'dropdownSlide 0.2s ease-out'
+          }}>
+            {/* Header */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '20px',
+              backgroundColor: '#474A4A',
+              borderRadius: '8px 8px 0 0',
+              borderBottom: '2px solid #2A398D'
+            }}>
+              <h4 style={{ 
+                margin: 0, 
+                color: 'white',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+              }}>🔔 Trade Notifications</h4>
+              <button 
+                onClick={() => setShowDropdown(false)}
+                style={{
+                  background: '#E61D25',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '28px',
+                  height: '28px',
+                  cursor: 'pointer',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#C41E3A';
+                  e.target.style.transform = 'scale(1.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = '#E61D25';
+                  e.target.style.transform = 'scale(1)';
+                }}
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Notification List */}
+            <div style={{
+              maxHeight: '400px',
+              overflowY: 'auto',
+              padding: notifications.length === 0 ? '40px 20px' : '0'
+            }}>
+              {notifications.length === 0 ? (
+                <div style={{ 
+                  textAlign: 'center',
+                  color: '#474A4A'
+                }}>
+                  <div style={{ 
+                    fontSize: '48px', 
+                    marginBottom: '15px',
+                    opacity: 0.5
+                  }}>🔕</div>
+                  <p style={{ 
+                    margin: 0,
+                    fontSize: '16px',
+                    fontWeight: 'bold'
+                  }}>No new notifications</p>
+                  <p style={{ 
+                    margin: '8px 0 0 0',
+                    fontSize: '14px',
+                    opacity: 0.7
+                  }}>You're all caught up!</p>
                 </div>
-              ))
+              ) : (
+                notifications.map((notification, index) => (
+                  <div key={notification.id} style={{
+                    padding: '20px',
+                    borderBottom: index < notifications.length - 1 ? '1px solid #D1D4D1' : 'none',
+                    backgroundColor: 'white',
+                    transition: 'background-color 0.2s ease',
+                    cursor: 'pointer'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f8f9fa';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'white';
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '12px'
+                    }}>
+                      <div style={{
+                        backgroundColor: '#3CAC3B',
+                        color: 'white',
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '16px',
+                        flexShrink: 0,
+                        border: '2px solid white',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                      }}>
+                        🔄
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <strong style={{ 
+                          display: 'block',
+                          color: '#2A398D',
+                          fontSize: '16px',
+                          marginBottom: '5px',
+                          fontWeight: 'bold'
+                        }}>{notification.title}</strong>
+                        <p style={{ 
+                          margin: '0 0 8px 0',
+                          color: '#474A4A',
+                          fontSize: '14px',
+                          lineHeight: '1.4'
+                        }}>{notification.message}</p>
+                        <small style={{ 
+                          color: '#666',
+                          fontSize: '12px',
+                          fontStyle: 'italic'
+                        }}>
+                          {notification.createdAt?.toDate ? 
+                            new Date(notification.createdAt.toDate()).toLocaleString() : 
+                            'Just now'
+                          }
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Footer (if there are notifications) */}
+            {notifications.length > 0 && (
+              <div style={{
+                padding: '15px 20px',
+                backgroundColor: '#D1D4D1',
+                borderRadius: '0 0 8px 8px',
+                borderTop: '1px solid #474A4A',
+                textAlign: 'center'
+              }}>
+                <button style={{
+                  background: '#2A398D',
+                  color: 'white',
+                  border: 'none',
+                  padding: '8px 16px',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#1e2a6b';
+                  e.target.style.transform = 'translateY(-1px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = '#2A398D';
+                  e.target.style.transform = 'translateY(0)';
+                }}>
+                  Mark All as Read
+                </button>
+              </div>
             )}
           </div>
-        </div>
+        </>
       )}
+
+      {/* Add CSS animations */}
+      <style jsx>{`
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+
+        @keyframes dropdownSlide {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </div>
   );
 };

@@ -287,52 +287,110 @@ const getCardImageUrl = (cardData) => {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-        <h2>🔄 Trading Post</h2>
-        <p>Trade your duplicate cards with other collectors!</p>
+    <div style={{ 
+      padding: '20px', 
+      backgroundColor: '#f8f9fa', 
+      minHeight: '100vh' 
+    }}>
+      <div style={{ 
+        textAlign: 'center', 
+        marginBottom: '30px',
+        backgroundColor: '#474A4A',
+        padding: '30px',
+        borderRadius: '15px',
+        border: '3px solid #2A398D'
+      }}>
+        <h2 style={{ 
+          color: 'white', 
+          margin: '0 0 10px 0',
+          fontSize: '2.5rem',
+          textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+        }}>🔄 Trading Post</h2>
+        <p style={{ 
+          color: 'white', 
+          margin: 0,
+          fontSize: '1.2rem',
+          fontWeight: 'bold'
+        }}>Trade your duplicate cards with other collectors!</p>
       </div>
 
       {/* User's Available Cards for Trading */}
-      <div style={{ marginBottom: '40px' }}>
-        <h3>📦 Your Duplicate Cards (Available for Trading)</h3>
+      <div style={{ 
+        marginBottom: '40px',
+        backgroundColor: 'white',
+        padding: '25px',
+        borderRadius: '15px',
+        border: '3px solid #3CAC3B',
+        boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
+      }}>
+        <h3 style={{ 
+          color: '#2A398D', 
+          marginBottom: '20px',
+          fontSize: '1.8rem',
+          textAlign: 'center'
+        }}>📦 Your Duplicate Cards (Available for Trading)</h3>
         {userCards.length === 0 ? (
-          <p style={{ color: '#666', fontStyle: 'italic' }}>
-            You don't have any duplicate cards to trade yet. Open more packs to get duplicates!
-          </p>
+          <div style={{
+            textAlign: 'center',
+            padding: '40px',
+            backgroundColor: '#D1D4D1',
+            borderRadius: '10px',
+            border: '2px solid #474A4A'
+          }}>
+            <p style={{ 
+              color: '#474A4A', 
+              fontStyle: 'italic',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              margin: 0
+            }}>
+              You don't have any duplicate cards to trade yet. Open more packs to get duplicates!
+            </p>
+          </div>
         ) : (
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', 
-            gap: '15px',
-            marginBottom: '20px'
+            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', 
+            gap: '20px',
+            marginBottom: '25px'
           }}>
             {userCards.map((card) => (
               <div
                 key={card.id}
                 style={{
-                  border: '2px solid #28a745',
-                  borderRadius: '10px',
-                  padding: '15px',
-                  backgroundColor: 'white',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                  position: 'relative'
+                  border: '3px solid #3CAC3B',
+                  borderRadius: '12px',
+                  padding: '18px',
+                  backgroundColor: '#D1D4D1',
+                  boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+                  position: 'relative',
+                  transition: 'transform 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-5px)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
                 }}
               >
                 <div style={{
                   position: 'absolute',
-                  top: '8px',
-                  right: '8px',
-                  backgroundColor: '#28a745',
+                  top: '10px',
+                  right: '10px',
+                  backgroundColor: '#3CAC3B',
                   color: 'white',
                   borderRadius: '50%',
-                  width: '25px',
-                  height: '25px',
+                  width: '30px',
+                  height: '30px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '12px',
-                  fontWeight: 'bold'
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  border: '2px solid white',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
                 }}>
                   {card.count}
                 </div>
@@ -340,14 +398,15 @@ const getCardImageUrl = (cardData) => {
                 {/* Fixed Card Image Display */}
                 <div style={{ 
                   width: '100%', 
-                  height: '120px', 
-                  marginBottom: '10px',
+                  height: '140px', 
+                  marginBottom: '15px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: '#f8f9fa',
-                  borderRadius: '8px',
-                  overflow: 'hidden'
+                  backgroundColor: 'white',
+                  borderRadius: '10px',
+                  overflow: 'hidden',
+                  border: '2px solid #474A4A'
                 }}>
                   {getCardImageUrl(card.cardData) ? (
   <img
@@ -370,27 +429,55 @@ const getCardImageUrl = (cardData) => {
                     justifyContent: 'center',
                     width: '100%',
                     height: '100%',
-                    backgroundColor: '#e9ecef',
-                    color: '#6c757d',
-                    fontSize: '12px',
+                    backgroundColor: '#474A4A',
+                    color: 'white',
+                    fontSize: '14px',
                     textAlign: 'center',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    fontWeight: 'bold'
                   }}>
-                    <div>🎴</div>
+                    <div style={{ fontSize: '24px', marginBottom: '8px' }}>🎴</div>
                     <div>{card.cardData.name}</div>
                   </div>
                 </div>
 
-                <h4 style={{ margin: '0 0 8px 0', color: '#28a745' }}>
+                <h4 style={{ 
+                  margin: '0 0 10px 0', 
+                  color: '#2A398D',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  textAlign: 'center'
+                }}>
                   {card.cardData.name}
                 </h4>
-                <p style={{ margin: '4px 0', fontSize: '14px', color: '#666' }}>
+                <p style={{ 
+                  margin: '6px 0', 
+                  fontSize: '14px', 
+                  color: '#474A4A',
+                  textAlign: 'center',
+                  fontWeight: 'bold'
+                }}>
                   {card.cardData.team}
                 </p>
-                <p style={{ margin: '4px 0', fontSize: '12px', fontWeight: 'bold', color: '#28a745' }}>
+                <p style={{ 
+                  margin: '6px 0', 
+                  fontSize: '13px', 
+                  fontWeight: 'bold', 
+                  color: '#3CAC3B',
+                  textAlign: 'center',
+                  backgroundColor: 'rgba(60,172,59,0.1)',
+                  padding: '4px 8px',
+                  borderRadius: '8px'
+                }}>
                   {card.cardData.rarity}
                 </p>
-                <p style={{ margin: '8px 0 0 0', fontSize: '12px', color: '#28a745' }}>
+                <p style={{ 
+                  margin: '10px 0 0 0', 
+                  fontSize: '13px', 
+                  color: '#E61D25',
+                  textAlign: 'center',
+                  fontWeight: 'bold'
+                }}>
                   {card.count - 1} available for trade
                 </p>
               </div>
@@ -399,66 +486,165 @@ const getCardImageUrl = (cardData) => {
         )}
 
         {userCards.length > 0 && (
-          <button
-            onClick={() => setShowCreateTrade(!showCreateTrade)}
-            style={{
-              padding: '12px 24px',
-              backgroundColor: '#007bff',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: 'bold'
-            }}
-          >
-            {showCreateTrade ? '❌ Cancel' : '➕ Create New Trade'}
-          </button>
+          <div style={{ textAlign: 'center' }}>
+            <button
+              onClick={() => setShowCreateTrade(!showCreateTrade)}
+              style={{
+                padding: '15px 30px',
+                backgroundColor: showCreateTrade ? '#E61D25' : '#2A398D',
+                color: 'white',
+                border: 'none',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 6px 16px rgba(0,0,0,0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+              }}
+            >
+              {showCreateTrade ? '❌ Cancel' : '➕ Create New Trade'}
+            </button>
+          </div>
         )}
       </div>
 
       {/* Available Trades from Other Users */}
-      <div>
-        <h3>🛒 Available Trades from Other Collectors</h3>
+      <div style={{
+        backgroundColor: 'white',
+        padding: '25px',
+        borderRadius: '15px',
+        border: '3px solid #2A398D',
+        boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
+      }}>
+        <h3 style={{ 
+          color: '#2A398D', 
+          marginBottom: '20px',
+          fontSize: '1.8rem',
+          textAlign: 'center'
+        }}>🛒 Available Trades from Other Collectors</h3>
         {availableTrades.length === 0 ? (
-          <p style={{ color: '#666', fontStyle: 'italic' }}>
-            No trades available right now. Be the first to post a trade!
-          </p>
+          <div style={{
+            textAlign: 'center',
+            padding: '40px',
+            backgroundColor: '#D1D4D1',
+            borderRadius: '10px',
+            border: '2px solid #474A4A'
+          }}>
+            <p style={{ 
+              color: '#474A4A', 
+              fontStyle: 'italic',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              margin: 0
+            }}>
+              No trades available right now. Be the first to post a trade!
+            </p>
+          </div>
         ) : (
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
-            gap: '20px' 
+            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', 
+            gap: '25px' 
           }}>
             {availableTrades.map((trade) => (
               <div
                 key={trade.id}
                 style={{
-                  border: '2px solid #17a2b8',
-                  borderRadius: '10px',
-                  padding: '20px',
-                  backgroundColor: 'white',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                  border: '3px solid #2A398D',
+                  borderRadius: '12px',
+                  padding: '25px',
+                  backgroundColor: '#D1D4D1',
+                  boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+                  transition: 'transform 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-5px)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
                 }}
               >
-                <div style={{ marginBottom: '15px' }}>
-                  <strong style={{ color: '#17a2b8' }}>Trade Offer</strong>
-                  <p style={{ fontSize: '12px', color: '#666', margin: '4px 0' }}>
+                <div style={{ marginBottom: '20px', textAlign: 'center' }}>
+                  <strong style={{ 
+                    color: '#2A398D', 
+                    fontSize: '18px',
+                    display: 'block',
+                    marginBottom: '8px'
+                  }}>Trade Offer</strong>
+                  <p style={{ 
+                    fontSize: '14px', 
+                    color: '#474A4A', 
+                    margin: 0,
+                    fontWeight: 'bold'
+                  }}>
                     by {trade.userEmail}
                   </p>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                  <div style={{ flex: 1, textAlign: 'center' }}>
-                    <p style={{ fontSize: '12px', color: '#666', margin: '0 0 4px 0' }}>OFFERING</p>
-                    <strong style={{ color: '#28a745' }}>{trade.offeringCard}</strong>
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '20px',
+                  marginBottom: '20px'
+                }}>
+                  <div style={{ 
+                    flex: 1, 
+                    textAlign: 'center',
+                    backgroundColor: 'white',
+                    padding: '15px',
+                    borderRadius: '10px',
+                    border: '2px solid #3CAC3B'
+                  }}>
+                    <p style={{ 
+                      fontSize: '12px', 
+                      color: '#474A4A', 
+                      margin: '0 0 8px 0',
+                      fontWeight: 'bold',
+                      textTransform: 'uppercase'
+                    }}>OFFERING</p>
+                    <strong style={{ 
+                      color: '#3CAC3B',
+                      fontSize: '16px',
+                      display: 'block'
+                    }}>{trade.offeringCard}</strong>
                   </div>
 
-                  <div style={{ fontSize: '20px' }}>🔄</div>
+                  <div style={{ 
+                    fontSize: '24px',
+                    color: '#2A398D',
+                    fontWeight: 'bold'
+                  }}>🔄</div>
 
-                  <div style={{ flex: 1, textAlign: 'center' }}>
-                    <p style={{ fontSize: '12px', color: '#666', margin: '0 0 4px 0' }}>WANTS</p>
-                    <strong style={{ color: '#dc3545' }}>{trade.wantingCard}</strong>
+                  <div style={{ 
+                    flex: 1, 
+                    textAlign: 'center',
+                    backgroundColor: 'white',
+                    padding: '15px',
+                    borderRadius: '10px',
+                    border: '2px solid #E61D25'
+                  }}>
+                    <p style={{ 
+                      fontSize: '12px', 
+                      color: '#474A4A', 
+                      margin: '0 0 8px 0',
+                      fontWeight: 'bold',
+                      textTransform: 'uppercase'
+                    }}>WANTS</p>
+                    <strong style={{ 
+                      color: '#E61D25',
+                      fontSize: '16px',
+                      display: 'block'
+                    }}>{trade.wantingCard}</strong>
                   </div>
                 </div>
 
@@ -466,14 +652,26 @@ const getCardImageUrl = (cardData) => {
                   onClick={() => acceptTrade(trade)}
                   style={{
                     width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#28a745',
+                    padding: '15px',
+                    backgroundColor: '#3CAC3B',
                     color: 'white',
                     border: 'none',
-                    borderRadius: '6px',
+                    borderRadius: '8px',
                     cursor: 'pointer',
-                    marginTop: '15px',
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
+                    fontSize: '16px',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = '#2e8b2e';
+                    e.target.style.transform = 'translateY(-2px)';
+                    e.target.style.boxShadow = '0 6px 16px rgba(0,0,0,0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = '#3CAC3B';
+                    e.target.style.transform = 'translateY(0)';
+                    e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
                   }}
                 >
                   ✅ Accept Trade
@@ -492,7 +690,7 @@ const getCardImageUrl = (cardData) => {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0,0,0,0.5)',
+          backgroundColor: 'rgba(71,74,74,0.8)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -500,17 +698,30 @@ const getCardImageUrl = (cardData) => {
         }}>
           <div style={{
             backgroundColor: 'white',
-            padding: '30px',
-            borderRadius: '15px',
-            maxWidth: '600px',
-            width: '90%',
-            maxHeight: '80vh',
-            overflow: 'auto'
+            padding: '35px',
+            borderRadius: '20px',
+            maxWidth: '650px',
+            width: '95%',
+            maxHeight: '85vh',
+            overflow: 'auto',
+            border: '4px solid #2A398D',
+            boxShadow: '0 12px 32px rgba(0,0,0,0.3)'
           }}>
-            <h3>Create New Trade</h3>
+            <h3 style={{ 
+              color: '#2A398D', 
+              textAlign: 'center',
+              fontSize: '2rem',
+              marginBottom: '25px'
+            }}>Create New Trade</h3>
 
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
+            <div style={{ marginBottom: '25px' }}>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '10px', 
+                fontWeight: 'bold',
+                color: '#474A4A',
+                fontSize: '16px'
+              }}>
                 I'm offering:
               </label>
               <select
@@ -518,10 +729,13 @@ const getCardImageUrl = (cardData) => {
                 onChange={(e) => setSelectedOfferingCard(e.target.value)}
                 style={{
                   width: '100%',
-                  padding: '10px',
-                  border: '1px solid #ddd',
-                  borderRadius: '6px',
-                  fontSize: '14px'
+                  padding: '12px',
+                  border: '3px solid #3CAC3B',
+                  borderRadius: '8px',
+                  fontSize: '16px',
+                  backgroundColor: 'white',
+                  color: '#474A4A',
+                  fontWeight: 'bold'
                 }}
               >
                 <option value="">Select a card to offer...</option>
@@ -533,8 +747,14 @@ const getCardImageUrl = (cardData) => {
               </select>
             </div>
 
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
+            <div style={{ marginBottom: '25px' }}>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '10px', 
+                fontWeight: 'bold',
+                color: '#474A4A',
+                fontSize: '16px'
+              }}>
                 I want:
               </label>
 
@@ -546,12 +766,14 @@ const getCardImageUrl = (cardData) => {
                 onChange={(e) => setWantingCardSearch(e.target.value)}
                 style={{
                   width: '100%',
-                  padding: '10px',
-                  border: '1px solid #007bff',
-                  borderRadius: '6px',
-                  fontSize: '14px',
-                  marginBottom: '10px',
-                  backgroundColor: '#f8f9ff'
+                  padding: '12px',
+                  border: '3px solid #2A398D',
+                  borderRadius: '8px',
+                  fontSize: '16px',
+                  marginBottom: '12px',
+                  backgroundColor: '#f8f9ff',
+                  color: '#474A4A',
+                  fontWeight: 'bold'
                 }}
               />
 
@@ -561,11 +783,14 @@ const getCardImageUrl = (cardData) => {
                 onChange={(e) => setSelectedWantingCard(e.target.value)}
                 style={{
                   width: '100%',
-                  padding: '10px',
-                  border: '1px solid #ddd',
-                  borderRadius: '6px',
-                  fontSize: '14px',
-                  maxHeight: '200px'
+                  padding: '12px',
+                  border: '3px solid #E61D25',
+                  borderRadius: '8px',
+                  fontSize: '16px',
+                  maxHeight: '200px',
+                  backgroundColor: 'white',
+                  color: '#474A4A',
+                  fontWeight: 'bold'
                 }}
                 size={Math.min(filteredAllCards.length + 1, 8)}
               >
@@ -583,30 +808,59 @@ const getCardImageUrl = (cardData) => {
               </select>
 
               {wantingCardSearch && filteredAllCards.length === 0 && (
-                <p style={{ color: '#dc3545', fontSize: '12px', margin: '5px 0' }}>
+                <p style={{ 
+                  color: '#E61D25', 
+                  fontSize: '14px', 
+                  margin: '8px 0',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  backgroundColor: 'rgba(230,29,37,0.1)',
+                  padding: '8px',
+                  borderRadius: '6px'
+                }}>
                   No cards found matching "{wantingCardSearch}"
                 </p>
               )}
 
               {wantingCardSearch && filteredAllCards.length > 0 && (
-                <p style={{ color: '#28a745', fontSize: '12px', margin: '5px 0' }}>
+                <p style={{ 
+                  color: '#3CAC3B', 
+                  fontSize: '14px', 
+                  margin: '8px 0',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  backgroundColor: 'rgba(60,172,59,0.1)',
+                  padding: '8px',
+                  borderRadius: '6px'
+                }}>
                   Found {filteredAllCards.length} card(s) matching "{wantingCardSearch}"
                 </p>
               )}
             </div>
 
-            <div style={{ display: 'flex', gap: '10px' }}>
+            <div style={{ display: 'flex', gap: '15px' }}>
               <button
                 onClick={createTrade}
                 style={{
                   flex: 1,
-                  padding: '12px',
-                  backgroundColor: '#28a745',
+                  padding: '15px',
+                  backgroundColor: '#3CAC3B',
                   color: 'white',
                   border: 'none',
-                  borderRadius: '6px',
+                  borderRadius: '8px',
                   cursor: 'pointer',
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#2e8b2e';
+                  e.target.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = '#3CAC3B';
+                  e.target.style.transform = 'translateY(0)';
                 }}
               >
                 ✅ Create Trade
@@ -620,12 +874,24 @@ const getCardImageUrl = (cardData) => {
                 }}
                 style={{
                   flex: 1,
-                  padding: '12px',
-                  backgroundColor: '#6c757d',
+                  padding: '15px',
+                  backgroundColor: '#474A4A',
                   color: 'white',
                   border: 'none',
-                  borderRadius: '6px',
-                  cursor: 'pointer'
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#3a3d3d';
+                  e.target.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = '#474A4A';
+                  e.target.style.transform = 'translateY(0)';
                 }}
               >
                 ❌ Cancel

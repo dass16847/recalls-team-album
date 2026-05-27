@@ -139,22 +139,50 @@ setTimeout(() => {
   };
 
   return (
-    <div className="pack-opening-container">
-      <div className="pack-opening-header">
-        <h2>🎁 Pack Opening</h2>
+    <div className="pack-opening-container" style={{ backgroundColor: '#f8f9fa', minHeight: '100vh', padding: '20px' }}>
+      <div className="pack-opening-header" style={{ 
+        textAlign: 'center', 
+        marginBottom: '30px',
+        padding: '20px',
+        backgroundColor: '#474A4A',
+        borderRadius: '15px',
+        border: '3px solid #2A398D'
+      }}>
+        <h2 style={{ color: 'white', margin: '0 0 15px 0', fontSize: '2.5rem' }}>🎁 Pack Opening</h2>
         <div className="pack-count-display">
-          <h3>You have {userPacks} packs available</h3>
+          <h3 style={{ 
+            color: 'white', 
+            margin: 0,
+            fontSize: '1.5rem',
+            textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+          }}>
+            You have <span style={{ 
+              color: '#3CAC3B', 
+              fontWeight: 'bold',
+              backgroundColor: 'rgba(255,255,255,0.2)',
+              padding: '5px 10px',
+              borderRadius: '8px'
+            }}>{userPacks}</span> packs available
+          </h3>
         </div>
       </div>
 
       {!isOpening && !showCards && (
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ marginBottom: '20px' }}>
+        <div style={{ 
+          textAlign: 'center',
+          backgroundColor: 'white',
+          padding: '40px',
+          borderRadius: '15px',
+          border: '3px solid #2A398D',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
+        }}>
+          <div style={{ marginBottom: '30px' }}>
             <label style={{ 
               display: 'block', 
-              marginBottom: '10px', 
-              fontSize: '18px', 
-              fontWeight: 'bold' 
+              marginBottom: '15px', 
+              fontSize: '20px', 
+              fontWeight: 'bold',
+              color: '#474A4A'
             }}>
               How many packs do you want to open?
             </label>
@@ -162,13 +190,16 @@ setTimeout(() => {
               value={packQuantity}
               onChange={(e) => setPackQuantity(parseInt(e.target.value))}
               style={{
-                padding: '10px 15px',
-                fontSize: '16px',
-                borderRadius: '8px',
-                border: '2px solid #007bff',
+                padding: '15px 20px',
+                fontSize: '18px',
+                borderRadius: '10px',
+                border: '3px solid #2A398D',
                 backgroundColor: 'white',
                 cursor: 'pointer',
-                marginBottom: '15px'
+                marginBottom: '20px',
+                color: '#474A4A',
+                fontWeight: 'bold',
+                minWidth: '200px'
               }}
             >
               {[1, 2, 3, 4, 5].map(num => (
@@ -181,7 +212,33 @@ setTimeout(() => {
           <button
             onClick={openPack}
             disabled={userPacks <= 0 || packQuantity > userPacks}
-            className="open-pack-button"
+            style={{
+              padding: '20px 40px',
+              fontSize: '20px',
+              fontWeight: 'bold',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: userPacks > 0 && packQuantity <= userPacks ? 'pointer' : 'not-allowed',
+              backgroundColor: userPacks > 0 && packQuantity <= userPacks ? '#2A398D' : '#474A4A',
+              color: 'white',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+              transform: 'translateY(0)',
+            }}
+            onMouseEnter={(e) => {
+              if (userPacks > 0 && packQuantity <= userPacks) {
+                e.target.style.backgroundColor = '#1e2a6b';
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 6px 16px rgba(0,0,0,0.3)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (userPacks > 0 && packQuantity <= userPacks) {
+                e.target.style.backgroundColor = '#2A398D';
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+              }
+            }}
           >
             {userPacks > 0 ? `🎁 Open ${packQuantity} Pack${packQuantity > 1 ? 's' : ''}!` : 'No Packs Available'}
           </button>
@@ -189,38 +246,93 @@ setTimeout(() => {
       )}
 
       {isOpening && (
-        <div className="opening-animation">
-          <h3>✨ Opening {packQuantity} pack{packQuantity > 1 ? 's' : ''}...</h3>
-          <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '20px' }}>
+        <div className="opening-animation" style={{
+          textAlign: 'center',
+          backgroundColor: 'white',
+          padding: '60px 40px',
+          borderRadius: '15px',
+          border: '3px solid #3CAC3B',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
+        }}>
+          <h3 style={{ 
+            color: '#2A398D', 
+            fontSize: '2rem', 
+            marginBottom: '30px',
+            textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+          }}>
+            ✨ Opening {packQuantity} pack{packQuantity > 1 ? 's' : ''}...
+          </h3>
+          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '30px' }}>
             {Array.from({ length: Math.min(packQuantity, 5) }, (_, i) => (
               <div 
                 key={i} 
                 className="pack-icon" 
                 style={{ 
                   animationDelay: `${i * 0.2}s`,
-                  fontSize: '3rem'
+                  fontSize: '4rem',
+                  filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))'
                 }}
               >
                 🎁
               </div>
             ))}
           </div>
-          <p style={{ marginTop: '20px', color: '#666' }}>
+          <p style={{ 
+            marginTop: '30px', 
+            color: '#474A4A',
+            fontSize: '18px',
+            fontWeight: 'bold'
+          }}>
             Shuffling cards and checking for duplicates...
           </p>
         </div>
       )}
 
       {showCards && openedCards.length > 0 && (
-        <div className="pack-results">
-          <h3>🎉 You opened {packQuantity} pack{packQuantity > 1 ? 's' : ''} and got:</h3>
-          <div className="cards-grid">
+        <div className="pack-results" style={{
+          backgroundColor: 'white',
+          padding: '30px',
+          borderRadius: '15px',
+          border: '3px solid #3CAC3B',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
+        }}>
+          <h3 style={{ 
+            textAlign: 'center', 
+            color: '#2A398D', 
+            fontSize: '2rem',
+            marginBottom: '30px',
+            textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+          }}>
+            🎉 You opened {packQuantity} pack{packQuantity > 1 ? 's' : ''} and got:
+          </h3>
+          <div className="cards-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '25px',
+            marginBottom: '30px'
+          }}>
             {openedCards.map((card, index) => {
   const cardImageUrl = getCardImageUrl(card.name);
   const isStacked = card.count > 1;
 
   return (
-    <div key={index} className="result-card" style={{ position: 'relative' }}>
+    <div key={index} className="result-card" style={{ 
+      position: 'relative',
+      backgroundColor: '#D1D4D1',
+      borderRadius: '15px',
+      padding: '20px',
+      border: '3px solid #2A398D',
+      boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+      transition: 'transform 0.3s ease',
+    }}
+    onMouseEnter={(e) => {
+      e.currentTarget.style.transform = 'translateY(-5px)';
+      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.transform = 'translateY(0)';
+      e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+    }}>
       {/* Enhanced Stack effect - show multiple card shadows behind */}
       {isStacked && (
         <>
@@ -232,10 +344,10 @@ setTimeout(() => {
               left: '6px',
               width: '100%',
               height: '100%',
-              backgroundColor: 'rgba(102, 126, 234, 0.4)',
+              backgroundColor: 'rgba(42, 57, 141, 0.4)',
               borderRadius: '15px',
               zIndex: -2,
-              border: '2px solid rgba(102, 126, 234, 0.3)'
+              border: '2px solid rgba(42, 57, 141, 0.3)'
             }}
           />
           <div 
@@ -246,10 +358,10 @@ setTimeout(() => {
               left: '12px',
               width: '100%',
               height: '100%',
-              backgroundColor: 'rgba(102, 126, 234, 0.3)',
+              backgroundColor: 'rgba(42, 57, 141, 0.3)',
               borderRadius: '15px',
               zIndex: -3,
-              border: '2px solid rgba(102, 126, 234, 0.2)'
+              border: '2px solid rgba(42, 57, 141, 0.2)'
             }}
           />
           {card.count > 2 && (
@@ -261,10 +373,10 @@ setTimeout(() => {
                 left: '18px',
                 width: '100%',
                 height: '100%',
-                backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                backgroundColor: 'rgba(42, 57, 141, 0.2)',
                 borderRadius: '15px',
                 zIndex: -4,
-                border: '2px solid rgba(102, 126, 234, 0.1)'
+                border: '2px solid rgba(42, 57, 141, 0.1)'
               }}
             />
           )}
@@ -277,25 +389,36 @@ setTimeout(() => {
           position: 'absolute',
           top: '-10px',
           right: '-10px',
-          backgroundColor: '#ff6b35',
+          backgroundColor: '#E61D25',
           color: 'white',
           borderRadius: '50%',
-          width: '30px',
-          height: '30px',
+          width: '35px',
+          height: '35px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '14px',
+          fontSize: '16px',
           fontWeight: 'bold',
           zIndex: 20,
-          border: '2px solid white',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+          border: '3px solid white',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
         }}>
           x{card.count}
         </div>
       )}
 
-      <div className="card-image-container" style={{ position: 'relative', zIndex: 5 }}>
+      <div className="card-image-container" style={{ 
+        position: 'relative', 
+        zIndex: 5,
+        marginBottom: '15px',
+        height: '200px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        borderRadius: '10px',
+        border: '2px solid #474A4A'
+      }}>
                     {cardImageUrl ? (
                       <img 
                         src={cardImageUrl} 
@@ -310,27 +433,59 @@ setTimeout(() => {
                     ) : null}
                     <div 
                       className="card-fallback" 
-                      style={{ display: cardImageUrl ? 'none' : 'flex' }}
+                      style={{ 
+                        display: cardImageUrl ? 'none' : 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: '100%',
+                        color: '#474A4A'
+                      }}
                     >
-                      <h4>{card.name}</h4>
-                      <p>{card.team}</p>
-                      <span className={`card-rarity rarity-${card.rarity?.toLowerCase() || 'common'}`}>
+                      <h4 style={{ margin: '0 0 10px 0', color: '#2A398D' }}>{card.name}</h4>
+                      <p style={{ margin: '0 0 10px 0', fontWeight: 'bold' }}>{card.team}</p>
+                      <span className={`card-rarity rarity-${card.rarity?.toLowerCase() || 'common'}`} style={{
+                        padding: '5px 10px',
+                        borderRadius: '15px',
+                        backgroundColor: '#3CAC3B',
+                        color: 'white',
+                        fontSize: '12px',
+                        fontWeight: 'bold'
+                      }}>
                         {card.rarity}
                       </span>
                     </div>
                   </div>
-                  <div className="card-info">
-                    <h4>{card.name}</h4>
-                    <p>{card.team}</p>
-                    <span className={`card-rarity rarity-${card.rarity?.toLowerCase() || 'common'}`}>
+                  <div className="card-info" style={{ textAlign: 'center' }}>
+                    <h4 style={{ 
+                      margin: '0 0 8px 0', 
+                      color: '#2A398D',
+                      fontSize: '18px',
+                      fontWeight: 'bold'
+                    }}>{card.name}</h4>
+                    <p style={{ 
+                      margin: '0 0 8px 0', 
+                      color: '#474A4A',
+                      fontWeight: 'bold'
+                    }}>{card.team}</p>
+                    <span className={`card-rarity rarity-${card.rarity?.toLowerCase() || 'common'}`} style={{
+                      padding: '6px 12px',
+                      borderRadius: '15px',
+                      backgroundColor: '#3CAC3B',
+                      color: 'white',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      display: 'inline-block'
+                    }}>
                       {card.rarity}
                     </span>
                     {isStacked && (
                       <p style={{ 
-                        color: '#ff6b35', 
+                        color: '#E61D25', 
                         fontWeight: 'bold', 
-                        fontSize: '14px',
-                        margin: '5px 0 0 0'
+                        fontSize: '16px',
+                        margin: '10px 0 0 0',
+                        textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
                       }}>
                         Got {card.count} copies! 🎉
                       </p>
@@ -340,13 +495,17 @@ setTimeout(() => {
               );
             })}
           </div>
-          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <div style={{ textAlign: 'center', marginTop: '30px' }}>
             <p style={{ 
-              backgroundColor: '#e8f5e8', 
-              padding: '15px', 
-              borderRadius: '8px', 
-              marginBottom: '15px',
-              color: '#155724'
+              backgroundColor: '#3CAC3B', 
+              padding: '20px', 
+              borderRadius: '12px', 
+              marginBottom: '20px',
+              color: 'white',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              border: '3px solid #2A398D',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
             }}>
               🎉 Pack opening complete! You opened {packQuantity} pack{packQuantity > 1 ? 's' : ''} and got {openedCards.reduce((total, card) => total + card.count, 0)} cards total.
               {openedCards.some(card => card.count > 1) && (
@@ -355,7 +514,28 @@ setTimeout(() => {
             </p>
             <button
               onClick={() => setShowCards(false)}
-              className="close-results-button"
+              style={{
+                padding: '15px 30px',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                borderRadius: '10px',
+                border: 'none',
+                cursor: 'pointer',
+                backgroundColor: '#2A398D',
+                color: 'white',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = '#1e2a6b';
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 6px 16px rgba(0,0,0,0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = '#2A398D';
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+              }}
             >
               ✨ Close Results
             </button>

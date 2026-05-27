@@ -1,12 +1,12 @@
-/* Toast Notifications */
+/* Toast Notifications - FIFA World Cup Palette */
 .trade-toast-notification {
   position: fixed;
   top: 20px;
   right: 20px;
-  background: white;
-  border: 2px solid #007bff;
+  background: linear-gradient(135deg, #D1D4D1 0%, #c4c7c4 100%);
+  border: 2px solid #2A398D;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   z-index: 10000;
   animation: slideInRight 0.3s ease-out;
   max-width: 350px;
@@ -22,6 +22,7 @@
 .toast-icon {
   font-size: 24px;
   flex-shrink: 0;
+  color: #2A398D;
 }
 
 .toast-message {
@@ -30,14 +31,15 @@
 
 .toast-message strong {
   display: block;
-  color: #007bff;
+  color: #2A398D;
   margin-bottom: 4px;
+  font-weight: 600;
 }
 
 .toast-message p {
   margin: 0;
   font-size: 14px;
-  color: #666;
+  color: #474A4A;
 }
 
 .toast-close {
@@ -45,17 +47,38 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: #999;
+  color: #474A4A;
   padding: 0;
   width: 20px;
   height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: color 0.2s ease;
 }
 
 .toast-close:hover {
-  color: #333;
+  color: #E61D25;
+}
+
+/* Success Toast */
+.toast-success {
+  border-color: #3CAC3B;
+}
+
+.toast-success .toast-icon,
+.toast-success .toast-message strong {
+  color: #3CAC3B;
+}
+
+/* Error Toast */
+.toast-error {
+  border-color: #E61D25;
+}
+
+.toast-error .toast-icon,
+.toast-error .toast-message strong {
+  color: #E61D25;
 }
 
 /* Notification Bell */
@@ -72,17 +95,18 @@
   padding: 8px;
   border-radius: 50%;
   transition: background-color 0.2s;
+  color: #2A398D;
 }
 
 .notification-bell:hover {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(42, 57, 141, 0.1);
 }
 
 .notification-badge {
   position: absolute;
   top: 0;
   right: 0;
-  background: #dc3545;
+  background: linear-gradient(135deg, #E61D25 0%, #c41620 100%);
   color: white;
   border-radius: 50%;
   width: 20px;
@@ -92,16 +116,17 @@
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  box-shadow: 0 2px 4px rgba(230, 29, 37, 0.3);
 }
 
 .notification-dropdown {
   position: absolute;
   top: 100%;
   right: 0;
-  background: white;
-  border: 1px solid #ddd;
+  background: linear-gradient(135deg, #D1D4D1 0%, #c4c7c4 100%);
+  border: 1px solid rgba(42, 57, 141, 0.2);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   width: 300px;
   max-height: 400px;
   overflow: hidden;
@@ -113,13 +138,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px;
-  border-bottom: 1px solid #eee;
-  background: #f8f9fa;
+  border-bottom: 1px solid rgba(42, 57, 141, 0.2);
+  background: linear-gradient(135deg, #474A4A 0%, #3a3d3d 100%);
 }
 
 .notification-header h4 {
   margin: 0;
-  color: #333;
+  color: white;
+  font-weight: 600;
 }
 
 .close-dropdown {
@@ -127,7 +153,12 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: #999;
+  color: #D1D4D1;
+  transition: color 0.2s ease;
+}
+
+.close-dropdown:hover {
+  color: white;
 }
 
 .notification-list {
@@ -137,13 +168,13 @@
 
 .notification-item {
   padding: 15px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(42, 57, 141, 0.1);
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .notification-item:hover {
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, #d8dbd8 0%, #D1D4D1 100%);
 }
 
 .notification-item:last-child {
@@ -152,25 +183,27 @@
 
 .notification-content strong {
   display: block;
-  color: #007bff;
+  color: #2A398D;
   margin-bottom: 4px;
+  font-weight: 600;
 }
 
 .notification-content p {
   margin: 4px 0;
   font-size: 14px;
-  color: #666;
+  color: #474A4A;
 }
 
 .notification-content small {
-  color: #999;
+  color: #474A4A;
   font-size: 12px;
+  opacity: 0.8;
 }
 
 .no-notifications {
   padding: 20px;
   text-align: center;
-  color: #666;
+  color: #474A4A;
   font-style: italic;
 }
 

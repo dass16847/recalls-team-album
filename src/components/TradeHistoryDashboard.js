@@ -177,24 +177,81 @@ export const TradeHistoryDashboard = () => {
 
   if (loading) {
     return (
-      <div className="trade-history-loading">
-        <div className="loading-spinner"></div>
-        <p>Loading trade history...</p>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '400px',
+        backgroundColor: '#474A4A',
+        borderRadius: '15px',
+        border: '3px solid #2A398D',
+        margin: '20px',
+        color: 'white'
+      }}>
+        <div style={{
+          width: '50px',
+          height: '50px',
+          border: '4px solid #D1D4D1',
+          borderTop: '4px solid #3CAC3B',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite',
+          marginBottom: '20px'
+        }}></div>
+        <p style={{ fontSize: '18px', fontWeight: 'bold' }}>Loading trade history...</p>
       </div>
     );
   }
 
   return (
-    <div className="trade-history-dashboard">
-      <div className="dashboard-header">
-        <h2>Trade History & Statistics</h2>
+    <div style={{ 
+      padding: '20px', 
+      backgroundColor: '#f8f9fa', 
+      minHeight: '100vh' 
+    }}>
+      {/* Header */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '30px',
+        backgroundColor: '#474A4A',
+        padding: '25px',
+        borderRadius: '15px',
+        border: '3px solid #2A398D'
+      }}>
+        <h2 style={{ 
+          color: 'white', 
+          margin: 0,
+          fontSize: '2.2rem',
+          textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+        }}>📊 Trade History & Statistics</h2>
         <button 
-          className="export-btn" 
           onClick={exportToCSV}
           disabled={filteredTrades.length === 0}
           style={{ 
-            opacity: filteredTrades.length === 0 ? 0.5 : 1,
-            cursor: filteredTrades.length === 0 ? 'not-allowed' : 'pointer'
+            padding: '12px 24px',
+            backgroundColor: filteredTrades.length === 0 ? '#474A4A' : '#3CAC3B',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: filteredTrades.length === 0 ? 'not-allowed' : 'pointer',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            transition: 'all 0.3s ease',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+          }}
+          onMouseEnter={(e) => {
+            if (filteredTrades.length > 0) {
+              e.target.style.backgroundColor = '#2e8b2e';
+              e.target.style.transform = 'translateY(-2px)';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (filteredTrades.length > 0) {
+              e.target.style.backgroundColor = '#3CAC3B';
+              e.target.style.transform = 'translateY(0)';
+            }
           }}
         >
           📊 Export CSV
@@ -202,131 +259,444 @@ export const TradeHistoryDashboard = () => {
       </div>
 
       {/* Statistics Cards */}
-      <div className="statistics-grid">
-        <div className="stat-card total">
-          <div className="stat-icon">📈</div>
-          <div className="stat-content">
-            <h3>{statistics.totalTrades}</h3>
-            <p>Total Trades</p>
-          </div>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+        gap: '20px',
+        marginBottom: '30px'
+      }}>
+        <div style={{
+          backgroundColor: 'white',
+          padding: '25px',
+          borderRadius: '12px',
+          border: '3px solid #2A398D',
+          boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+          textAlign: 'center',
+          transition: 'transform 0.3s ease'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-5px)';
+          e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+        }}>
+          <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>📈</div>
+          <h3 style={{ 
+            fontSize: '2rem', 
+            margin: '0 0 8px 0', 
+            color: '#2A398D',
+            fontWeight: 'bold'
+          }}>{statistics.totalTrades}</h3>
+          <p style={{ 
+            margin: 0, 
+            color: '#474A4A', 
+            fontSize: '16px',
+            fontWeight: 'bold'
+          }}>Total Trades</p>
         </div>
 
-        <div className="stat-card success">
-          <div className="stat-icon">✅</div>
-          <div className="stat-content">
-            <h3>{statistics.successfulTrades}</h3>
-            <p>Completed</p>
-          </div>
+        <div style={{
+          backgroundColor: 'white',
+          padding: '25px',
+          borderRadius: '12px',
+          border: '3px solid #3CAC3B',
+          boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+          textAlign: 'center',
+          transition: 'transform 0.3s ease'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-5px)';
+          e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+        }}>
+          <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>✅</div>
+          <h3 style={{ 
+            fontSize: '2rem', 
+            margin: '0 0 8px 0', 
+            color: '#3CAC3B',
+            fontWeight: 'bold'
+          }}>{statistics.successfulTrades}</h3>
+          <p style={{ 
+            margin: 0, 
+            color: '#474A4A', 
+            fontSize: '16px',
+            fontWeight: 'bold'
+          }}>Completed</p>
         </div>
 
-        <div className="stat-card pending">
-          <div className="stat-icon">⏳</div>
-          <div className="stat-content">
-            <h3>{statistics.pendingTrades}</h3>
-            <p>Pending</p>
-          </div>
+        <div style={{
+          backgroundColor: 'white',
+          padding: '25px',
+          borderRadius: '12px',
+          border: '3px solid #ffc107',
+          boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+          textAlign: 'center',
+          transition: 'transform 0.3s ease'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-5px)';
+          e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+        }}>
+          <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>⏳</div>
+          <h3 style={{ 
+            fontSize: '2rem', 
+            margin: '0 0 8px 0', 
+            color: '#ffc107',
+            fontWeight: 'bold'
+          }}>{statistics.pendingTrades}</h3>
+          <p style={{ 
+            margin: 0, 
+            color: '#474A4A', 
+            fontSize: '16px',
+            fontWeight: 'bold'
+          }}>Pending</p>
         </div>
 
-        <div className="stat-card rate">
-          <div className="stat-icon">🎯</div>
-          <div className="stat-content">
-            <h3>{statistics.successRate}%</h3>
-            <p>Success Rate</p>
-          </div>
+        <div style={{
+          backgroundColor: 'white',
+          padding: '25px',
+          borderRadius: '12px',
+          border: '3px solid #E61D25',
+          boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+          textAlign: 'center',
+          transition: 'transform 0.3s ease'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-5px)';
+          e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+        }}>
+          <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🎯</div>
+          <h3 style={{ 
+            fontSize: '2rem', 
+            margin: '0 0 8px 0', 
+            color: '#E61D25',
+            fontWeight: 'bold'
+          }}>{statistics.successRate}%</h3>
+          <p style={{ 
+            margin: 0, 
+            color: '#474A4A', 
+            fontSize: '16px',
+            fontWeight: 'bold'
+          }}>Success Rate</p>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="filters-section">
-        <div className="filter-group">
-          <label>Status:</label>
-          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-            <option value="all">All Statuses</option>
-            <option value="pending">Pending</option>
-            <option value="completed">Completed</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
-        </div>
+      <div style={{
+        backgroundColor: 'white',
+        padding: '25px',
+        borderRadius: '15px',
+        border: '3px solid #2A398D',
+        marginBottom: '30px',
+        boxShadow: '0 6px 16px rgba(0,0,0,0.1)'
+      }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '20px',
+          alignItems: 'end'
+        }}>
+          <div>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '8px', 
+              fontWeight: 'bold',
+              color: '#474A4A',
+              fontSize: '16px'
+            }}>Status:</label>
+            <select 
+              value={statusFilter} 
+              onChange={(e) => setStatusFilter(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '2px solid #2A398D',
+                borderRadius: '8px',
+                fontSize: '16px',
+                backgroundColor: 'white',
+                color: '#474A4A',
+                fontWeight: 'bold'
+              }}
+            >
+              <option value="all">All Statuses</option>
+              <option value="pending">Pending</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
 
-        <div className="filter-group">
-          <label>Time Period:</label>
-          <select value={dateFilter} onChange={(e) => setDateFilter(e.target.value)}>
-            <option value="all">All Time</option>
-            <option value="week">Last Week</option>
-            <option value="month">Last Month</option>
-            <option value="year">Last Year</option>
-          </select>
-        </div>
+          <div>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '8px', 
+              fontWeight: 'bold',
+              color: '#474A4A',
+              fontSize: '16px'
+            }}>Time Period:</label>
+            <select 
+              value={dateFilter} 
+              onChange={(e) => setDateFilter(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '2px solid #2A398D',
+                borderRadius: '8px',
+                fontSize: '16px',
+                backgroundColor: 'white',
+                color: '#474A4A',
+                fontWeight: 'bold'
+              }}
+            >
+              <option value="all">All Time</option>
+              <option value="week">Last Week</option>
+              <option value="month">Last Month</option>
+              <option value="year">Last Year</option>
+            </select>
+          </div>
 
-        <div className="filter-group">
-          <label>Search:</label>
-          <input
-            type="text"
-            placeholder="Search trades..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+          <div>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '8px', 
+              fontWeight: 'bold',
+              color: '#474A4A',
+              fontSize: '16px'
+            }}>Search:</label>
+            <input
+              type="text"
+              placeholder="Search trades..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '2px solid #2A398D',
+                borderRadius: '8px',
+                fontSize: '16px',
+                backgroundColor: 'white',
+                color: '#474A4A'
+              }}
+            />
+          </div>
         </div>
       </div>
 
       {/* Trade History List */}
-      <div className="trade-history-list">
+      <div>
         {filteredTrades.length === 0 ? (
-          <div className="no-trades">
-            <div style={{ textAlign: 'center', padding: '40px' }}>
-              <div style={{ fontSize: '48px', marginBottom: '20px' }}>📊</div>
-              <h3>No Trade History Yet</h3>
-              <p>Your completed trades will appear here once you start trading with other users.</p>
-              <p style={{ color: '#666', fontSize: '14px', marginTop: '20px' }}>
-                💡 Tip: Visit the Trading Post to start making trades!
-              </p>
-            </div>
+          <div style={{
+            backgroundColor: 'white',
+            padding: '60px 40px',
+            borderRadius: '15px',
+            border: '3px solid #D1D4D1',
+            textAlign: 'center',
+            boxShadow: '0 6px 16px rgba(0,0,0,0.1)'
+          }}>
+            <div style={{ fontSize: '4rem', marginBottom: '20px' }}>📊</div>
+            <h3 style={{ 
+              color: '#2A398D', 
+              fontSize: '1.8rem',
+              marginBottom: '15px'
+            }}>No Trade History Yet</h3>
+            <p style={{ 
+              color: '#474A4A', 
+              fontSize: '16px',
+              marginBottom: '10px',
+              fontWeight: 'bold'
+            }}>Your completed trades will appear here once you start trading with other users.</p>
+            <p style={{ 
+              color: '#474A4A', 
+              fontSize: '14px', 
+              marginTop: '20px',
+              fontStyle: 'italic'
+            }}>
+              💡 Tip: Visit the Trading Post to start making trades!
+            </p>
           </div>
         ) : (
-          filteredTrades.map(trade => (
-            <div key={trade.id} className={`trade-item ${trade.status}`}>
-              <div className="trade-header">
-                <div className="trade-status">
-                  <span className={`status-badge ${trade.status}`}>
-                    {trade.status.charAt(0).toUpperCase() + trade.status.slice(1)}
-                  </span>
-                </div>
-                <div className="trade-date">
-                  {trade.createdAt.toLocaleDateString()}
-                </div>
-              </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            {filteredTrades.map(trade => {
+              const getStatusColor = (status) => {
+                switch(status) {
+                  case 'completed': return '#3CAC3B';
+                  case 'pending': return '#ffc107';
+                  case 'cancelled': return '#E61D25';
+                  default: return '#474A4A';
+                }
+              };
 
-              <div className="trade-details">
-                <div className="trade-partner">
-                  <strong>Trading with:</strong> {
-                    trade.senderId === auth.currentUser.uid ? trade.receiverName : trade.senderName
-                  }
-                </div>
-
-                <div className="trade-cards">
-                  <div className="cards-section">
-                    <h4>You gave:</h4>
-                    <div className="card-list">
-                      {(trade.senderId === auth.currentUser.uid ? trade.senderCards : trade.receiverCards)?.map((card, index) => (
-                        <span key={index} className="card-name">{card.name}</span>
-                      )) || <span className="card-name">No cards</span>}
+              return (
+                <div key={trade.id} style={{
+                  backgroundColor: 'white',
+                  borderRadius: '12px',
+                  border: `3px solid ${getStatusColor(trade.status)}`,
+                  boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+                  overflow: 'hidden',
+                  transition: 'transform 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+                }}>
+                  {/* Trade Header */}
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: '20px 25px',
+                    backgroundColor: '#D1D4D1',
+                    borderBottom: `2px solid ${getStatusColor(trade.status)}`
+                  }}>
+                    <span style={{
+                      backgroundColor: getStatusColor(trade.status),
+                      color: 'white',
+                      padding: '8px 16px',
+                      borderRadius: '20px',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      textTransform: 'uppercase'
+                    }}>
+                      {trade.status.charAt(0).toUpperCase() + trade.status.slice(1)}
+                    </span>
+                    <div style={{
+                      color: '#474A4A',
+                      fontSize: '16px',
+                      fontWeight: 'bold'
+                    }}>
+                      {trade.createdAt.toLocaleDateString()}
                     </div>
                   </div>
 
-                  <div className="cards-section">
-                    <h4>You received:</h4>
-                    <div className="card-list">
-                      {(trade.senderId === auth.currentUser.uid ? trade.receiverCards : trade.senderCards)?.map((card, index) => (
-                        <span key={index} className="card-name">{card.name}</span>
-                      )) || <span className="card-name">No cards</span>}
+                  {/* Trade Details */}
+                  <div style={{ padding: '25px' }}>
+                    <div style={{ 
+                      marginBottom: '20px',
+                      textAlign: 'center'
+                    }}>
+                      <strong style={{ 
+                        color: '#2A398D',
+                        fontSize: '18px'
+                      }}>Trading with: </strong>
+                      <span style={{ 
+                        color: '#474A4A',
+                        fontSize: '18px',
+                        fontWeight: 'bold'
+                      }}>
+                        {trade.senderId === auth.currentUser.uid ? trade.receiverName : trade.senderName}
+                      </span>
+                    </div>
+
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: '1fr 1fr',
+                      gap: '25px'
+                    }}>
+                      {/* Cards Given */}
+                      <div style={{
+                        backgroundColor: '#f8f9fa',
+                        padding: '20px',
+                        borderRadius: '10px',
+                        border: '2px solid #E61D25'
+                      }}>
+                        <h4 style={{ 
+                          margin: '0 0 15px 0',
+                          color: '#E61D25',
+                          fontSize: '16px',
+                          textAlign: 'center'
+                        }}>You gave:</h4>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          {(trade.senderId === auth.currentUser.uid ? trade.senderCards : trade.receiverCards)?.map((card, index) => (
+                            <span key={index} style={{
+                              backgroundColor: 'white',
+                              padding: '8px 12px',
+                              borderRadius: '6px',
+                              border: '1px solid #E61D25',
+                              color: '#474A4A',
+                              fontWeight: 'bold',
+                              textAlign: 'center'
+                            }}>{card.name}</span>
+                          )) || <span style={{
+                            backgroundColor: 'white',
+                            padding: '8px 12px',
+                            borderRadius: '6px',
+                            border: '1px solid #E61D25',
+                            color: '#474A4A',
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            fontStyle: 'italic'
+                          }}>No cards</span>}
+                        </div>
+                      </div>
+
+                      {/* Cards Received */}
+                      <div style={{
+                        backgroundColor: '#f8f9fa',
+                        padding: '20px',
+                        borderRadius: '10px',
+                        border: '2px solid #3CAC3B'
+                      }}>
+                        <h4 style={{ 
+                          margin: '0 0 15px 0',
+                          color: '#3CAC3B',
+                          fontSize: '16px',
+                          textAlign: 'center'
+                        }}>You received:</h4>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          {(trade.senderId === auth.currentUser.uid ? trade.receiverCards : trade.senderCards)?.map((card, index) => (
+                            <span key={index} style={{
+                              backgroundColor: 'white',
+                              padding: '8px 12px',
+                              borderRadius: '6px',
+                              border: '1px solid #3CAC3B',
+                              color: '#474A4A',
+                              fontWeight: 'bold',
+                              textAlign: 'center'
+                            }}>{card.name}</span>
+                          )) || <span style={{
+                            backgroundColor: 'white',
+                            padding: '8px 12px',
+                            borderRadius: '6px',
+                            border: '1px solid #3CAC3B',
+                            color: '#474A4A',
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            fontStyle: 'italic'
+                          }}>No cards</span>}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          ))
+              );
+            })}
+          </div>
         )}
       </div>
+
+      {/* Add CSS animation for loading spinner */}
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 };

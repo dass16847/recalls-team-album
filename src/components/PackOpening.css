@@ -1,17 +1,19 @@
-/* Premium Pack Opening Styles */
+/* FIFA World Cup Premium Pack Opening Styles */
 .pack-opening-container {
   background: 
-    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.6) 0%, transparent 50%),
-    linear-gradient(135deg, #f8f6f3 0%, #f0ede8 50%, #e8e3d8 100%);
+    radial-gradient(circle at 30% 20%, rgba(60, 172, 59, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(42, 57, 141, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #f8f9fa 0%, #D1D4D1 50%, #474A4A 100%);
   border-radius: 20px;
   padding: 40px;
   margin: 20px 0;
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+    0 12px 40px rgba(42, 57, 141, 0.2),
+    inset 0 2px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -2px 0 rgba(71, 74, 74, 0.1);
   position: relative;
   overflow: hidden;
+  border: 3px solid #2A398D;
 }
 
 .pack-opening-container::before {
@@ -21,7 +23,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><defs><filter id="paper"><feTurbulence baseFrequency="0.04" numOctaves="3" result="noise"/><feColorMatrix in="noise" type="saturate" values="0"/><feComponentTransfer><feFuncA type="discrete" tableValues="0.01 0.02 0.03"/></feComponentTransfer></filter></defs><rect width="100%" height="100%" filter="url(%23paper)" opacity="0.4"/></svg>') repeat;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><defs><filter id="fifaPaper"><feTurbulence baseFrequency="0.04" numOctaves="3" result="noise"/><feColorMatrix in="noise" type="saturate" values="0"/><feComponentTransfer><feFuncA type="discrete" tableValues="0.01 0.02 0.03"/></feComponentTransfer></filter></defs><rect width="100%" height="100%" filter="url(%23fifaPaper)" opacity="0.3"/></svg>') repeat;
   pointer-events: none;
   z-index: 1;
 }
@@ -31,34 +33,39 @@
   z-index: 2;
 }
 
-/* Pack Opening Header */
+/* FIFA Pack Opening Header */
 .pack-opening-header {
   text-align: center;
   margin-bottom: 40px;
+  background: linear-gradient(135deg, #474A4A 0%, #2A398D 100%);
+  padding: 30px;
+  border-radius: 15px;
+  border: 3px solid #3CAC3B;
+  box-shadow: 0 8px 25px rgba(42, 57, 141, 0.3);
 }
 
 .pack-opening-header h2 {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #D1D4D1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-size: 3em;
   font-weight: 800;
   margin: 0 0 20px 0;
-  text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
   letter-spacing: 2px;
 }
 
 .pack-count-display {
   background: 
-    linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
-  border: 3px solid rgba(102, 126, 234, 0.3);
+    linear-gradient(135deg, #ffffff 0%, #D1D4D1 100%);
+  border: 3px solid #3CAC3B;
   border-radius: 20px;
   padding: 25px 35px;
   margin: 25px auto;
   max-width: 450px;
   box-shadow: 
-    0 6px 20px rgba(102, 126, 234, 0.15),
+    0 8px 25px rgba(60, 172, 59, 0.3),
     inset 0 2px 0 rgba(255, 255, 255, 0.9);
   position: relative;
   overflow: hidden;
@@ -71,17 +78,17 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
-  animation: shimmer 3s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, rgba(60, 172, 59, 0.2), transparent);
+  animation: fifaShimmer 3s ease-in-out infinite;
 }
 
-@keyframes shimmer {
+@keyframes fifaShimmer {
   0%, 100% { left: -100%; }
   50% { left: 100%; }
 }
 
 .pack-count-display h3 {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2A398D 0%, #3CAC3B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -92,12 +99,12 @@
   z-index: 2;
 }
 
-/* PREMIUM OPEN PACK BUTTON */
+/* FIFA PREMIUM OPEN PACK BUTTON */
 .open-pack-button {
   background: 
-    linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+    linear-gradient(135deg, #2A398D 0%, #3CAC3B 50%, #2A398D 100%);
   background-size: 200% 200%;
-  border: none;
+  border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   padding: 20px 50px;
   font-size: 1.4em;
@@ -108,15 +115,15 @@
   position: relative;
   overflow: hidden;
   box-shadow: 
-    0 8px 25px rgba(102, 126, 234, 0.4),
+    0 10px 30px rgba(42, 57, 141, 0.4),
     inset 0 2px 0 rgba(255, 255, 255, 0.3),
     inset 0 -2px 0 rgba(0, 0, 0, 0.1);
   text-transform: uppercase;
   letter-spacing: 2px;
-  animation: gradient-shift 3s ease-in-out infinite;
+  animation: fifaGradientShift 3s ease-in-out infinite;
 }
 
-@keyframes gradient-shift {
+@keyframes fifaGradientShift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
@@ -139,64 +146,70 @@
 .open-pack-button:hover {
   transform: translateY(-4px) scale(1.05);
   box-shadow: 
-    0 15px 40px rgba(102, 126, 234, 0.5),
+    0 18px 50px rgba(42, 57, 141, 0.5),
     inset 0 2px 0 rgba(255, 255, 255, 0.4),
     inset 0 -2px 0 rgba(0, 0, 0, 0.1);
   animation-duration: 1s;
+  border-color: #3CAC3B;
 }
 
 .open-pack-button:active {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 
-    0 8px 20px rgba(102, 126, 234, 0.4),
+    0 10px 25px rgba(42, 57, 141, 0.4),
     inset 0 3px 5px rgba(0, 0, 0, 0.2);
 }
 
 .open-pack-button:disabled {
-  background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+  background: linear-gradient(135deg, #474A4A 0%, #3a3d3d 100%);
   cursor: not-allowed;
   transform: none;
-  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+  box-shadow: 0 4px 12px rgba(71, 74, 74, 0.3);
   animation: none;
+  border-color: #D1D4D1;
 }
 
 .open-pack-button:disabled:hover {
   transform: none;
-  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+  box-shadow: 0 4px 12px rgba(71, 74, 74, 0.3);
 }
 
-/* STYLISH OPENING ANIMATION */
+/* FIFA STYLISH OPENING ANIMATION */
 .opening-animation {
   text-align: center;
   padding: 80px 40px;
   background: 
-    radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+    radial-gradient(circle at 50% 50%, rgba(60, 172, 59, 0.15) 0%, transparent 70%);
   border-radius: 20px;
   margin: 20px 0;
-  animation: pulse 1.5s ease-in-out infinite;
+  border: 3px solid #3CAC3B;
+  animation: fifaPulse 1.5s ease-in-out infinite;
+  box-shadow: 0 8px 25px rgba(60, 172, 59, 0.2);
 }
 
-@keyframes pulse {
+@keyframes fifaPulse {
   0%, 100% {
     transform: scale(1);
+    box-shadow: 0 8px 25px rgba(60, 172, 59, 0.2);
   }
   50% {
-    transform: scale(1.05);
+    transform: scale(1.02);
+    box-shadow: 0 12px 35px rgba(60, 172, 59, 0.3);
   }
 }
 
 .opening-animation h3 {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2A398D 0%, #3CAC3B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-size: 2.2em;
   margin-bottom: 40px;
   font-weight: 700;
-  animation: pulse-text 2s ease-in-out infinite;
+  animation: fifaPulseText 2s ease-in-out infinite;
 }
 
-@keyframes pulse-text {
+@keyframes fifaPulseText {
   0%, 100% { 
     opacity: 0.8;
     transform: scale(1);
@@ -209,11 +222,11 @@
 
 .pack-icon {
   font-size: 4rem;
-  animation: bounce 1s ease-in-out infinite;
-  filter: drop-shadow(0 10px 20px rgba(102, 126, 234, 0.3));
+  animation: fifaBounce 1s ease-in-out infinite;
+  filter: drop-shadow(0 10px 20px rgba(42, 57, 141, 0.3));
 }
 
-@keyframes bounce {
+@keyframes fifaBounce {
   0%, 20%, 50%, 80%, 100% {
     transform: translateY(0);
   }
@@ -225,33 +238,33 @@
   }
 }
 
-/* Card Results Display */
+/* FIFA Card Results Display */
 .pack-results {
   margin-top: 40px;
   padding: 35px;
   background: 
     radial-gradient(circle at 50% 20%, rgba(255,255,255,0.9) 0%, transparent 50%),
-    linear-gradient(135deg, rgba(248,246,243,0.95) 0%, rgba(240,237,232,0.95) 100%);
+    linear-gradient(135deg, rgba(248,249,250,0.95) 0%, rgba(209,212,209,0.95) 100%);
   border-radius: 20px;
-  border: 2px solid rgba(102, 126, 234, 0.2);
+  border: 3px solid #3CAC3B;
   box-shadow: 
     inset 0 2px 4px rgba(0,0,0,0.05),
-    0 8px 25px rgba(0,0,0,0.1);
+    0 12px 35px rgba(60, 172, 59, 0.2);
 }
 
 .pack-results h3 {
   text-align: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2A398D 0%, #3CAC3B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-size: 2.2em;
   margin-bottom: 30px;
   font-weight: 700;
-  animation: celebration 1s ease-out;
+  animation: fifaCelebration 1s ease-out;
 }
 
-@keyframes celebration {
+@keyframes fifaCelebration {
   0% { 
     transform: scale(0.5) rotate(-10deg);
     opacity: 0;
@@ -277,20 +290,20 @@
   margin-right: auto;
 }
 
-/* ENHANCED RESULT CARD WITH STACKING ANIMATIONS */
+/* FIFA ENHANCED RESULT CARD WITH STACKING ANIMATIONS */
 .result-card {
   background: 
-    linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
-  border: 3px solid rgba(102, 126, 234, 0.2);
+    linear-gradient(145deg, #ffffff 0%, #D1D4D1 100%);
+  border: 3px solid #2A398D;
   border-radius: 15px;
   padding: 0;
   text-align: center;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 
-    0 6px 15px rgba(0,0,0,0.1),
+    0 8px 20px rgba(42, 57, 141, 0.15),
     inset 0 2px 0 rgba(255, 255, 255, 0.9);
   overflow: hidden;
-  animation: cardReveal 0.6s ease-out forwards;
+  animation: fifaCardReveal 0.6s ease-out forwards;
   transform: translateY(20px);
   opacity: 0;
   position: relative;
@@ -308,7 +321,7 @@
 .result-card:nth-child(9) { animation-delay: 0.9s; }
 .result-card:nth-child(10) { animation-delay: 1.0s; }
 
-@keyframes cardReveal {
+@keyframes fifaCardReveal {
   from {
     transform: translateY(20px) scale(0.8);
     opacity: 0;
@@ -322,34 +335,37 @@
 .result-card:hover {
   transform: translateY(-8px) rotate(2deg) scale(1.02);
   box-shadow: 
-    0 15px 35px rgba(102, 126, 234, 0.2),
+    0 18px 40px rgba(42, 57, 141, 0.25),
     inset 0 2px 0 rgba(255, 255, 255, 0.95);
-  border-color: rgba(102, 126, 234, 0.5);
+  border-color: #3CAC3B;
 }
 
-/* STACK SHADOW ANIMATIONS */
+/* FIFA STACK SHADOW ANIMATIONS */
 .card-stack-shadow {
-  animation: stackSlide 0.4s ease-out forwards;
+  animation: fifaStackSlide 0.4s ease-out forwards;
   border-radius: 15px;
+  border-color: #2A398D !important;
 }
 
-@keyframes stackSlide {
+@keyframes fifaStackSlide {
   from {
     transform: translateX(-20px);
     opacity: 0;
   }
   to {
     transform: translateX(0);
-    opacity: 0.3;
+    opacity: 0.4;
   }
 }
 
-/* COUNTER BADGE ANIMATION */
+/* FIFA COUNTER BADGE ANIMATION */
 .result-card div[style*="x"] {
-  animation: badgePop 0.5s ease-out 0.3s both;
+  animation: fifaBadgePop 0.5s ease-out 0.3s both;
+  background: #E61D25 !important;
+  border: 3px solid white !important;
 }
 
-@keyframes badgePop {
+@keyframes fifaBadgePop {
   0% {
     transform: scale(0);
     opacity: 0;
@@ -363,18 +379,18 @@
   }
 }
 
-/* Enhanced duplicate card styling */
+/* FIFA Enhanced duplicate card styling */
 .result-card[data-duplicate="true"] {
-  border-color: rgba(255, 107, 53, 0.5);
+  border-color: #E61D25;
   box-shadow: 
-    0 6px 15px rgba(255, 107, 53, 0.2),
+    0 8px 20px rgba(230, 29, 37, 0.2),
     inset 0 2px 0 rgba(255, 255, 255, 0.9);
 }
 
 .result-card[data-duplicate="true"]:hover {
-  border-color: rgba(255, 107, 53, 0.8);
+  border-color: #E61D25;
   box-shadow: 
-    0 15px 35px rgba(255, 107, 53, 0.3),
+    0 18px 40px rgba(230, 29, 37, 0.3),
     inset 0 2px 0 rgba(255, 255, 255, 0.95);
 }
 
@@ -388,8 +404,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+  background: linear-gradient(135deg, #f8f9fa 0%, #D1D4D1 100%);
   padding: 15px;
+  border-bottom: 2px solid #2A398D;
 }
 
 .card-image {
@@ -400,7 +417,7 @@
   object-fit: contain;
   transition: transform 0.4s ease;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(42, 57, 141, 0.2);
 }
 
 .result-card:hover .card-image {
@@ -409,7 +426,7 @@
 
 .card-fallback {
   padding: 50px 25px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2A398D 0%, #3CAC3B 100%);
   color: white;
   min-height: 280px;
   display: flex;
@@ -423,79 +440,91 @@
   content: '🎴';
   font-size: 40px;
   margin-bottom: 10px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
 .card-info {
   padding: 20px 25px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
 }
 
 .card-info h4 {
-  color: #667eea;
+  color: #2A398D;
   font-size: 1.2em;
   margin: 0 0 10px 0;
   font-weight: 700;
 }
 
 .card-info p {
-  color: #6c757d;
+  color: #474A4A;
   margin: 8px 0;
   font-weight: 600;
   font-size: 0.95em;
 }
 
-/* Enhanced duplicate count styling */
-.card-info p[style*="color: #ff6b35"] {
-  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.05) 100%);
-  border: 1px solid rgba(255, 107, 53, 0.3);
-  border-radius: 8px;
-  padding: 8px 12px;
-  animation: duplicateGlow 2s ease-in-out infinite;
+/* FIFA Enhanced duplicate count styling */
+.card-info p[style*="color: #ff6b35"],
+.card-info p[style*="color: #E61D25"] {
+  background: linear-gradient(135deg, rgba(230, 29, 37, 0.1) 0%, rgba(230, 29, 37, 0.05) 100%) !important;
+  border: 2px solid #E61D25 !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  animation: fifaDuplicateGlow 2s ease-in-out infinite !important;
+  color: #E61D25 !important;
+  font-weight: 700 !important;
 }
 
-@keyframes duplicateGlow {
+@keyframes fifaDuplicateGlow {
   0%, 100% {
-    box-shadow: 0 0 5px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 0 5px rgba(230, 29, 37, 0.3);
   }
   50% {
-    box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+    box-shadow: 0 0 15px rgba(230, 29, 37, 0.5);
   }
 }
 
 .card-rarity {
   font-weight: 800;
   text-transform: uppercase;
-  padding: 6px 12px;
-  border-radius: 8px;
+  padding: 8px 15px;
+  border-radius: 10px;
   font-size: 0.85em;
   display: inline-block;
   margin-top: 8px;
   letter-spacing: 1px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .rarity-common {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  background: linear-gradient(135deg, #3CAC3B 0%, #2e8b2e 100%);
   color: white;
-  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+  box-shadow: 0 3px 10px rgba(60, 172, 59, 0.4);
 }
 
 .rarity-rare {
-  background: linear-gradient(135deg, #007bff 0%, #6610f2 100%);
+  background: linear-gradient(135deg, #2A398D 0%, #1e2a6b 100%);
   color: white;
-  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 3px 10px rgba(42, 57, 141, 0.4);
 }
 
 .rarity-epic {
   background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
   color: white;
-  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+  box-shadow: 0 3px 10px rgba(255, 193, 7, 0.4);
 }
 
-/* STYLISH CLOSE BUTTON */
+.rarity-legendary {
+  background: linear-gradient(135deg, #E61D25 0%, #C41E3A 100%);
+  color: white;
+  box-shadow: 0 3px 10px rgba(230, 29, 37, 0.4);
+}
+
+/* FIFA STYLISH CLOSE BUTTON */
 .close-results-button {
   background: 
-    linear-gradient(135deg, #28a745 0%, #20c997 50%, #28a745 100%);
+    linear-gradient(135deg, #3CAC3B 0%, #2e8b2e 50%, #3CAC3B 100%);
   background-size: 200% 200%;
-  border: none;
+  border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 15px;
   padding: 15px 40px;
   font-size: 1.2em;
@@ -506,26 +535,26 @@
   display: block;
   margin: 0 auto;
   box-shadow: 
-    0 6px 20px rgba(40, 167, 69, 0.3),
+    0 8px 25px rgba(60, 172, 59, 0.4),
     inset 0 2px 0 rgba(255, 255, 255, 0.3);
   text-transform: uppercase;
   letter-spacing: 1px;
   position: relative;
   overflow: hidden;
-  animation: success-glow 2s ease-in-out infinite;
+  animation: fifaSuccessGlow 2s ease-in-out infinite;
 }
 
-@keyframes success-glow {
+@keyframes fifaSuccessGlow {
   0%, 100% { 
     background-position: 0% 50%;
     box-shadow: 
-      0 6px 20px rgba(40, 167, 69, 0.3),
+      0 8px 25px rgba(60, 172, 59, 0.4),
       inset 0 2px 0 rgba(255, 255, 255, 0.3);
   }
   50% { 
     background-position: 100% 50%;
     box-shadow: 
-      0 8px 25px rgba(40, 167, 69, 0.4),
+      0 12px 35px rgba(60, 172, 59, 0.5),
       inset 0 2px 0 rgba(255, 255, 255, 0.4);
   }
 }
@@ -548,7 +577,7 @@
 .close-results-button:hover {
   transform: translateY(-3px) scale(1.05);
   box-shadow: 
-    0 10px 30px rgba(40, 167, 69, 0.5),
+    0 15px 40px rgba(60, 172, 59, 0.6),
     inset 0 2px 0 rgba(255, 255, 255, 0.4);
   animation-duration: 1s;
 }
@@ -557,44 +586,45 @@
   transform: translateY(-1px) scale(1.02);
 }
 
-/* Pack Quantity Selector Styling */
+/* FIFA Pack Quantity Selector Styling */
 select {
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
-  border: 2px solid rgba(102, 126, 234, 0.3);
+  background: linear-gradient(135deg, #ffffff 0%, #D1D4D1 100%);
+  border: 3px solid #2A398D;
   border-radius: 12px;
   padding: 12px 20px;
   font-size: 16px;
   font-weight: 600;
-  color: #667eea;
+  color: #2A398D;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 4px 12px rgba(42, 57, 141, 0.15);
 }
 
 select:hover {
-  border-color: rgba(102, 126, 234, 0.5);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.2);
+  border-color: #3CAC3B;
+  box-shadow: 0 6px 20px rgba(42, 57, 141, 0.25);
   transform: translateY(-2px);
 }
 
 select:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  border-color: #3CAC3B;
+  box-shadow: 0 0 0 3px rgba(60, 172, 59, 0.2);
 }
 
-/* Summary message styling */
+/* FIFA Summary message styling */
 .pack-summary {
-  background: linear-gradient(135deg, rgba(232, 245, 232, 0.9) 0%, rgba(212, 237, 218, 0.9) 100%);
-  border: 2px solid rgba(40, 167, 69, 0.3);
+  background: linear-gradient(135deg, rgba(60, 172, 59, 0.1) 0%, rgba(60, 172, 59, 0.05) 100%);
+  border: 3px solid #3CAC3B;
   border-radius: 15px;
   padding: 20px;
   margin: 20px 0;
-  color: #155724;
-  animation: summarySlide 0.8s ease-out;
+  color: #2A398D;
+  animation: fifaSummarySlide 0.8s ease-out;
+  font-weight: 600;
 }
 
-@keyframes summarySlide {
+@keyframes fifaSummarySlide {
   from {
     transform: translateY(20px);
     opacity: 0;
@@ -605,11 +635,15 @@ select:focus {
   }
 }
 
-/* Responsive Design */
+/* FIFA Responsive Design */
 @media (max-width: 768px) {
   .pack-opening-container {
     padding: 25px;
     margin: 15px 0;
+  }
+
+  .pack-opening-header {
+    padding: 20px;
   }
 
   .pack-opening-header h2 {
@@ -647,39 +681,92 @@ select:focus {
   }
 }
 
-/* Special effects for high-value duplicates */
+/* FIFA Special effects for high-value duplicates */
 .result-card[data-count="3"] {
-  animation: cardReveal 0.6s ease-out forwards, specialGlow 3s ease-in-out infinite 1s;
+  animation: fifaCardReveal 0.6s ease-out forwards, fifaSpecialGlow 3s ease-in-out infinite 1s;
 }
 
 .result-card[data-count="4"], .result-card[data-count="5"] {
-  animation: cardReveal 0.6s ease-out forwards, epicGlow 3s ease-in-out infinite 1s;
+  animation: fifaCardReveal 0.6s ease-out forwards, fifaEpicGlow 3s ease-in-out infinite 1s;
 }
 
-@keyframes specialGlow {
+@keyframes fifaSpecialGlow {
   0%, 100% {
     box-shadow: 
-      0 6px 15px rgba(0,0,0,0.1),
+      0 8px 20px rgba(42, 57, 141, 0.15),
       inset 0 2px 0 rgba(255, 255, 255, 0.9);
   }
   50% {
     box-shadow: 
-      0 6px 15px rgba(0,0,0,0.1),
+      0 8px 20px rgba(42, 57, 141, 0.15),
       inset 0 2px 0 rgba(255, 255, 255, 0.9),
-      0 0 20px rgba(255, 193, 7, 0.4);
+      0 0 25px rgba(255, 193, 7, 0.5);
   }
 }
 
-@keyframes epicGlow {
+@keyframes fifaEpicGlow {
   0%, 100% {
     box-shadow: 
-      0 6px 15px rgba(0,0,0,0.1),
+      0 8px 20px rgba(42, 57, 141, 0.15),
       inset 0 2px 0 rgba(255, 255, 255, 0.9);
   }
   50% {
     box-shadow: 
-      0 6px 15px rgba(0,0,0,0.1),
+      0 8px 20px rgba(42, 57, 141, 0.15),
       inset 0 2px 0 rgba(255, 255, 255, 0.9),
-      0 0 25px rgba(138, 43, 226, 0.5);
+      0 0 30px rgba(230, 29, 37, 0.6);
   }
+}
+
+/* FIFA Loading states */
+.fifa-loading {
+  background: linear-gradient(135deg, #474A4A 0%, #2A398D 100%);
+  color: white;
+  border: 3px solid #D1D4D1;
+}
+
+/* FIFA Success states */
+.fifa-success {
+  border-color: #3CAC3B !important;
+  box-shadow: 0 0 20px rgba(60, 172, 59, 0.4) !important;
+}
+
+/* FIFA Error states */
+.fifa-error {
+  border-color: #E61D25 !important;
+  box-shadow: 0 0 20px rgba(230, 29, 37, 0.4) !important;
+}
+
+/* FIFA Card hover effects */
+.result-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(60, 172, 59, 0.1) 50%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.result-card:hover::after {
+  opacity: 1;
+}
+
+/* FIFA Progress indicators */
+.fifa-progress {
+  background: #D1D4D1;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 8px;
+  margin: 10px 0;
+}
+
+.fifa-progress-bar {
+  background: linear-gradient(135deg, #2A398D 0%, #3CAC3B 100%);
+  height: 100%;
+  transition: width 0.5s ease;
+  border-radius: 10px;
 }
