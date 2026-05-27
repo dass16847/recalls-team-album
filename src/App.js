@@ -562,17 +562,17 @@ function App() {
     }
   };
 
-  const handlePackOpened = async () => {
-    const newPackCount = Math.max(0, userPacks - 1);
-    setUserPacks(newPackCount);
+const handlePackOpened = async (quantity = 1) => {
+  const newPackCount = Math.max(0, userPacks - quantity);
+  setUserPacks(newPackCount);
 
-    try {
-      const userDocRef = doc(db, 'users', user.uid);
-      await updateDoc(userDocRef, { packs: newPackCount });
-    } catch (error) {
-      console.error('Error updating pack count:', error);
-    }
-  };
+  try {
+    const userDocRef = doc(db, 'users', user.uid);
+    await updateDoc(userDocRef, { packs: newPackCount });
+  } catch (error) {
+    console.error('Error updating pack count:', error);
+  }
+};
 
   const openAdminPanel = async () => {
     setShowAdminPanel(true);

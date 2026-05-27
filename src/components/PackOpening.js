@@ -124,14 +124,12 @@ function PackOpening({ userPacks, onPackOpened }) {
       const displayCards = Object.values(cardCounts);
       setOpenedCards(displayCards);
 
-      setTimeout(() => {
-        setShowCards(true);
-        setIsOpening(false);
-        // Update pack count based on quantity opened
-        for (let i = 0; i < packQuantity; i++) {
-          onPackOpened();
-        }
-      }, 1500);
+setTimeout(() => {
+  setShowCards(true);
+  setIsOpening(false);
+  // Update pack count based on quantity opened - call onPackOpened once per pack
+  onPackOpened(packQuantity);
+}, 1500);
 
     } catch (error) {
       console.error('Error:', error);
@@ -218,70 +216,86 @@ function PackOpening({ userPacks, onPackOpened }) {
           <h3>🎉 You opened {packQuantity} pack{packQuantity > 1 ? 's' : ''} and got:</h3>
           <div className="cards-grid">
             {openedCards.map((card, index) => {
-              const cardImageUrl = getCardImageUrl(card.name);
-              const isStacked = card.count > 1;
+  const cardImageUrl = getCardImageUrl(card.name);
+  const isStacked = card.count > 1;
 
-              return (
-                <div key={index} className="result-card" style={{ position: 'relative' }}>
-                  {/* Stack effect - show multiple card shadows behind */}
-                  {isStacked && (
-                    <>
-                      <div 
-                        className="card-stack-shadow"
-                        style={{
-                          position: 'absolute',
-                          top: '-4px',
-                          left: '4px',
-                          width: '100%',
-                          height: '100%',
-                          backgroundColor: '#007bff',
-                          borderRadius: '12px',
-                          zIndex: 1,
-                          opacity: 0.3
-                        }}
-                      />
-                      <div 
-                        className="card-stack-shadow"
-                        style={{
-                          position: 'absolute',
-                          top: '-8px',
-                          left: '8px',
-                          width: '100%',
-                          height: '100%',
-                          backgroundColor: '#007bff',
-                          borderRadius: '12px',
-                          zIndex: 0,
-                          opacity: 0.2
-                        }}
-                      />
-                    </>
-                  )}
+  return (
+    <div key={index} className="result-card" style={{ position: 'relative' }}>
+      {/* Enhanced Stack effect - show multiple card shadows behind */}
+      {isStacked && (
+        <>
+          <div 
+            className="card-stack-shadow"
+            style={{
+              position: 'absolute',
+              top: '-6px',
+              left: '6px',
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(102, 126, 234, 0.4)',
+              borderRadius: '15px',
+              zIndex: -2,
+              border: '2px solid rgba(102, 126, 234, 0.3)'
+            }}
+          />
+          <div 
+            className="card-stack-shadow"
+            style={{
+              position: 'absolute',
+              top: '-12px',
+              left: '12px',
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(102, 126, 234, 0.3)',
+              borderRadius: '15px',
+              zIndex: -3,
+              border: '2px solid rgba(102, 126, 234, 0.2)'
+            }}
+          />
+          {card.count > 2 && (
+            <div 
+              className="card-stack-shadow"
+              style={{
+                position: 'absolute',
+                top: '-18px',
+                left: '18px',
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                borderRadius: '15px',
+                zIndex: -4,
+                border: '2px solid rgba(102, 126, 234, 0.1)'
+              }}
+            />
+          )}
+        </>
+      )}
 
-                  {/* Stack counter badge */}
-                  {isStacked && (
-                    <div style={{
-                      position: 'absolute',
-                      top: '-10px',
-                      right: '-10px',
-                      backgroundColor: '#ff6b35',
-                      color: 'white',
-                      borderRadius: '50%',
-                      width: '30px',
-                      height: '30px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '14px',
-                      fontWeight: 'bold',
-                      zIndex: 10,
-                      border: '2px solid white',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
-                    }}>
-                      x{card.count}
-                    </div>
-                  )}
+      {/* Stack counter badge */}
+      {isStacked && (
+        <div style={{
+          position: 'absolute',
+          top: '-10px',
+          right: '-10px',
+          backgroundColor: '#ff6b35',
+          color: 'white',
+          borderRadius: '50%',
+          width: '30px',
+          height: '30px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '14px',
+          fontWeight: 'bold',
+          zIndex: 20,
+          border: '2px solid white',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+        }}>
+          x{card.count}
+        </div>
+      )}
 
-                  <div className="card-image-container" style={{ position: 'relative', zIndex: 2 }}>
+      <div className="card-image-container" style={{ position: 'relative', zIndex: 5 }}>
                     {cardImageUrl ? (
                       <img 
                         src={cardImageUrl} 
