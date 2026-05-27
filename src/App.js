@@ -596,7 +596,10 @@ const handlePackOpened = async (quantity = 1) => {
  // MAIN APP
 return (
   <NotificationProvider>
-    <div className="App">
+    <div className="App" style={{
+  minHeight: '100vh',
+  background: 'linear-gradient(135deg, #f0f8ff 0%, #ffffff 50%, #e6f3ff 100%)'
+}}>
       <header style={{ padding: '20px', backgroundColor: '#474A4A', borderBottom: '2px solid #2A398D' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto' }}>
           <h1 style={{ color: 'white', margin: 0 }}>🏆 Recalls Team Album</h1>
@@ -660,38 +663,38 @@ return (
           >
             🔄 Trading Post
           </button>
-          <button
-            onClick={() => setActiveTab('history')}
-            style={{
-              padding: '10px 20px',
-              backgroundColor: activeTab === 'history' ? '#2A398D' : 'transparent',
-              color: activeTab === 'history' ? 'white' : '#2A398D',
-              border: '2px solid #2A398D',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontWeight: 'bold'
-            }}
-          >
-            📊 Trade History
-          </button>
+         <button
+  onClick={() => setActiveTab('history')}
+  style={{
+    padding: '10px 20px',
+    backgroundColor: activeTab === 'history' ? '#1e3a8a' : '#f0f8ff',
+    color: activeTab === 'history' ? 'white' : '#1e3a8a',
+    border: '1px solid #1e3a8a',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontWeight: 'bold'
+  }}
+>
+  📊 Trade History
+</button>
 
-          {user && adminEmails.includes(user.email) && (
-            <button
-              onClick={openAdminPanel}
-              style={{
-                padding: '10px 20px',
-                backgroundColor: '#3CAC3B',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '12px',
-                fontWeight: 'bold'
-              }}
-            >
-              ⚙️ Admin Panel
-            </button>
-          )}
+{user && adminEmails.includes(user.email) && (
+  <button
+    onClick={openAdminPanel}
+    style={{
+      padding: '10px 20px',
+      backgroundColor: '#e6f3ff',
+      color: '#1e3a8a',
+      border: '2px solid #1e3a8a',
+      borderRadius: '4px',
+      cursor: 'pointer',
+      fontSize: '12px',
+      fontWeight: 'bold'
+    }}
+  >
+    ⚙️ Admin Panel
+  </button>
+)}
         </div>
       </nav>
 

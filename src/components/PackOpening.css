@@ -299,8 +299,8 @@
 /* FIFA ENHANCED RESULT CARD WITH STACKING ANIMATIONS */
 .result-card {
   background: 
-    linear-gradient(145deg, #ffffff 0%, #D1D4D1 100%);
-  border: 3px solid #2A398D;
+    linear-gradient(145deg, #ffffff 0%, #f0f8ff 100%);
+  border: 3px solid rgba(30, 58, 138, 0.2);
   border-radius: 15px;
   padding: 0;
   text-align: center;
@@ -410,7 +410,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #e3f2fd 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
   padding: 15px;
   border-bottom: 2px solid #2A398D;
 }
@@ -432,14 +432,15 @@
 
 .card-fallback {
   padding: 50px 25px;
-  background: linear-gradient(135deg, #2A398D 0%, #3CAC3B 100%);
-  color: white;
+  background: linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);
+  color: #1e3a8a;
   min-height: 280px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
+  border: 2px solid #e6f3ff;
 }
 
 .card-fallback::before {
@@ -454,15 +455,20 @@
   background: linear-gradient(135deg, #ffffff 0%, #f3e5f5 25%, #e8f5e8 50%, #e3f2fd 75%, #ffffff 100%);
 }
 
+.card-info {
+  padding: 20px 25px;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
+}
+
 .card-info h4 {
-  color: #2A398D;
+  color: #1e3a8a;
   font-size: 1.2em;
   margin: 0 0 10px 0;
   font-weight: 700;
 }
 
 .card-info p {
-  color: #474A4A;
+  color: #1e3a8a;
   margin: 8px 0;
   font-weight: 600;
   font-size: 0.95em;

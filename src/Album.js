@@ -699,22 +699,25 @@ const handleDrop = async (e, slotName, pageId) => {
         </div>
 
         {/* Progress Bar */}
-        <div style={{
-          width: '100%',
-          height: '20px',
-          backgroundColor: '#D1D4D1',
-          borderRadius: '10px',
-          overflow: 'hidden',
-          marginBottom: '10px'
-        }}>
-          <div style={{
-            width: `${calculateCompletionPercentage()}%`,
-            height: '100%',
-            backgroundColor: calculateCompletionPercentage() === 100 ? '#3CAC3B' : '#2A398D',
-            transition: 'width 0.5s ease',
-            borderRadius: '10px'
-          }}></div>
-        </div>
+<div style={{
+  width: '100%',
+  height: '20px',
+  backgroundColor: '#ffffff',
+  border: '2px solid #1e3a8a',
+  borderRadius: '10px',
+  overflow: 'hidden',
+  marginBottom: '10px',
+  boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+}}>
+  <div style={{
+    width: `${calculateCompletionPercentage()}%`,
+    height: '100%',
+    backgroundColor: calculateCompletionPercentage() === 100 ? '#22c55e' : '#1e3a8a',
+    transition: 'width 0.5s ease',
+    borderRadius: '8px',
+    boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
+  }}></div>
+</div>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <p>Page {currentPage + 1} of {albumPages.length}</p>
@@ -1118,15 +1121,16 @@ const handleDrop = async (e, slotName, pageId) => {
                   ) : null}
 
                   <div style={{
-                    aspectRatio: '241/305',
-                    background: '#2A398D',
-                    display: cardImageUrl ? 'none' : 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    color: 'white',
-                    padding: '15px'
-                  }}>
+  aspectRatio: '241/305',
+  background: 'linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%)',
+  border: '2px solid #e6f3ff',
+  display: cardImageUrl ? 'none' : 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  color: '#1e3a8a',
+  padding: '15px'
+}}>
                     <h4>{userCard.cardData.name}</h4>
                     <p>{userCard.cardData.team}</p>
                     <p className="card-rarity">{userCard.cardData.rarity}</p>
