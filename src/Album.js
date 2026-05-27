@@ -68,7 +68,7 @@ const getCardImageStyle = (cardName, context = 'album') => {
       // In album slot: rotate 90 degrees and scale with specific ratios
       return {
         ...baseStyle,
-        objectFit: 'contain', // FIXED: was 'fit', now 'contain'
+        objectFit: 'fit', // FIXED: was 'fit', now 'contain'
         transform: 'rotate(90deg) scale(0.62, 1.70)', // Your preferred scaling
         transformOrigin: 'center center'
       };
@@ -391,40 +391,54 @@ const getCardImageStyle = (cardName, context = 'album') => {
     }
   };
 
-  const handleDrop = async (e, slotName, pageId) => {
-    e.preventDefault();
+const handleDrop = async (e, slotName, pageId) => {
+  e.preventDefault();
 
-    try {
-      const cardData = JSON.parse(e.dataTransfer.getData('application/json'));
+  try {
+    const cardData = JSON.parse(e.dataTransfer.getData('application/json'));
 
-      if (cardData.cardData.name.toUpperCase() === slotName.toUpperCase()) {
-        const slotKey = `${pageId}-${slotName}`;
+    // CREATE A NAME NORMALIZATION FUNCTION
+    const normalizeCardName = (name) => {
+      const nameMap = {
+        'RAFA AGUERO': 'RAFA',
+        'PAWEL PUDLIK': 'PAWEL', 
+        'IRE VARGAS': 'IRE'
+      };
+      return nameMap[name.toUpperCase()] || name.toUpperCase();
+    };
 
-        if (placedCards[slotKey]) {
-          alert(`❌ This slot already has a card placed!`);
-          return;
-        }
+    // USE NORMALIZED NAMES FOR COMPARISON
+    const normalizedCardName = normalizeCardName(cardData.cardData.name);
+    const normalizedSlotName = normalizeCardName(slotName);
 
-        const newPlacedCards = {
-          ...placedCards,
-          [slotKey]: cardData
-        };
+    if (normalizedCardName === normalizedSlotName) {
+      const slotKey = `${pageId}-${slotName}`;
 
-        setPlacedCards(newPlacedCards);
-        await savePlacedCards(newPlacedCards);
-        await decreaseCardCount(cardData.userCardId);
-        await loadUserCollection();
-
-        alert(`✅ ${cardData.cardData.name} placed successfully!`);
-        checkForCompletion();
-      } else {
-        alert(`❌ This card doesn't belong in the ${slotName} slot!`);
+      if (placedCards[slotKey]) {
+        alert(`❌ This slot already has a card placed!`);
+        return;
       }
-    } catch (error) {
-      console.error('Error handling drop:', error);
-      alert('❌ Error placing card. Please try again.');
+
+      const newPlacedCards = {
+        ...placedCards,
+        [slotKey]: cardData
+      };
+
+      setPlacedCards(newPlacedCards);
+      await savePlacedCards(newPlacedCards);
+      await decreaseCardCount(cardData.userCardId);
+      await loadUserCollection();
+
+      // REMOVED: alert(`✅ ${cardData.cardData.name} placed successfully!`);
+      checkForCompletion();
+    } else {
+      alert(`❌ This card doesn't belong in the ${slotName} slot!`);
     }
-  };
+  } catch (error) {
+    console.error('Error handling drop:', error);
+    alert('❌ Error placing card. Please try again.');
+  }
+};
 
   const handleDragOver = (e) => {
     e.preventDefault();
