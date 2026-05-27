@@ -124,12 +124,12 @@ function PackOpening({ userPacks, onPackOpened }) {
       const displayCards = Object.values(cardCounts);
       setOpenedCards(displayCards);
 
-setTimeout(() => {
-  setShowCards(true);
-  setIsOpening(false);
-  // Update pack count based on quantity opened - call onPackOpened once per pack
-  onPackOpened(packQuantity);
-}, 1500);
+      setTimeout(() => {
+        setShowCards(true);
+        setIsOpening(false);
+        // Update pack count based on quantity opened - call onPackOpened once per pack
+        onPackOpened(packQuantity);
+      }, 1500);
 
     } catch (error) {
       console.error('Error:', error);
@@ -312,113 +312,114 @@ setTimeout(() => {
             marginBottom: '30px'
           }}>
             {openedCards.map((card, index) => {
-  const cardImageUrl = getCardImageUrl(card.name);
-  const isStacked = card.count > 1;
+              const cardImageUrl = getCardImageUrl(card.name);
+              const isStacked = card.count > 1;
 
-  return (
-    <div key={index} className="result-card" style={{ 
-      position: 'relative',
-      backgroundColor: '#D1D4D1',
-      borderRadius: '15px',
-      padding: '20px',
-      border: '3px solid #2A398D',
-      boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
-      transition: 'transform 0.3s ease',
-    }}
-    onMouseEnter={(e) => {
-      e.currentTarget.style.transform = 'translateY(-5px)';
-      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
-    }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.transform = 'translateY(0)';
-      e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
-    }}>
-      {/* Enhanced Stack effect - show multiple card shadows behind */}
-      {isStacked && (
-        <>
-          <div 
-            className="card-stack-shadow"
-            style={{
-              position: 'absolute',
-              top: '-6px',
-              left: '6px',
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'rgba(42, 57, 141, 0.4)',
-              borderRadius: '15px',
-              zIndex: -2,
-              border: '2px solid rgba(42, 57, 141, 0.3)'
-            }}
-          />
-          <div 
-            className="card-stack-shadow"
-            style={{
-              position: 'absolute',
-              top: '-12px',
-              left: '12px',
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'rgba(42, 57, 141, 0.3)',
-              borderRadius: '15px',
-              zIndex: -3,
-              border: '2px solid rgba(42, 57, 141, 0.2)'
-            }}
-          />
-          {card.count > 2 && (
-            <div 
-              className="card-stack-shadow"
-              style={{
-                position: 'absolute',
-                top: '-18px',
-                left: '18px',
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'rgba(42, 57, 141, 0.2)',
-                borderRadius: '15px',
-                zIndex: -4,
-                border: '2px solid rgba(42, 57, 141, 0.1)'
-              }}
-            />
-          )}
-        </>
-      )}
+              return (
+                <div key={index} className="result-card" style={{ 
+                  position: 'relative',
+                  backgroundColor: '#D1D4D1',
+                  borderRadius: '15px',
+                  padding: '20px',
+                  border: '3px solid #2A398D',
+                  boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+                  transition: 'transform 0.3s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-5px)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+                }}>
+                  {/* Enhanced Stack effect - show multiple card shadows behind */}
+                  {isStacked && (
+                    <>
+                      <div 
+                        className="card-stack-shadow"
+                        style={{
+                          position: 'absolute',
+                          top: '-6px',
+                          left: '6px',
+                          width: '100%',
+                          height: '100%',
+                          backgroundColor: 'rgba(42, 57, 141, 0.4)',
+                          borderRadius: '15px',
+                          zIndex: -2,
+                          border: '2px solid rgba(42, 57, 141, 0.3)'
+                        }}
+                      />
+                      <div 
+                        className="card-stack-shadow"
+                        style={{
+                          position: 'absolute',
+                          top: '-12px',
+                          left: '12px',
+                          width: '100%',
+                          height: '100%',
+                          backgroundColor: 'rgba(42, 57, 141, 0.3)',
+                          borderRadius: '15px',
+                          zIndex: -3,
+                          border: '2px solid rgba(42, 57, 141, 0.2)'
+                        }}
+                      />
+                      {card.count > 2 && (
+                        <div 
+                          className="card-stack-shadow"
+                          style={{
+                            position: 'absolute',
+                            top: '-18px',
+                            left: '18px',
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(42, 57, 141, 0.2)',
+                            borderRadius: '15px',
+                            zIndex: -4,
+                            border: '2px solid rgba(42, 57, 141, 0.1)'
+                          }}
+                        />
+                      )}
+                    </>
+                  )}
 
-      {/* Stack counter badge */}
-      {isStacked && (
-        <div style={{
-          position: 'absolute',
-          top: '-10px',
-          right: '-10px',
-          backgroundColor: '#E61D25',
-          color: 'white',
-          borderRadius: '50%',
-          width: '35px',
-          height: '35px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '16px',
-          fontWeight: 'bold',
-          zIndex: 20,
-          border: '3px solid white',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
-        }}>
-          x{card.count}
-        </div>
-      )}
+                  {/* Stack counter badge */}
+                  {isStacked && (
+                    <div style={{
+                      position: 'absolute',
+                      top: '-10px',
+                      right: '-10px',
+                      backgroundColor: '#E61D25',
+                      color: 'white',
+                      borderRadius: '50%',
+                      width: '35px',
+                      height: '35px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      zIndex: 20,
+                      border: '3px solid white',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                    }}>
+                      x{card.count}
+                    </div>
+                  )}
 
-      <div className="card-image-container" style={{ 
-        position: 'relative', 
-        zIndex: 5,
-        marginBottom: '15px',
-        height: '200px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'white',
-        borderRadius: '10px',
-        border: '2px solid #474A4A'
-      }}>
+                  <div className="card-image-container" style={{ 
+                    position: 'relative', 
+                    zIndex: 5,
+                    marginBottom: '15px',
+                    height: '200px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: '#f8f9fa', // Changed from white to light gray-blue
+                    borderRadius: '10px',
+                    border: '2px solid #D1D4D1', // Changed from #474A4A to lighter border
+                    boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)' // Added subtle inset shadow
+                  }}>
                     {cardImageUrl ? (
                       <img 
                         src={cardImageUrl} 
@@ -447,10 +448,11 @@ setTimeout(() => {
                       <span className={`card-rarity rarity-${card.rarity?.toLowerCase() || 'common'}`} style={{
                         padding: '5px 10px',
                         borderRadius: '15px',
-                        backgroundColor: '#3CAC3B',
-                        color: 'white',
+                        backgroundColor: '#f8f9fa', // Changed to light background
+                        color: '#2A398D', // Changed to dark blue text
                         fontSize: '12px',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        border: '2px solid #2A398D' // Added border
                       }}>
                         {card.rarity}
                       </span>
@@ -471,11 +473,12 @@ setTimeout(() => {
                     <span className={`card-rarity rarity-${card.rarity?.toLowerCase() || 'common'}`} style={{
                       padding: '6px 12px',
                       borderRadius: '15px',
-                      backgroundColor: '#3CAC3B',
-                      color: 'white',
+                      backgroundColor: '#f8f9fa', // Changed to light background
+                      color: '#2A398D', // Changed to dark blue text
                       fontSize: '14px',
                       fontWeight: 'bold',
-                      display: 'inline-block'
+                      display: 'inline-block',
+                      border: '2px solid #2A398D' // Added border for definition
                     }}>
                       {card.rarity}
                     </span>

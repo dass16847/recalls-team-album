@@ -1,16 +1,17 @@
-/* FIFA World Cup Premium Pack Opening Styles */
+/* FIFA World Cup Premium Pack Opening Styles - Joyful & Colorful */
 .pack-opening-container {
   background: 
-    radial-gradient(circle at 30% 20%, rgba(60, 172, 59, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 70% 80%, rgba(42, 57, 141, 0.1) 0%, transparent 50%),
-    linear-gradient(135deg, #f8f9fa 0%, #D1D4D1 50%, #474A4A 100%);
+    radial-gradient(circle at 30% 20%, rgba(60, 172, 59, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(42, 57, 141, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 223, 0, 0.1) 0%, transparent 70%),
+    linear-gradient(135deg, #e3f2fd 0%, #bbdefb 25%, #90caf9 50%, #64b5f6 75%, #42a5f5 100%);
   border-radius: 20px;
   padding: 40px;
   margin: 20px 0;
   box-shadow: 
     0 12px 40px rgba(42, 57, 141, 0.2),
-    inset 0 2px 0 rgba(255, 255, 255, 0.8),
-    inset 0 -2px 0 rgba(71, 74, 74, 0.1);
+    inset 0 2px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -2px 0 rgba(66, 165, 245, 0.1);
   position: relative;
   overflow: hidden;
   border: 3px solid #2A398D;
@@ -23,7 +24,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><defs><filter id="fifaPaper"><feTurbulence baseFrequency="0.04" numOctaves="3" result="noise"/><feColorMatrix in="noise" type="saturate" values="0"/><feComponentTransfer><feFuncA type="discrete" tableValues="0.01 0.02 0.03"/></feComponentTransfer></filter></defs><rect width="100%" height="100%" filter="url(%23fifaPaper)" opacity="0.3"/></svg>') repeat;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 30%),
+    radial-gradient(circle at 80% 70%, rgba(60, 172, 59, 0.1) 0%, transparent 40%);
   pointer-events: none;
   z-index: 1;
 }
@@ -37,7 +40,7 @@
 .pack-opening-header {
   text-align: center;
   margin-bottom: 40px;
-  background: linear-gradient(135deg, #474A4A 0%, #2A398D 100%);
+  background: linear-gradient(135deg, #1976d2 0%, #2A398D 50%, #1565c0 100%);
   padding: 30px;
   border-radius: 15px;
   border: 3px solid #3CAC3B;
@@ -45,20 +48,20 @@
 }
 
 .pack-opening-header h2 {
-  background: linear-gradient(135deg, #ffffff 0%, #D1D4D1 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #e1f5fe 50%, #ffffff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-size: 3em;
   font-weight: 800;
   margin: 0 0 20px 0;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
   letter-spacing: 2px;
 }
 
 .pack-count-display {
   background: 
-    linear-gradient(135deg, #ffffff 0%, #D1D4D1 100%);
+    linear-gradient(135deg, #ffffff 0%, #f3e5f5 50%, #e8f5e8 100%);
   border: 3px solid #3CAC3B;
   border-radius: 20px;
   padding: 25px 35px;
@@ -78,7 +81,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(60, 172, 59, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 223, 0, 0.3), transparent);
   animation: fifaShimmer 3s ease-in-out infinite;
 }
 
@@ -179,7 +182,9 @@
   text-align: center;
   padding: 80px 40px;
   background: 
-    radial-gradient(circle at 50% 50%, rgba(60, 172, 59, 0.15) 0%, transparent 70%);
+    radial-gradient(circle at 50% 50%, rgba(255, 223, 0, 0.2) 0%, transparent 70%),
+    radial-gradient(circle at 30% 30%, rgba(60, 172, 59, 0.15) 0%, transparent 60%),
+    linear-gradient(135deg, #e8f5e8 0%, #fff3e0 50%, #e3f2fd 100%);
   border-radius: 20px;
   margin: 20px 0;
   border: 3px solid #3CAC3B;
@@ -194,12 +199,12 @@
   }
   50% {
     transform: scale(1.02);
-    box-shadow: 0 12px 35px rgba(60, 172, 59, 0.3);
+    box-shadow: 0 12px 35px rgba(255, 223, 0, 0.3);
   }
 }
 
 .opening-animation h3 {
-  background: linear-gradient(135deg, #2A398D 0%, #3CAC3B 100%);
+  background: linear-gradient(135deg, #2A398D 0%, #3CAC3B 50%, #ff9800 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -244,7 +249,8 @@
   padding: 35px;
   background: 
     radial-gradient(circle at 50% 20%, rgba(255,255,255,0.9) 0%, transparent 50%),
-    linear-gradient(135deg, rgba(248,249,250,0.95) 0%, rgba(209,212,209,0.95) 100%);
+    radial-gradient(circle at 30% 80%, rgba(255, 223, 0, 0.1) 0%, transparent 60%),
+    linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 25%, #fff3e0 50%, #f1f8e9 75%, #ffffff 100%);
   border-radius: 20px;
   border: 3px solid #3CAC3B;
   box-shadow: 
@@ -254,7 +260,7 @@
 
 .pack-results h3 {
   text-align: center;
-  background: linear-gradient(135deg, #2A398D 0%, #3CAC3B 100%);
+  background: linear-gradient(135deg, #2A398D 0%, #3CAC3B 50%, #ff9800 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -404,7 +410,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f8f9fa 0%, #D1D4D1 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #e3f2fd 100%);
   padding: 15px;
   border-bottom: 2px solid #2A398D;
 }
@@ -445,7 +451,7 @@
 
 .card-info {
   padding: 20px 25px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f3e5f5 25%, #e8f5e8 50%, #e3f2fd 75%, #ffffff 100%);
 }
 
 .card-info h4 {
@@ -673,7 +679,6 @@ select:focus {
     padding: 60px 25px;
   }
 
-  /* Mobile-friendly pack selector */
   select {
     width: 100%;
     max-width: 300px;
