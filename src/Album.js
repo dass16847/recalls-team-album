@@ -544,7 +544,6 @@ const handleDrop = async (e, slotName, pageId) => {
       }
     }
   };
-
   if (loading) {
     return <LoadingSpinner type="pack" message="🎁 Opening Your Album..." size="large" />;
   }
@@ -746,7 +745,7 @@ const handleDrop = async (e, slotName, pageId) => {
           marginBottom: '15px',
           fontStyle: 'italic'
         }}>
-          💡 Tip: Cards with duplicates show a 🗑️ button to delete extras you don't want to trade
+          💡 Tip: All cards show a 🗑️ button to delete them from your collection if you don't want to keep them
         </p>
 
         {loading ? (
@@ -798,45 +797,43 @@ const handleDrop = async (e, slotName, pageId) => {
                   )}
                   <div className="drag-label">DRAG ME</div>
 
-                  {/* Delete button for duplicate cards */}
-                  {userCard.count > 1 && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation(); // Prevent drag from starting
-                        deleteCard(userCard.id, userCard.cardData.name, userCard.count);
-                      }}
-                      style={{
-                        position: 'absolute',
-                        top: '5px',
-                        left: '5px',
-                        backgroundColor: '#dc3545',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '50%',
-                        width: '25px',
-                        height: '25px',
-                        fontSize: '12px',
-                        cursor: 'pointer',
-                        zIndex: 10,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                        transition: 'all 0.2s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.target.style.backgroundColor = '#c82333';
-                        e.target.style.transform = 'scale(1.1)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.backgroundColor = '#dc3545';
-                        e.target.style.transform = 'scale(1)';
-                      }}
-                      title={`Delete one copy of ${userCard.cardData.name}`}
-                    >
-                      🗑️
-                    </button>
-                  )}
+                  {/* Delete button for all cards */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent drag from starting
+                      deleteCard(userCard.id, userCard.cardData.name, userCard.count);
+                    }}
+                    style={{
+                      position: 'absolute',
+                      top: '5px',
+                      left: '5px',
+                      backgroundColor: '#dc3545',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '50%',
+                      width: '25px',
+                      height: '25px',
+                      fontSize: '12px',
+                      cursor: 'pointer',
+                      zIndex: 10,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                      transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#c82333';
+                      e.target.style.transform = 'scale(1.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = '#dc3545';
+                      e.target.style.transform = 'scale(1)';
+                    }}
+                    title={`Delete ${userCard.count > 1 ? 'one copy of' : ''} ${userCard.cardData.name}`}
+                  >
+                    🗑️
+                  </button>
 
                   {cardImageUrl ? (
                     <img 
