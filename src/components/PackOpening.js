@@ -46,6 +46,49 @@ function PackOpening({ userPacks, onPackOpened }) {
     return baseStyle;
   };
 
+  // NEW FUNCTION: Get random card based on rarity weights
+  const getRandomCardByRarity = (cards) => {
+    const rand = Math.random(); // Gets random number between 0 and 1
+
+    // 85% chance for common cards
+    if (rand < 0.85) {
+      const commonCards = cards.filter(card => 
+        card.rarity === 'Common' || card.rarity === 'common' || !card.rarity
+      );
+      if (commonCards.length > 0) {
+        return commonCards[Math.floor(Math.random() * commonCards.length)];
+      }
+    } 
+    // 12% chance for rare cards (85% to 97%)
+    else if (rand < 0.97) {
+      const rareCards = cards.filter(card => 
+        card.rarity === 'Rare' || card.rarity === 'rare'
+      );
+      if (rareCards.length > 0) {
+        return rareCards[Math.floor(Math.random() * rareCards.length)];
+      }
+      // If no rare cards exist, give a common instead
+      const commonCards = cards.filter(card => 
+        card.rarity === 'Common' || card.rarity === 'common' || !card.rarity
+      );
+      return commonCards[Math.floor(Math.random() * commonCards.length)];
+    } 
+    // 3% chance for epic cards (97% to 100%)
+    else {
+      const epicCards = cards.filter(card => 
+        card.rarity === 'Epic' || card.rarity === 'epic'
+      );
+      if (epicCards.length > 0) {
+        return epicCards[Math.floor(Math.random() * epicCards.length)];
+      }
+      // If no epic cards exist, give a common instead
+      const commonCards = cards.filter(card => 
+        card.rarity === 'Common' || card.rarity === 'common' || !card.rarity
+      );
+      return commonCards[Math.floor(Math.random() * commonCards.length)];
+    }
+  };
+
   const openPack = async () => {
     if (userPacks <= 0 || isOpening || packQuantity > userPacks) return;
     setIsOpening(true);
@@ -69,7 +112,7 @@ function PackOpening({ userPacks, onPackOpened }) {
       for (let pack = 0; pack < packQuantity; pack++) {
         const packCards = [];
         for (let i = 0; i < 3; i++) {
-          const randomCard = allCards[Math.floor(Math.random() * allCards.length)];
+          const randomCard = getRandomCardByRarity(allCards);
           packCards.push(randomCard);
         }
         allPackCards.push(...packCards);
