@@ -1,8 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { collection, query, where, onSnapshot, orderBy, limit } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, orderBy, limit, updateDoc, doc } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import './NotificationSystem.css';
-import { collection, query, where, onSnapshot, orderBy, limit, updateDoc, doc } from 'firebase/firestore';
 
 // Create notification context
 const NotificationContext = createContext();
