@@ -222,7 +222,7 @@ export const NotificationProvider = ({ children }) => {
 
 // Notification Bell Component
 export const NotificationBell = () => {
-  const { notifications, unreadCount } = useNotifications();
+  const { notifications, unreadCount, clearAllNotifications } = useNotifications();
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (

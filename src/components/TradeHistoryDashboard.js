@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, orderBy, onSnapshot, or } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import './TradeHistoryDashboard.css';
 
@@ -30,22 +30,40 @@ export const TradeHistoryDashboard = () => {
     }
 
     try {
-      // Query for trades where user is either sender or receiver
-      const tradesQuery = query(
-        collection(db, 'trades'),
-        where('participants', 'array-contains', auth.currentUser.uid),
+      // FIXED: Query for completed trades from tradeNotifications where user was involved
+      const completedTradesQuery = query(
+        collection(db, 'tradeNotifications'),
+        where('targetUserId', '==', auth.currentUser.uid),
+        where('type', '==', 'trade_completed'),
         orderBy('createdAt', 'desc')
       );
 
       const unsubscribe = onSnapshot(
-        tradesQuery, 
+        completedTradesQuery, 
         (snapshot) => {
-          const tradeData = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-            createdAt: doc.data().createdAt?.toDate() || new Date()
-          }));
+          console.log('Trade notifications found:', snapshot.docs.length);
 
+          const tradeData = snapshot.docs.map(doc => {
+            const data = doc.data();
+            console.log('Trade notification data:', data);
+
+            return {
+              id: doc.id,
+              status: 'completed', // All these are completed trades
+              createdAt: data.createdAt?.toDate() || new Date(),
+              senderName: data.tradeData?.traderEmail || 'Unknown User',
+              receiverName: auth.currentUser.email,
+              senderId: 'other_user', // The other trader
+              receiverId: auth.currentUser.uid,
+              // Cards involved in the trade
+              senderCards: data.tradeData?.offeringCard ? [{ name: data.tradeData.offeringCard }] : [],
+              receiverCards: data.tradeData?.receivedCard ? [{ name: data.tradeData.receivedCard }] : [],
+              // Additional data
+              tradeData: data.tradeData || {}
+            };
+          });
+
+          console.log('Processed trade data:', tradeData);
           setTrades(tradeData);
           setFilteredTrades(tradeData);
           calculateStatistics(tradeData);
@@ -53,8 +71,51 @@ export const TradeHistoryDashboard = () => {
           setError(null);
         },
         (error) => {
-          console.log('No trades collection yet or permission denied:', error);
-          // This is normal - trades collection doesn't exist yet
+          console.log('Error loading trade notifications:', error);
+          // Try alternative approach - look for any trade-related data
+          loadAlternativeTradeData();
+        }
+      );
+
+      return () => unsubscribe();
+    } catch (error) {
+      console.error('Error setting up trades listener:', error);
+      loadAlternativeTradeData();
+    }
+  }, []);
+
+  // Alternative method to load trade data
+  const loadAlternativeTradeData = () => {
+    try {
+      // Check for any trades collection
+      const tradesQuery = query(
+        collection(db, 'trades'),
+        orderBy('createdAt', 'desc')
+      );
+
+      const unsubscribe = onSnapshot(
+        tradesQuery, 
+        (snapshot) => {
+          console.log('Alternative trades found:', snapshot.docs.length);
+
+          // Filter trades where current user was involved
+          const userTrades = snapshot.docs
+            .map(doc => ({ id: doc.id, ...doc.data() }))
+            .filter(trade => 
+              trade.userId === auth.currentUser.uid || 
+              trade.userEmail === auth.currentUser.email ||
+              (trade.participants && trade.participants.includes(auth.currentUser.uid))
+            );
+
+          console.log('User trades found:', userTrades);
+          setTrades(userTrades);
+          setFilteredTrades(userTrades);
+          calculateStatistics(userTrades);
+          setLoading(false);
+          setError(null);
+        },
+        (error) => {
+          console.log('No trades found:', error);
           setTrades([]);
           setFilteredTrades([]);
           calculateStatistics([]);
@@ -63,16 +124,16 @@ export const TradeHistoryDashboard = () => {
         }
       );
 
-      return () => unsubscribe();
+      return unsubscribe;
     } catch (error) {
-      console.error('Error setting up trades listener:', error);
+      console.error('Error with alternative trade loading:', error);
       setTrades([]);
       setFilteredTrades([]);
       calculateStatistics([]);
       setLoading(false);
       setError(null);
     }
-  }, []);
+  };
 
   // Calculate trade statistics
   const calculateStatistics = (tradeData) => {
@@ -81,6 +142,8 @@ export const TradeHistoryDashboard = () => {
     const pending = tradeData.filter(trade => trade.status === 'pending').length;
     const cancelled = tradeData.filter(trade => trade.status === 'cancelled').length;
     const successRate = total > 0 ? Math.round((successful / total) * 100) : 0;
+
+    console.log('Statistics calculated:', { total, successful, pending, cancelled, successRate });
 
     setStatistics({
       totalTrades: total,
@@ -148,13 +211,13 @@ export const TradeHistoryDashboard = () => {
       const csvData = filteredTrades.map(trade => ({
         Date: trade.createdAt.toLocaleDateString(),
         Status: trade.status,
-        'Trading Partner': trade.senderId === auth.currentUser.uid ? trade.receiverName : trade.senderName,
-        'Cards Given': trade.senderId === auth.currentUser.uid ? 
-          trade.senderCards?.map(card => card.name).join(', ') || 'None' : 
-          trade.receiverCards?.map(card => card.name).join(', ') || 'None',
-        'Cards Received': trade.senderId === auth.currentUser.uid ? 
+        'Trading Partner': trade.senderName === auth.currentUser.email ? trade.receiverName : trade.senderName,
+        'Cards Given': trade.receiverId === auth.currentUser.uid ? 
           trade.receiverCards?.map(card => card.name).join(', ') || 'None' : 
-          trade.senderCards?.map(card => card.name).join(', ') || 'None'
+          trade.senderCards?.map(card => card.name).join(', ') || 'None',
+        'Cards Received': trade.receiverId === auth.currentUser.uid ? 
+          trade.senderCards?.map(card => card.name).join(', ') || 'None' : 
+          trade.receiverCards?.map(card => card.name).join(', ') || 'None'
       }));
 
       const csvContent = [
@@ -183,7 +246,7 @@ export const TradeHistoryDashboard = () => {
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: '400px',
-        background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 100%)',
+        background: 'linear-gradient(135deg, #E6F0FF 0%, #D4E6F1 100%)',
         borderRadius: '15px',
         border: '3px solid #6100E9',
         margin: '20px',
@@ -192,7 +255,7 @@ export const TradeHistoryDashboard = () => {
         <div style={{
           width: '50px',
           height: '50px',
-          border: '4px solid #E6F9F5',
+          border: '4px solid #D4E6F1',
           borderTop: '4px solid #64FEDA',
           borderRadius: '50%',
           animation: 'spin 1s linear infinite',
@@ -206,7 +269,7 @@ export const TradeHistoryDashboard = () => {
   return (
     <div style={{ 
       padding: '20px', 
-      background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 50%, #F5F0FF 100%)', 
+      background: 'linear-gradient(135deg, #E6F0FF 0%, #D4E6F1 50%, #E8E6FF 100%)', 
       minHeight: '100vh' 
     }}>
       {/* Header */}
@@ -266,7 +329,7 @@ export const TradeHistoryDashboard = () => {
         marginBottom: '30px'
       }}>
         <div style={{
-          background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
+          background: 'linear-gradient(135deg, #ffffff 0%, #E6F0FF 100%)',
           padding: '25px',
           borderRadius: '12px',
           border: '3px solid #6100E9',
@@ -298,7 +361,7 @@ export const TradeHistoryDashboard = () => {
         </div>
 
         <div style={{
-          background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
+          background: 'linear-gradient(135deg, #ffffff 0%, #E6F0FF 100%)',
           padding: '25px',
           borderRadius: '12px',
           border: '3px solid #AFEA00',
@@ -330,7 +393,7 @@ export const TradeHistoryDashboard = () => {
         </div>
 
         <div style={{
-          background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
+          background: 'linear-gradient(135deg, #ffffff 0%, #E6F0FF 100%)',
           padding: '25px',
           borderRadius: '12px',
           border: '3px solid #B288FD',
@@ -362,7 +425,7 @@ export const TradeHistoryDashboard = () => {
         </div>
 
         <div style={{
-          background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
+          background: 'linear-gradient(135deg, #ffffff 0%, #E6F0FF 100%)',
           padding: '25px',
           borderRadius: '12px',
           border: '3px solid #64FEDA',
@@ -396,7 +459,7 @@ export const TradeHistoryDashboard = () => {
 
       {/* Filters */}
       <div style={{
-        background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
+        background: 'linear-gradient(135deg, #ffffff 0%, #E6F0FF 100%)',
         padding: '25px',
         borderRadius: '15px',
         border: '3px solid #6100E9',
@@ -498,10 +561,10 @@ export const TradeHistoryDashboard = () => {
       <div>
         {filteredTrades.length === 0 ? (
           <div style={{
-            background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
+            background: 'linear-gradient(135deg, #ffffff 0%, #E6F0FF 100%)',
             padding: '60px 40px',
             borderRadius: '15px',
-            border: '3px solid #E6F9F5',
+            border: '3px solid #D4E6F1',
             textAlign: 'center',
             boxShadow: '0 6px 16px rgba(97,0,233,0.08)'
           }}>
@@ -544,7 +607,7 @@ export const TradeHistoryDashboard = () => {
 
               return (
                 <div key={trade.id} style={{
-                  background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
+                  background: 'linear-gradient(135deg, #ffffff 0%, #E6F0FF 100%)',
                   borderRadius: '12px',
                   border: `3px solid ${getStatusColor(trade.status)}`,
                   boxShadow: '0 6px 16px rgba(97,0,233,0.1)',
@@ -603,7 +666,7 @@ export const TradeHistoryDashboard = () => {
                         fontSize: '18px',
                         fontWeight: 'bold'
                       }}>
-                        {trade.senderId === auth.currentUser.uid ? trade.receiverName : trade.senderName}
+                        {trade.senderName === auth.currentUser.email ? trade.receiverName : trade.senderName}
                       </span>
                     </div>
 
@@ -626,7 +689,7 @@ export const TradeHistoryDashboard = () => {
                           textAlign: 'center'
                         }}>You gave:</h4>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                          {(trade.senderId === auth.currentUser.uid ? trade.senderCards : trade.receiverCards)?.map((card, index) => (
+                          {(trade.receiverId === auth.currentUser.uid ? trade.receiverCards : trade.senderCards)?.map((card, index) => (
                             <span key={index} style={{
                               backgroundColor: 'white',
                               padding: '8px 12px',
@@ -663,7 +726,7 @@ export const TradeHistoryDashboard = () => {
                           textAlign: 'center'
                         }}>You received:</h4>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                          {(trade.senderId === auth.currentUser.uid ? trade.receiverCards : trade.senderCards)?.map((card, index) => (
+                          {(trade.receiverId === auth.currentUser.uid ? trade.senderCards : trade.receiverCards)?.map((card, index) => (
                             <span key={index} style={{
                               backgroundColor: 'white',
                               padding: '8px 12px',
