@@ -309,22 +309,22 @@ const acceptTrade = async (trade) => {
   return (
     <div style={{ 
       padding: '20px', 
-      background: 'linear-gradient(135deg, #f0f8ff 0%, #ffffff 50%, #e6f3ff 100%)',
+      background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 50%, #F5F0FF 100%)',
       minHeight: '100vh' 
     }}>
       <div style={{ 
         textAlign: 'center', 
         marginBottom: '30px',
-        backgroundColor: '#1e3a8a',
+        background: 'linear-gradient(135deg, #6100E9 0%, #304FFF 50%, #64FEDA 100%)',
         padding: '30px',
         borderRadius: '15px',
-        border: '3px solid #1e3a8a'
+        border: '3px solid #AFEA00'
       }}>
         <h2 style={{ 
           color: 'white', 
           margin: '0 0 10px 0',
           fontSize: '2.5rem',
-          textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+          textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
         }}>🔄 Trading Post</h2>
         <p style={{ 
           color: 'white', 
@@ -340,11 +340,11 @@ const acceptTrade = async (trade) => {
         backgroundColor: 'white',
         padding: '25px',
         borderRadius: '15px',
-        border: '3px solid #1e3a8a',
-        boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
+        border: '3px solid #6100E9',
+        boxShadow: '0 8px 24px rgba(97,0,233,0.1)'
       }}>
         <h3 style={{ 
-          color: '#1e3a8a', 
+          color: '#1A1A2E', 
           marginBottom: '20px',
           fontSize: '1.8rem',
           textAlign: 'center'
@@ -353,12 +353,12 @@ const acceptTrade = async (trade) => {
           <div style={{
             textAlign: 'center',
             padding: '40px',
-            backgroundColor: '#f0f8ff',
+            background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 100%)',
             borderRadius: '10px',
-            border: '2px solid #1e3a8a'
+            border: '2px solid #6100E9'
           }}>
             <p style={{ 
-              color: '#1e3a8a', 
+              color: '#1A1A2E', 
               fontStyle: 'italic',
               fontSize: '18px',
               fontWeight: 'bold',
@@ -378,29 +378,29 @@ const acceptTrade = async (trade) => {
               <div
                 key={card.id}
                 style={{
-                  border: '3px solid #1e3a8a',
+                  border: '3px solid #6100E9',
                   borderRadius: '12px',
                   padding: '18px',
-                  backgroundColor: '#f0f8ff',
-                  boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+                  background: 'linear-gradient(135deg, #F0F4FF 0%, #ffffff 100%)',
+                  boxShadow: '0 6px 16px rgba(97,0,233,0.1)',
                   position: 'relative',
                   transition: 'transform 0.3s ease'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-5px)';
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(97,0,233,0.15)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(97,0,233,0.1)';
                 }}
               >
                 <div style={{
                   position: 'absolute',
                   top: '10px',
                   right: '10px',
-                  backgroundColor: '#1e3a8a',
-                  color: 'white',
+                  backgroundColor: '#64FEDA',
+                  color: '#1A1A2E',
                   borderRadius: '50%',
                   width: '30px',
                   height: '30px',
@@ -426,7 +426,7 @@ const acceptTrade = async (trade) => {
                   backgroundColor: 'white',
                   borderRadius: '10px',
                   overflow: 'hidden',
-                  border: '2px solid #1e3a8a'
+                  border: '2px solid #6100E9'
                 }}>
                   {getCardImageUrl(card.cardData) ? (
                     <img
@@ -449,7 +449,7 @@ const acceptTrade = async (trade) => {
                     justifyContent: 'center',
                     width: '100%',
                     height: '100%',
-                    backgroundColor: '#1e3a8a',
+                    backgroundColor: '#6100E9',
                     color: 'white',
                     fontSize: '14px',
                     textAlign: 'center',
@@ -463,7 +463,7 @@ const acceptTrade = async (trade) => {
 
                 <h4 style={{ 
                   margin: '0 0 10px 0', 
-                  color: '#1e3a8a',
+                  color: '#1A1A2E',
                   fontSize: '16px',
                   fontWeight: 'bold',
                   textAlign: 'center'
@@ -473,7 +473,7 @@ const acceptTrade = async (trade) => {
                 <p style={{ 
                   margin: '6px 0', 
                   fontSize: '14px', 
-                  color: '#1e3a8a',
+                  color: '#4A4A6A',
                   textAlign: 'center',
                   fontWeight: 'bold'
                 }}>
@@ -483,9 +483,9 @@ const acceptTrade = async (trade) => {
                   margin: '6px 0', 
                   fontSize: '13px', 
                   fontWeight: 'bold', 
-                  color: '#1e3a8a',
+                  color: '#1A1A2E',
                   textAlign: 'center',
-                  backgroundColor: 'rgba(30,58,138,0.1)',
+                  backgroundColor: 'rgba(100,254,218,0.15)',
                   padding: '4px 8px',
                   borderRadius: '8px'
                 }}>
@@ -494,7 +494,7 @@ const acceptTrade = async (trade) => {
                 <p style={{ 
                   margin: '10px 0 0 0', 
                   fontSize: '13px', 
-                  color: '#1e3a8a',
+                  color: '#6100E9',
                   textAlign: 'center',
                   fontWeight: 'bold'
                 }}>
@@ -511,7 +511,7 @@ const acceptTrade = async (trade) => {
               onClick={() => setShowCreateTrade(!showCreateTrade)}
               style={{
                 padding: '15px 30px',
-                backgroundColor: showCreateTrade ? '#dc3545' : '#1e3a8a',
+                backgroundColor: showCreateTrade ? '#FF3D00' : '#6100E9',
                 color: 'white',
                 border: 'none',
                 borderRadius: '10px',
@@ -541,11 +541,11 @@ const acceptTrade = async (trade) => {
         backgroundColor: 'white',
         padding: '25px',
         borderRadius: '15px',
-        border: '3px solid #1e3a8a',
-        boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
+        border: '3px solid #6100E9',
+        boxShadow: '0 8px 24px rgba(97,0,233,0.1)'
       }}>
         <h3 style={{ 
-          color: '#1e3a8a', 
+          color: '#1A1A2E', 
           marginBottom: '20px',
           fontSize: '1.8rem',
           textAlign: 'center'
@@ -554,12 +554,12 @@ const acceptTrade = async (trade) => {
           <div style={{
             textAlign: 'center',
             padding: '40px',
-            backgroundColor: '#f0f8ff',
+            background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 100%)',
             borderRadius: '10px',
-            border: '2px solid #1e3a8a'
+            border: '2px solid #6100E9'
           }}>
             <p style={{ 
-              color: '#1e3a8a', 
+              color: '#1A1A2E', 
               fontStyle: 'italic',
               fontSize: '18px',
               fontWeight: 'bold',
@@ -578,32 +578,32 @@ const acceptTrade = async (trade) => {
               <div
                 key={trade.id}
                 style={{
-                  border: '3px solid #1e3a8a',
+                  border: '3px solid #6100E9',
                   borderRadius: '12px',
                   padding: '25px',
-                  backgroundColor: '#f0f8ff',
-                  boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+                  background: 'linear-gradient(135deg, #F0F4FF 0%, #ffffff 100%)',
+                  boxShadow: '0 6px 16px rgba(97,0,233,0.1)',
                   transition: 'transform 0.3s ease'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-5px)';
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(97,0,233,0.15)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(97,0,233,0.1)';
                 }}
               >
                 <div style={{ marginBottom: '20px', textAlign: 'center' }}>
                   <strong style={{ 
-                    color: '#1e3a8a', 
+                    color: '#1A1A2E', 
                     fontSize: '18px',
                     display: 'block',
                     marginBottom: '8px'
                   }}>Trade Offer</strong>
                   <p style={{ 
                     fontSize: '14px', 
-                    color: '#1e3a8a', 
+                    color: '#4A4A6A', 
                     margin: 0,
                     fontWeight: 'bold'
                   }}>
@@ -623,17 +623,17 @@ const acceptTrade = async (trade) => {
                     backgroundColor: 'white',
                     padding: '15px',
                     borderRadius: '10px',
-                    border: '2px solid #22c55e'
+                    border: '2px solid #AFEA00'
                   }}>
                     <p style={{ 
                       fontSize: '12px', 
-                      color: '#1e3a8a', 
+                      color: '#1A1A2E', 
                       margin: '0 0 8px 0',
                       fontWeight: 'bold',
                       textTransform: 'uppercase'
                     }}>OFFERING</p>
                     <strong style={{ 
-                      color: '#22c55e',
+                      color: '#AFEA00',
                       fontSize: '16px',
                       display: 'block'
                     }}>{trade.offeringCard}</strong>
@@ -641,7 +641,7 @@ const acceptTrade = async (trade) => {
 
                   <div style={{ 
                     fontSize: '24px',
-                    color: '#1e3a8a',
+                    color: '#6100E9',
                     fontWeight: 'bold'
                   }}>🔄</div>
 
@@ -651,17 +651,17 @@ const acceptTrade = async (trade) => {
                     backgroundColor: 'white',
                     padding: '15px',
                     borderRadius: '10px',
-                    border: '2px solid #dc3545'
+                    border: '2px solid #FF3D00'
                   }}>
                     <p style={{ 
                       fontSize: '12px', 
-                      color: '#1e3a8a', 
+                      color: '#1A1A2E', 
                       margin: '0 0 8px 0',
                       fontWeight: 'bold',
                       textTransform: 'uppercase'
                     }}>WANTS</p>
                     <strong style={{ 
-                      color: '#dc3545',
+                      color: '#FF3D00',
                       fontSize: '16px',
                       display: 'block'
                     }}>{trade.wantingCard}</strong>
@@ -673,8 +673,8 @@ const acceptTrade = async (trade) => {
                   style={{
                     width: '100%',
                     padding: '15px',
-                    backgroundColor: '#22c55e',
-                    color: 'white',
+                    backgroundColor: '#AFEA00',
+                    color: '#1A1A2E',
                     border: 'none',
                     borderRadius: '8px',
                     cursor: 'pointer',
@@ -684,12 +684,12 @@ const acceptTrade = async (trade) => {
                     boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#16a34a';
+                    e.target.style.backgroundColor = '#00CA55';
                     e.target.style.transform = 'translateY(-2px)';
                     e.target.style.boxShadow = '0 6px 16px rgba(0,0,0,0.3)';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#22c55e';
+                    e.target.style.backgroundColor = '#AFEA00';
                     e.target.style.transform = 'translateY(0)';
                     e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
                   }}
@@ -710,7 +710,7 @@ const acceptTrade = async (trade) => {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(30,58,138,0.8)',
+          backgroundColor: 'rgba(26,26,46,0.8)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -724,11 +724,11 @@ const acceptTrade = async (trade) => {
             width: '95%',
             maxHeight: '85vh',
             overflow: 'auto',
-            border: '4px solid #1e3a8a',
+            border: '4px solid #6100E9',
             boxShadow: '0 12px 32px rgba(0,0,0,0.3)'
           }}>
             <h3 style={{ 
-              color: '#1e3a8a', 
+              color: '#1A1A2E', 
               textAlign: 'center',
               fontSize: '2rem',
               marginBottom: '25px'
@@ -739,7 +739,7 @@ const acceptTrade = async (trade) => {
                 display: 'block', 
                 marginBottom: '10px', 
                 fontWeight: 'bold',
-                color: '#1e3a8a',
+                color: '#1A1A2E',
                 fontSize: '16px'
               }}>
                 I'm offering:
@@ -750,11 +750,11 @@ const acceptTrade = async (trade) => {
                 style={{
                   width: '100%',
                   padding: '12px',
-                  border: '3px solid #22c55e',
+                  border: '3px solid #AFEA00',
                   borderRadius: '8px',
                   fontSize: '16px',
                   backgroundColor: 'white',
-                  color: '#1e3a8a',
+                  color: '#1A1A2E',
                   fontWeight: 'bold'
                 }}
               >
@@ -772,7 +772,7 @@ const acceptTrade = async (trade) => {
                 display: 'block', 
                 marginBottom: '10px', 
                 fontWeight: 'bold',
-                color: '#1e3a8a',
+                color: '#1A1A2E',
                 fontSize: '16px'
               }}>
                 I want:
@@ -787,12 +787,12 @@ const acceptTrade = async (trade) => {
                 style={{
                   width: '100%',
                   padding: '12px',
-                  border: '3px solid #1e3a8a',
+                  border: '3px solid #6100E9',
                   borderRadius: '8px',
                   fontSize: '16px',
                   marginBottom: '12px',
-                  backgroundColor: '#f0f8ff',
-                  color: '#1e3a8a',
+                  background: 'linear-gradient(135deg, #F0F4FF 0%, #ffffff 100%)',
+                  color: '#1A1A2E',
                   fontWeight: 'bold'
                 }}
               />
@@ -807,11 +807,11 @@ const acceptTrade = async (trade) => {
   style={{
     width: '100%',
     padding: '12px',
-    border: '3px solid #dc3545',
+    border: '3px solid #FF3D00',
     borderRadius: '8px',
     fontSize: '16px',
     backgroundColor: 'white',
-    color: '#1e3a8a',
+    color: '#1A1A2E',
     fontWeight: 'bold',
     cursor: 'pointer'
   }}
@@ -834,12 +834,12 @@ const acceptTrade = async (trade) => {
   <div style={{
     marginTop: '10px',
     padding: '10px',
-    backgroundColor: '#e6f3ff',
-    border: '2px solid #1e3a8a',
+    background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 100%)',
+    border: '2px solid #6100E9',
     borderRadius: '8px',
     textAlign: 'center'
   }}>
-    <strong style={{ color: '#1e3a8a' }}>
+    <strong style={{ color: '#1A1A2E' }}>
       Selected: {selectedWantingCard}
     </strong>
   </div>
@@ -847,12 +847,12 @@ const acceptTrade = async (trade) => {
 
               {wantingCardSearch && filteredAllCards.length === 0 && (
                 <p style={{ 
-                  color: '#dc3545', 
+                  color: '#FF3D00', 
                   fontSize: '14px', 
                   margin: '8px 0',
                   fontWeight: 'bold',
                   textAlign: 'center',
-                  backgroundColor: 'rgba(220,53,69,0.1)',
+                  backgroundColor: 'rgba(255,61,0,0.1)',
                   padding: '8px',
                   borderRadius: '6px'
                 }}>
@@ -862,12 +862,12 @@ const acceptTrade = async (trade) => {
 
               {wantingCardSearch && filteredAllCards.length > 0 && (
                 <p style={{ 
-                  color: '#22c55e', 
+                  color: '#AFEA00', 
                   fontSize: '14px', 
                   margin: '8px 0',
                   fontWeight: 'bold',
                   textAlign: 'center',
-                  backgroundColor: 'rgba(34,197,94,0.1)',
+                  backgroundColor: 'rgba(175,234,0,0.1)',
                   padding: '8px',
                   borderRadius: '6px'
                 }}>
@@ -882,8 +882,8 @@ const acceptTrade = async (trade) => {
                 style={{
                   flex: 1,
                   padding: '15px',
-                  backgroundColor: '#22c55e',
-                  color: 'white',
+                  backgroundColor: '#AFEA00',
+                  color: '#1A1A2E',
                   border: 'none',
                   borderRadius: '8px',
                   cursor: 'pointer',
@@ -893,11 +893,11 @@ const acceptTrade = async (trade) => {
                   boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#16a34a';
+                  e.target.style.backgroundColor = '#00CA55';
                   e.target.style.transform = 'translateY(-2px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = '#22c55e';
+                  e.target.style.backgroundColor = '#AFEA00';
                   e.target.style.transform = 'translateY(0)';
                 }}
               >
@@ -913,7 +913,7 @@ const acceptTrade = async (trade) => {
                 style={{
                   flex: 1,
                   padding: '15px',
-                  backgroundColor: '#6b7280',
+                  backgroundColor: '#8888AA',
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
@@ -924,11 +924,11 @@ const acceptTrade = async (trade) => {
                   boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#4b5563';
+                  e.target.style.backgroundColor = '#4A4A6A';
                   e.target.style.transform = 'translateY(-2px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = '#6b7280';
+                  e.target.style.backgroundColor = '#8888AA';
                   e.target.style.transform = 'translateY(0)';
                 }}
               >

@@ -20,6 +20,8 @@ function App() {
     'mccerdas@amazon.com',
     'iregonza@amazon.com',
     'rafajaso@amazon.com',
+    'eimy@amazon.com',
+    'campjul@amazon.com',
   ];
 
   const [user, setUser] = useState(null);
@@ -541,10 +543,10 @@ function App() {
   };
 
   const getCompletionColor = (percentage) => {
-    if (percentage >= 80) return '#3CAC3B'; // Average Green
-    if (percentage >= 60) return '#ffc107'; // Yellow
-    if (percentage >= 40) return '#fd7e14'; // Orange
-    return '#E61D25'; // Torch Red
+    if (percentage >= 80) return '#AFEA00'; // Neon Lime
+    if (percentage >= 60) return '#B288FD'; // Soft Lavender
+    if (percentage >= 40) return '#FF3D00'; // Flare Orange
+    return '#304FFF'; // Stadium Blue
   };
 
   const handleLogin = () => {
@@ -582,7 +584,7 @@ const handlePackOpened = async (quantity = 1) => {
   // MAIN LOADING STATE - When app is starting up
   if (loading) {
     return (
-      <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#474A4A' }}>
+      <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#F0F4FF' }}>
         <LoadingSpinner type="pack" message="🏆 Loading Recalls Team Album..." size="large" />
       </div>
     );
@@ -598,20 +600,20 @@ return (
   <NotificationProvider>
     <div className="App" style={{
   minHeight: '100vh',
-  background: 'linear-gradient(135deg, #f0f8ff 0%, #ffffff 50%, #e6f3ff 100%)'
+  background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 50%, #F5F0FF 100%)'
 }}>
-      <header style={{ padding: '20px', backgroundColor: '#474A4A', borderBottom: '2px solid #2A398D' }}>
+      <header style={{ padding: '20px', backgroundColor: 'rgba(97, 0, 233, 0.95)', borderBottom: '2px solid #6100E9' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto' }}>
           <h1 style={{ color: 'white', margin: 0 }}>🏆 Recalls Team Album</h1>
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <span style={{ color: 'white', fontWeight: 'bold' }}>Welcome, {user.email}!</span>
-            <span style={{ backgroundColor: '#3CAC3B', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '14px', fontWeight: 'bold' }}>
+            <span style={{ backgroundColor: '#64FEDA', color: '#1A1A2E', padding: '4px 8px', borderRadius: '12px', fontSize: '14px', fontWeight: 'bold' }}>
               {userPacks} packs
             </span>
             <NotificationBell />
             <button 
               onClick={handleLogout}
-              style={{ padding: '8px 16px', backgroundColor: '#E61D25', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+              style={{ padding: '8px 16px', backgroundColor: '#FF3D00', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
             >
               Logout
             </button>
@@ -619,15 +621,15 @@ return (
         </div>
       </header>
 
-      <nav style={{ backgroundColor: '#D1D4D1', padding: '10px 0' }}>
+      <nav style={{ backgroundColor: '#F0F4FF', padding: '10px 0' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', gap: '20px', paddingLeft: '20px' }}>
           <button
             onClick={() => setActiveTab('packs')}
             style={{
               padding: '10px 20px',
-              backgroundColor: activeTab === 'packs' ? '#2A398D' : 'transparent',
-              color: activeTab === 'packs' ? 'white' : '#2A398D',
-              border: '2px solid #2A398D',
+              backgroundColor: activeTab === 'packs' ? '#6100E9' : 'transparent',
+              color: activeTab === 'packs' ? 'white' : '#1A1A2E',
+              border: '2px solid #6100E9',
               borderRadius: '4px',
               cursor: 'pointer',
               fontWeight: 'bold'
@@ -639,9 +641,9 @@ return (
             onClick={() => setActiveTab('album')}
             style={{
               padding: '10px 20px',
-              backgroundColor: activeTab === 'album' ? '#2A398D' : 'transparent',
-              color: activeTab === 'album' ? 'white' : '#2A398D',
-              border: '2px solid #2A398D',
+              backgroundColor: activeTab === 'album' ? '#6100E9' : 'transparent',
+              color: activeTab === 'album' ? 'white' : '#1A1A2E',
+              border: '2px solid #6100E9',
               borderRadius: '4px',
               cursor: 'pointer',
               fontWeight: 'bold'
@@ -653,9 +655,9 @@ return (
             onClick={() => setActiveTab('trading')}
             style={{
               padding: '10px 20px',
-              backgroundColor: activeTab === 'trading' ? '#2A398D' : 'transparent',
-              color: activeTab === 'trading' ? 'white' : '#2A398D',
-              border: '2px solid #2A398D',
+              backgroundColor: activeTab === 'trading' ? '#6100E9' : 'transparent',
+              color: activeTab === 'trading' ? 'white' : '#1A1A2E',
+              border: '2px solid #6100E9',
               borderRadius: '4px',
               cursor: 'pointer',
               fontWeight: 'bold'
@@ -667,9 +669,9 @@ return (
   onClick={() => setActiveTab('history')}
   style={{
     padding: '10px 20px',
-    backgroundColor: activeTab === 'history' ? '#1e3a8a' : '#f0f8ff',
-    color: activeTab === 'history' ? 'white' : '#1e3a8a',
-    border: '1px solid #1e3a8a',
+    backgroundColor: activeTab === 'history' ? '#6100E9' : '#F0F4FF',
+    color: activeTab === 'history' ? 'white' : '#1A1A2E',
+    border: '1px solid #6100E9',
     borderRadius: '4px',
     cursor: 'pointer',
     fontWeight: 'bold'
@@ -683,9 +685,9 @@ return (
     onClick={openAdminPanel}
     style={{
       padding: '10px 20px',
-      backgroundColor: '#e6f3ff',
-      color: '#1e3a8a',
-      border: '2px solid #1e3a8a',
+      backgroundColor: '#AFEA00',
+      color: '#1A1A2E',
+      border: '2px solid #1A1A2E',
       borderRadius: '4px',
       cursor: 'pointer',
       fontSize: '12px',
@@ -698,7 +700,7 @@ return (
         </div>
       </nav>
 
-      <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px', backgroundColor: '#f8f9fa', minHeight: 'calc(100vh - 140px)' }}>
+      <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px', backgroundColor: '#F0F4FF', minHeight: 'calc(100vh - 140px)' }}>
         {activeTab === 'packs' && (
           <PackOpening 
             userPacks={userPacks} 
@@ -727,7 +729,7 @@ return (
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(71,74,74,0.8)',
+          backgroundColor: 'rgba(26,26,46,0.8)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -741,14 +743,14 @@ return (
             width: '95%',
             maxHeight: '90vh',
             overflow: 'auto',
-            border: '3px solid #2A398D'
+            border: '3px solid #6100E9'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h2 style={{ color: '#2A398D', margin: 0 }}>⚙️ Admin Panel</h2>
+              <h2 style={{ color: '#1A1A2E', margin: 0 }}>⚙️ Admin Panel</h2>
               <button
                 onClick={() => setShowAdminPanel(false)}
                 style={{
-                  backgroundColor: '#E61D25',
+                  backgroundColor: '#FF3D00',
                   color: 'white',
                   border: 'none',
                   borderRadius: '50%',
@@ -768,9 +770,9 @@ return (
                 onClick={() => setAdminView('grant')}
                 style={{
                   padding: '10px 20px',
-                  backgroundColor: adminView === 'grant' ? '#2A398D' : '#D1D4D1',
-                  color: adminView === 'grant' ? 'white' : '#2A398D',
-                  border: '2px solid #2A398D',
+                  backgroundColor: adminView === 'grant' ? '#6100E9' : '#F0F4FF',
+                  color: adminView === 'grant' ? 'white' : '#1A1A2E',
+                  border: '2px solid #6100E9',
                   borderRadius: '6px',
                   cursor: 'pointer',
                   fontWeight: 'bold'
@@ -782,9 +784,9 @@ return (
                 onClick={() => setAdminView('manage')}
                 style={{
                   padding: '10px 20px',
-                  backgroundColor: adminView === 'manage' ? '#2A398D' : '#D1D4D1',
-                  color: adminView === 'manage' ? 'white' : '#2A398D',
-                  border: '2px solid #2A398D',
+                  backgroundColor: adminView === 'manage' ? '#6100E9' : '#F0F4FF',
+                  color: adminView === 'manage' ? 'white' : '#1A1A2E',
+                  border: '2px solid #6100E9',
                   borderRadius: '6px',
                   cursor: 'pointer',
                   fontWeight: 'bold'
@@ -801,9 +803,9 @@ return (
                 }}
                 style={{
                   padding: '10px 20px',
-                  backgroundColor: adminView === 'analytics' ? '#2A398D' : '#D1D4D1',
-                  color: adminView === 'analytics' ? 'white' : '#2A398D',
-                  border: '2px solid #2A398D',
+                  backgroundColor: adminView === 'analytics' ? '#6100E9' : '#F0F4FF',
+                  color: adminView === 'analytics' ? 'white' : '#1A1A2E',
+                  border: '2px solid #6100E9',
                   borderRadius: '6px',
                   cursor: 'pointer',
                   fontWeight: 'bold'
@@ -816,9 +818,9 @@ return (
             {/* Grant Packs View */}
             {adminView === 'grant' && (
               <>
-                <div style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#D1D4D1', borderRadius: '8px' }}>
+                <div style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#F0F4FF', borderRadius: '8px' }}>
                   <div style={{ display: 'flex', gap: '15px', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ fontWeight: 'bold', color: '#474A4A' }}>Packs to grant:</label>
+                    <label style={{ fontWeight: 'bold', color: '#1A1A2E' }}>Packs to grant:</label>
                     <input
                       type="number"
                       min="1"
@@ -827,7 +829,7 @@ return (
                       onChange={(e) => setPacksToGrant(e.target.value)}
                       style={{
                         padding: '8px',
-                        border: '2px solid #2A398D',
+                        border: '2px solid #6100E9',
                         borderRadius: '4px',
                         width: '80px'
                       }}
@@ -837,8 +839,8 @@ return (
                       disabled={adminLoading || selectedUsers.length === 0}
                       style={{
                         padding: '10px 20px',
-                        backgroundColor: selectedUsers.length > 0 ? '#3CAC3B' : '#474A4A',
-                        color: 'white',
+                        backgroundColor: selectedUsers.length > 0 ? '#AFEA00' : '#8888AA',
+                        color: selectedUsers.length > 0 ? '#1A1A2E' : 'white',
                         border: 'none',
                         borderRadius: '6px',
                         cursor: selectedUsers.length > 0 ? 'pointer' : 'not-allowed',
@@ -855,13 +857,13 @@ return (
             {/* Manage Users View */}
             {adminView === 'manage' && (
               <>
-                <div style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#D1D4D1', borderRadius: '8px' }}>
+                <div style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#F0F4FF', borderRadius: '8px' }}>
                   <button
                     onClick={() => setShowAddUser(true)}
                     style={{
                       padding: '10px 20px',
-                      backgroundColor: '#3CAC3B',
-                      color: 'white',
+                      backgroundColor: '#AFEA00',
+                      color: '#1A1A2E',
                       border: 'none',
                       borderRadius: '6px',
                       cursor: 'pointer',
@@ -883,31 +885,31 @@ return (
                   <div>
                     {/* Overview Stats */}
                     <div style={{ marginBottom: '30px' }}>
-                      <h3 style={{ marginBottom: '20px', color: '#2A398D' }}>📈 Overview Statistics</h3>
+                      <h3 style={{ marginBottom: '20px', color: '#1A1A2E' }}>📈 Overview Statistics</h3>
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
-                        <div style={{ padding: '20px', backgroundColor: '#D1D4D1', borderRadius: '8px', textAlign: 'center', border: '2px solid #2A398D' }}>
-                          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A398D' }}>
+                        <div style={{ padding: '20px', backgroundColor: '#F0F4FF', borderRadius: '8px', textAlign: 'center', border: '2px solid #6100E9' }}>
+                          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#1A1A2E' }}>
                             {analyticsData.overview.totalUsers}
                           </div>
-                          <div style={{ fontSize: '14px', color: '#474A4A', fontWeight: 'bold' }}>Total Users</div>
+                          <div style={{ fontSize: '14px', color: '#4A4A6A', fontWeight: 'bold' }}>Total Users</div>
                         </div>
-                        <div style={{ padding: '20px', backgroundColor: '#D1D4D1', borderRadius: '8px', textAlign: 'center', border: '2px solid #3CAC3B' }}>
-                          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#3CAC3B' }}>
+                        <div style={{ padding: '20px', backgroundColor: '#F0F4FF', borderRadius: '8px', textAlign: 'center', border: '2px solid #64FEDA' }}>
+                          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#1A1A2E' }}>
                             {analyticsData.overview.activeUsers}
                           </div>
-                          <div style={{ fontSize: '14px', color: '#474A4A', fontWeight: 'bold' }}>Active Users</div>
+                          <div style={{ fontSize: '14px', color: '#4A4A6A', fontWeight: 'bold' }}>Active Users</div>
                         </div>
-                        <div style={{ padding: '20px', backgroundColor: '#D1D4D1', borderRadius: '8px', textAlign: 'center', border: '2px solid #ffc107' }}>
-                          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#ffc107' }}>
+                        <div style={{ padding: '20px', backgroundColor: '#F0F4FF', borderRadius: '8px', textAlign: 'center', border: '2px solid #B288FD' }}>
+                          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#1A1A2E' }}>
                             {analyticsData.overview.totalCardsCollected}
                           </div>
-                          <div style={{ fontSize: '14px', color: '#474A4A', fontWeight: 'bold' }}>Total Cards Collected</div>
+                          <div style={{ fontSize: '14px', color: '#4A4A6A', fontWeight: 'bold' }}>Total Cards Collected</div>
                         </div>
-                        <div style={{ padding: '20px', backgroundColor: '#D1D4D1', borderRadius: '8px', textAlign: 'center', border: `2px solid ${getCompletionColor(analyticsData.overview.overallCompletionRate)}` }}>
+                        <div style={{ padding: '20px', backgroundColor: '#F0F4FF', borderRadius: '8px', textAlign: 'center', border: `2px solid ${getCompletionColor(analyticsData.overview.overallCompletionRate)}` }}>
                           <div style={{ fontSize: '24px', fontWeight: 'bold', color: getCompletionColor(analyticsData.overview.overallCompletionRate) }}>
                             {analyticsData.overview.overallCompletionRate}%
                           </div>
-                          <div style={{ fontSize: '14px', color: '#474A4A', fontWeight: 'bold' }}>Average Completion</div>
+                          <div style={{ fontSize: '14px', color: '#4A4A6A', fontWeight: 'bold' }}>Average Completion</div>
                         </div>
                       </div>
                     </div>
@@ -916,20 +918,20 @@ return (
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '30px' }}>
                       {/* Top Collectors */}
                       <div>
-                        <h3 style={{ marginBottom: '15px', color: '#2A398D' }}>🏆 Top Collectors</h3>
-                        <div style={{ backgroundColor: '#D1D4D1', borderRadius: '8px', padding: '15px', border: '2px solid #2A398D' }}>
+                        <h3 style={{ marginBottom: '15px', color: '#1A1A2E' }}>🏆 Top Collectors</h3>
+                        <div style={{ backgroundColor: '#F0F4FF', borderRadius: '8px', padding: '15px', border: '2px solid #6100E9' }}>
                           {analyticsData.leaderboards.topCollectors.slice(0, 5).map((user, index) => (
                             <div key={user.userId} style={{ 
                               display: 'flex', 
                               justifyContent: 'space-between', 
                               alignItems: 'center',
                               padding: '8px 0',
-                              borderBottom: index < 4 ? '1px solid #474A4A' : 'none'
+                              borderBottom: index < 4 ? '1px solid #4A4A6A' : 'none'
                             }}>
                               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <span style={{ 
-                                  backgroundColor: index === 0 ? '#ffd700' : index === 1 ? '#c0c0c0' : index === 2 ? '#cd7f32' : '#2A398D',
-                                  color: 'white',
+                                  backgroundColor: index === 0 ? '#AFEA00' : index === 1 ? '#B288FD' : index === 2 ? '#FF3D00' : '#6100E9',
+                                  color: index === 0 ? '#1A1A2E' : 'white',
                                   borderRadius: '50%',
                                   width: '25px',
                                   height: '25px',
@@ -943,7 +945,7 @@ return (
                                 </span>
                                 <span style={{ fontSize: '14px', fontWeight: 'bold' }}>{user.email}</span>
                               </div>
-                              <span style={{ fontWeight: 'bold', color: '#3CAC3B' }}>{user.totalCards} cards</span>
+                              <span style={{ fontWeight: 'bold', color: '#64FEDA' }}>{user.totalCards} cards</span>
                             </div>
                           ))}
                         </div>
@@ -951,20 +953,20 @@ return (
 
                       {/* Top Completers */}
                       <div>
-                        <h3 style={{ marginBottom: '15px', color: '#2A398D' }}>🎯 Top Completers</h3>
-                        <div style={{ backgroundColor: '#D1D4D1', borderRadius: '8px', padding: '15px', border: '2px solid #2A398D' }}>
+                        <h3 style={{ marginBottom: '15px', color: '#1A1A2E' }}>🎯 Top Completers</h3>
+                        <div style={{ backgroundColor: '#F0F4FF', borderRadius: '8px', padding: '15px', border: '2px solid #6100E9' }}>
                           {analyticsData.leaderboards.topCompleters.slice(0, 5).map((user, index) => (
                             <div key={user.userId} style={{ 
                               display: 'flex', 
                               justifyContent: 'space-between', 
                               alignItems: 'center',
                               padding: '8px 0',
-                              borderBottom: index < 4 ? '1px solid #474A4A' : 'none'
+                              borderBottom: index < 4 ? '1px solid #4A4A6A' : 'none'
                             }}>
                               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <span style={{ 
-                                  backgroundColor: index === 0 ? '#ffd700' : index === 1 ? '#c0c0c0' : index === 2 ? '#cd7f32' : '#2A398D',
-                                  color: 'white',
+                                  backgroundColor: index === 0 ? '#AFEA00' : index === 1 ? '#B288FD' : index === 2 ? '#FF3D00' : '#6100E9',
+                                  color: index === 0 ? '#1A1A2E' : 'white',
                                   borderRadius: '50%',
                                   width: '25px',
                                   height: '25px',
@@ -991,21 +993,21 @@ return (
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '30px' }}>
                       {/* Most Collected Cards */}
                       <div>
-                        <h3 style={{ marginBottom: '15px', color: '#2A398D' }}>⭐ Most Collected Cards</h3>
-                        <div style={{ backgroundColor: '#D1D4D1', borderRadius: '8px', padding: '15px', maxHeight: '300px', overflowY: 'auto', border: '2px solid #2A398D' }}>
+                        <h3 style={{ marginBottom: '15px', color: '#1A1A2E' }}>⭐ Most Collected Cards</h3>
+                        <div style={{ backgroundColor: '#F0F4FF', borderRadius: '8px', padding: '15px', maxHeight: '300px', overflowY: 'auto', border: '2px solid #6100E9' }}>
                           {analyticsData.cards.mostCollected.slice(0, 10).map((card, index) => (
                             <div key={card.name} style={{ 
                               display: 'flex', 
                               justifyContent: 'space-between', 
                               alignItems: 'center',
                               padding: '8px 0',
-                              borderBottom: index < 9 ? '1px solid #474A4A' : 'none'
+                              borderBottom: index < 9 ? '1px solid #4A4A6A' : 'none'
                             }}>
                               <div>
                                 <div style={{ fontSize: '14px', fontWeight: 'bold' }}>{card.name}</div>
-                                <div style={{ fontSize: '12px', color: '#474A4A' }}>{card.team} • {card.rarity}</div>
+                                <div style={{ fontSize: '12px', color: '#4A4A6A' }}>{card.team} • {card.rarity}</div>
                               </div>
-                              <span style={{ fontWeight: 'bold', color: '#3CAC3B' }}>{card.collectedBy} users</span>
+                              <span style={{ fontWeight: 'bold', color: '#64FEDA' }}>{card.collectedBy} users</span>
                             </div>
                           ))}
                         </div>
@@ -1013,21 +1015,21 @@ return (
 
                       {/* Least Collected Cards */}
                       <div>
-                        <h3 style={{ marginBottom: '15px', color: '#2A398D' }}>🔍 Least Collected Cards</h3>
-                        <div style={{ backgroundColor: '#D1D4D1', borderRadius: '8px', padding: '15px', maxHeight: '300px', overflowY: 'auto', border: '2px solid #2A398D' }}>
+                        <h3 style={{ marginBottom: '15px', color: '#1A1A2E' }}>🔍 Least Collected Cards</h3>
+                        <div style={{ backgroundColor: '#F0F4FF', borderRadius: '8px', padding: '15px', maxHeight: '300px', overflowY: 'auto', border: '2px solid #6100E9' }}>
                           {analyticsData.cards.leastCollected.slice(0, 10).map((card, index) => (
                             <div key={card.name} style={{ 
                               display: 'flex', 
                               justifyContent: 'space-between', 
                               alignItems: 'center',
                               padding: '8px 0',
-                              borderBottom: index < 9 ? '1px solid #474A4A' : 'none'
+                              borderBottom: index < 9 ? '1px solid #4A4A6A' : 'none'
                             }}>
                               <div>
                                 <div style={{ fontSize: '14px', fontWeight: 'bold' }}>{card.name}</div>
-                                <div style={{ fontSize: '12px', color: '#474A4A' }}>{card.team} • {card.rarity}</div>
+                                <div style={{ fontSize: '12px', color: '#4A4A6A' }}>{card.team} • {card.rarity}</div>
                               </div>
-                              <span style={{ fontWeight: 'bold', color: '#E61D25' }}>{card.collectedBy} users</span>
+                              <span style={{ fontWeight: 'bold', color: '#FF3D00' }}>{card.collectedBy} users</span>
                             </div>
                           ))}
                         </div>
@@ -1036,12 +1038,12 @@ return (
 
                     {/* Team Performance */}
                     <div style={{ marginBottom: '30px' }}>
-                      <h3 style={{ marginBottom: '15px', color: '#2A398D' }}>🏢 Team Performance</h3>
-                      <div style={{ backgroundColor: '#D1D4D1', borderRadius: '8px', padding: '20px', border: '2px solid #2A398D' }}>
+                      <h3 style={{ marginBottom: '15px', color: '#1A1A2E' }}>🏢 Team Performance</h3>
+                      <div style={{ backgroundColor: '#F0F4FF', borderRadius: '8px', padding: '20px', border: '2px solid #6100E9' }}>
                         {analyticsData.teams.map((team, index) => (
                           <div key={team.team} style={{ marginBottom: '15px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5px' }}>
-                              <span style={{ fontWeight: 'bold', color: '#474A4A' }}>{team.team}</span>
+                              <span style={{ fontWeight: 'bold', color: '#1A1A2E' }}>{team.team}</span>
                               <span style={{ color: getCompletionColor(team.completionRate), fontWeight: 'bold' }}>
                                 {team.completionRate}% ({team.collectedCards}/{team.totalCards})
                               </span>
@@ -1049,7 +1051,7 @@ return (
                             <div style={{
                               width: '100%',
                               height: '8px',
-                              backgroundColor: '#474A4A',
+                              backgroundColor: '#E6F9F5',
                               borderRadius: '4px',
                               overflow: 'hidden'
                             }}>
@@ -1072,7 +1074,7 @@ return (
                         disabled={analyticsLoading}
                         style={{
                           padding: '12px 24px',
-                          backgroundColor: '#2A398D',
+                          backgroundColor: '#6100E9',
                           color: 'white',
                           border: 'none',
                           borderRadius: '6px',
@@ -1090,7 +1092,7 @@ return (
                       onClick={loadAnalyticsData}
                       style={{
                         padding: '15px 30px',
-                        backgroundColor: '#2A398D',
+                        backgroundColor: '#6100E9',
                         color: 'white',
                         border: 'none',
                         borderRadius: '8px',
@@ -1118,7 +1120,7 @@ return (
                     style={{
                       width: '100%',
                       padding: '12px',
-                      border: '2px solid #2A398D',
+                      border: '2px solid #6100E9',
                       borderRadius: '6px',
                       fontSize: '16px',
                       marginBottom: '10px'
@@ -1129,7 +1131,7 @@ return (
                       onClick={handleSelectAll}
                       style={{
                         padding: '8px 16px',
-                        backgroundColor: '#2A398D',
+                        backgroundColor: '#6100E9',
                         color: 'white',
                         border: 'none',
                         borderRadius: '4px',
@@ -1140,7 +1142,7 @@ return (
                       {selectedUsers.length === filteredUsers.length ? '☑️ Deselect All' : '☐ Select All'}
                     </button>
                   )}
-                  <span style={{ marginLeft: '15px', color: '#474A4A', fontWeight: 'bold' }}>
+                  <span style={{ marginLeft: '15px', color: '#4A4A6A', fontWeight: 'bold' }}>
                     Showing {filteredUsers.length} of {allUsers.length} users
                   </span>
                 </div>
@@ -1148,7 +1150,7 @@ return (
                 {adminLoading ? (
                   <LoadingSpinner type="dots" message="⏳ Loading users..." size="medium" />
                 ) : (
-                  <div style={{ maxHeight: '400px', overflowY: 'auto', border: '2px solid #2A398D', borderRadius: '6px' }}>
+                  <div style={{ maxHeight: '400px', overflowY: 'auto', border: '2px solid #6100E9', borderRadius: '6px' }}>
                     {filteredUsers.map((userData) => (
                       <div
                         key={userData.id}
@@ -1157,8 +1159,8 @@ return (
                           justifyContent: 'space-between',
                           alignItems: 'center',
                           padding: '12px 15px',
-                          borderBottom: '1px solid #D1D4D1',
-                          backgroundColor: selectedUsers.includes(userData.id) ? '#e3f2fd' : 'white'
+                          borderBottom: '1px solid #E6F9F5',
+                          backgroundColor: selectedUsers.includes(userData.id) ? '#F5F0FF' : 'white'
                         }}
                       >
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -1171,16 +1173,16 @@ return (
                             />
                           )}
                           <div>
-                            <strong style={{ color: '#474A4A' }}>{userData.email}</strong>
-                            <div style={{ fontSize: '12px', color: '#474A4A' }}>
+                            <strong style={{ color: '#1A1A2E' }}>{userData.email}</strong>
+                            <div style={{ fontSize: '12px', color: '#4A4A6A' }}>
                               Joined: {userData.createdAt?.toDate?.()?.toLocaleDateString() || 'Unknown'}
                             </div>
                           </div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                           <span style={{
-                            backgroundColor: '#3CAC3B',
-                            color: 'white',
+                            backgroundColor: '#64FEDA',
+                            color: '#1A1A2E',
                             padding: '4px 8px',
                             borderRadius: '12px',
                             fontSize: '12px',
@@ -1197,7 +1199,7 @@ return (
                                 }}
                                 style={{
                                   padding: '4px 8px',
-                                  backgroundColor: '#2A398D',
+                                  backgroundColor: '#6100E9',
                                   color: 'white',
                                   border: 'none',
                                   borderRadius: '4px',
@@ -1212,8 +1214,8 @@ return (
                                 onClick={() => resetUserProgress(userData.id, userData.email)}
                                 style={{
                                   padding: '4px 8px',
-                                  backgroundColor: '#ffc107',
-                                  color: 'black',
+                                  backgroundColor: '#B288FD',
+                                  color: 'white',
                                   border: 'none',
                                   borderRadius: '4px',
                                   cursor: 'pointer',
@@ -1227,7 +1229,7 @@ return (
                                 onClick={() => deleteUser(userData.id, userData.email)}
                                 style={{
                                   padding: '4px 8px',
-                                  backgroundColor: '#E61D25',
+                                  backgroundColor: '#FF3D00',
                                   color: 'white',
                                   border: 'none',
                                   borderRadius: '4px',
@@ -1259,7 +1261,7 @@ return (
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(71,74,74,0.8)',
+          backgroundColor: 'rgba(26,26,46,0.8)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -1271,11 +1273,11 @@ return (
             borderRadius: '15px',
             maxWidth: '500px',
             width: '90%',
-            border: '3px solid #2A398D'
+            border: '3px solid #6100E9'
           }}>
-            <h3 style={{ color: '#2A398D' }}>➕ Add New User</h3>
+            <h3 style={{ color: '#1A1A2E' }}>➕ Add New User</h3>
             <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#474A4A' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#1A1A2E' }}>
                 Email Address:
               </label>
               <input
@@ -1286,14 +1288,14 @@ return (
                 style={{
                   width: '100%',
                   padding: '10px',
-                  border: '2px solid #2A398D',
+                  border: '2px solid #6100E9',
                   borderRadius: '6px',
                   fontSize: '14px'
                 }}
               />
             </div>
             <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#474A4A' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#1A1A2E' }}>
                 Starting Packs:
               </label>
               <input
@@ -1305,7 +1307,7 @@ return (
                 style={{
                   width: '100%',
                   padding: '10px',
-                  border: '2px solid #2A398D',
+                  border: '2px solid #6100E9',
                   borderRadius: '6px',
                   fontSize: '14px'
                 }}
@@ -1318,8 +1320,8 @@ return (
                 style={{
                   flex: 1,
                   padding: '12px',
-                  backgroundColor: '#3CAC3B',
-                  color: 'white',
+                  backgroundColor: '#AFEA00',
+                  color: '#1A1A2E',
                   border: 'none',
                   borderRadius: '6px',
                   cursor: 'pointer',
@@ -1337,7 +1339,7 @@ return (
                 style={{
                   flex: 1,
                   padding: '12px',
-                  backgroundColor: '#474A4A',
+                  backgroundColor: '#8888AA',
                   color: 'white',
                   border: 'none',
                   borderRadius: '6px',
@@ -1360,7 +1362,7 @@ return (
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(71,74,74,0.8)',
+          backgroundColor: 'rgba(26,26,46,0.8)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -1372,11 +1374,11 @@ return (
             borderRadius: '15px',
             maxWidth: '500px',
             width: '90%',
-            border: '3px solid #2A398D'
+            border: '3px solid #6100E9'
           }}>
-            <h3 style={{ color: '#2A398D' }}>✏️ Modify User: {userToModify.email}</h3>
+            <h3 style={{ color: '#1A1A2E' }}>✏️ Modify User: {userToModify.email}</h3>
             <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#474A4A' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#1A1A2E' }}>
                 Pack Count:
               </label>
               <input
@@ -1388,7 +1390,7 @@ return (
                 style={{
                   width: '100%',
                   padding: '10px',
-                  border: '2px solid #2A398D',
+                  border: '2px solid #6100E9',
                   borderRadius: '6px',
                   fontSize: '14px'
                 }}
@@ -1401,7 +1403,7 @@ return (
                 style={{
                   flex: 1,
                   padding: '12px',
-                  backgroundColor: '#2A398D',
+                  backgroundColor: '#6100E9',
                   color: 'white',
                   border: 'none',
                   borderRadius: '6px',
@@ -1419,7 +1421,7 @@ return (
                 style={{
                   flex: 1,
                   padding: '12px',
-                  backgroundColor: '#474A4A',
+                  backgroundColor: '#8888AA',
                   color: 'white',
                   border: 'none',
                   borderRadius: '6px',

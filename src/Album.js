@@ -390,7 +390,7 @@ const getCardImageStyle = (cardName, context = 'album') => {
 
     try {
       // Show loading state
-      const deleteButton = document.querySelector('button[style*="E61D25"]') || document.querySelector('button[style*="dc3545"]');
+      const deleteButton = document.querySelector('button[style*="#FF3D00"]') || document.querySelector('button[style*="dc3545"]');
       if (deleteButton) {
         deleteButton.textContent = '⏳ Deleting...';
         deleteButton.disabled = true;
@@ -478,7 +478,7 @@ const getCardImageStyle = (cardName, context = 'album') => {
       alert('❌ Error deleting cards. Please try again.');
 
       // Reset button on error
-      const deleteButton = document.querySelector('button[style*="E61D25"]') || document.querySelector('button[style*="dc3545"]');
+      const deleteButton = document.querySelector('button[style*="#FF3D00"]') || document.querySelector('button[style*="dc3545"]');
       if (deleteButton) {
         deleteButton.textContent = `🗑️ Delete Selected (${selectedCards.length})`;
         deleteButton.disabled = false;
@@ -703,7 +703,7 @@ const handleDrop = async (e, slotName, pageId) => {
   width: '100%',
   height: '20px',
   backgroundColor: '#ffffff',
-  border: '2px solid #1e3a8a',
+  border: '2px solid #6100E9',
   borderRadius: '10px',
   overflow: 'hidden',
   marginBottom: '10px',
@@ -712,7 +712,7 @@ const handleDrop = async (e, slotName, pageId) => {
   <div style={{
     width: `${calculateCompletionPercentage()}%`,
     height: '100%',
-    backgroundColor: calculateCompletionPercentage() === 100 ? '#90ee90' : '#22c55e',
+    backgroundColor: calculateCompletionPercentage() === 100 ? '#AFEA00' : '#64FEDA',
     transition: 'width 0.5s ease',
     borderRadius: '8px',
     boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
@@ -802,13 +802,13 @@ const handleDrop = async (e, slotName, pageId) => {
                               display: 'none',
                               width: '100%',
                               height: '100%',
-                              background: 'linear-gradient(145deg, #e8f5e8, #d4edda)',
-                              border: '2px solid #3CAC3B',
+                              background: 'linear-gradient(145deg, #F0F4FF, #E6F9F5)',
+                              border: '2px solid #64FEDA',
                               borderRadius: '8px',
                               flexDirection: 'column',
                               justifyContent: 'center',
                               alignItems: 'center',
-                              color: '#155724',
+                              color: '#1A1A2E',
                               position: 'relative'
                             }}>
                               <h4 style={{ margin: '0 0 5px 0', fontSize: '0.9em' }}>
@@ -827,14 +827,14 @@ const handleDrop = async (e, slotName, pageId) => {
                           <div style={{
                             width: '100%',
                             height: '100%',
-                            background: 'linear-gradient(145deg, #e8f5e8, #d4edda)',
-                            border: '2px solid #3CAC3B',
+                            background: 'linear-gradient(145deg, #F0F4FF, #E6F9F5)',
+                            border: '2px solid #64FEDA',
                             borderRadius: '8px',
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            color: '#155724',
+                            color: '#1A1A2E',
                             position: 'relative'
                           }}>
                             <h4 style={{ margin: '0 0 5px 0', fontSize: '0.9em' }}>
@@ -883,7 +883,7 @@ const handleDrop = async (e, slotName, pageId) => {
                 onClick={() => setIsSelectionMode(true)}
                 style={{
                   padding: '8px 16px',
-                  backgroundColor: '#2A398D',
+                  backgroundColor: '#6100E9',
                   color: 'white',
                   border: 'none',
                   borderRadius: '5px',
@@ -900,8 +900,8 @@ const handleDrop = async (e, slotName, pageId) => {
                   onClick={selectAllCards}
                   style={{
                     padding: '8px 16px',
-                    backgroundColor: '#3CAC3B',
-                    color: 'white',
+                    backgroundColor: '#AFEA00',
+                    color: '#1A1A2E',
                     border: 'none',
                     borderRadius: '5px',
                     cursor: 'pointer',
@@ -916,7 +916,7 @@ const handleDrop = async (e, slotName, pageId) => {
                   disabled={selectedCards.length === 0}
                   style={{
                     padding: '8px 16px',
-                    backgroundColor: selectedCards.length > 0 ? '#E61D25' : '#474A4A',
+                    backgroundColor: selectedCards.length > 0 ? '#FF3D00' : '#8888AA',
                     color: 'white',
                     border: 'none',
                     borderRadius: '5px',
@@ -934,7 +934,7 @@ const handleDrop = async (e, slotName, pageId) => {
                   }}
                   style={{
                     padding: '8px 16px',
-                    backgroundColor: '#474A4A',
+                    backgroundColor: '#8888AA',
                     color: 'white',
                     border: 'none',
                     borderRadius: '5px',
@@ -952,7 +952,7 @@ const handleDrop = async (e, slotName, pageId) => {
 
         {!isSelectionMode ? (
           <p style={{ 
-            color: '#666', 
+            color: '#4A4A6A', 
             fontSize: '14px', 
             marginBottom: '15px',
             fontStyle: 'italic'
@@ -961,7 +961,7 @@ const handleDrop = async (e, slotName, pageId) => {
           </p>
         ) : (
           <p style={{ 
-            color: '#2A398D', 
+            color: '#6100E9', 
             fontSize: '14px', 
             marginBottom: '15px',
             fontStyle: 'italic',
@@ -975,14 +975,14 @@ const handleDrop = async (e, slotName, pageId) => {
           <LoadingSpinner type="pack" message="🎁 Loading your collection..." size="medium" />
         ) : userCards.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '20px' }}>
-            <p style={{ color: '#666', fontSize: '16px' }}>
+            <p style={{ color: '#4A4A6A', fontSize: '16px' }}>
               No cards collected yet. Go to "Open Packs" to start collecting!
             </p>
             <button 
               onClick={() => window.location.reload()} 
               style={{ 
                 padding: '10px 20px', 
-                background: '#2A398D', 
+                background: '#6100E9', 
                 color: 'white', 
                 border: 'none', 
                 borderRadius: '5px',
@@ -1013,10 +1013,10 @@ const handleDrop = async (e, slotName, pageId) => {
                     borderRadius: '8px',
                     overflow: 'hidden',
                     boxShadow: selectedCards.includes(userCard.id) 
-                      ? '0 4px 12px rgba(42,57,141,0.4)' 
+                      ? '0 4px 12px rgba(97,0,233,0.3)' 
                       : '0 2px 8px rgba(0,0,0,0.1)',
                     border: selectedCards.includes(userCard.id) 
-                      ? '3px solid #2A398D' 
+                      ? '3px solid #6100E9' 
                       : '3px solid transparent',
                     padding: '0'
                   }}
@@ -1041,9 +1041,9 @@ const handleDrop = async (e, slotName, pageId) => {
                         position: 'absolute',
                         top: '5px',
                         left: '5px',
-                        backgroundColor: selectedCards.includes(userCard.id) ? '#3CAC3B' : 'rgba(255,255,255,0.9)',
-                        color: selectedCards.includes(userCard.id) ? 'white' : '#333',
-                        border: '2px solid #3CAC3B',
+                        backgroundColor: selectedCards.includes(userCard.id) ? '#AFEA00' : 'rgba(255,255,255,0.9)',
+                        color: selectedCards.includes(userCard.id) ? '#1A1A2E' : '#333',
+                        border: '2px solid #AFEA00',
                         borderRadius: '4px',
                         width: '25px',
                         height: '25px',
@@ -1070,7 +1070,7 @@ const handleDrop = async (e, slotName, pageId) => {
                         position: 'absolute',
                         top: '5px',
                         left: '5px',
-                        backgroundColor: '#E61D25',
+                        backgroundColor: '#FF3D00',
                         color: 'white',
                         border: 'none',
                         borderRadius: '50%',
@@ -1086,11 +1086,11 @@ const handleDrop = async (e, slotName, pageId) => {
                         transition: 'all 0.2s ease'
                       }}
                       onMouseEnter={(e) => {
-                        e.target.style.backgroundColor = '#C41E3A';
+                        e.target.style.backgroundColor = '#D20100';
                         e.target.style.transform = 'scale(1.1)';
                       }}
                       onMouseLeave={(e) => {
-                        e.target.style.backgroundColor = '#E61D25';
+                        e.target.style.backgroundColor = '#FF3D00';
                         e.target.style.transform = 'scale(1)';
                       }}
                       title={`Delete ${userCard.count > 1 ? 'one copy of' : ''} ${userCard.cardData.name}`}
@@ -1122,13 +1122,13 @@ const handleDrop = async (e, slotName, pageId) => {
 
                   <div style={{
   aspectRatio: '241/305',
-  background: 'linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%)',
-  border: '2px solid #e6f3ff',
+  background: 'linear-gradient(135deg, #F0F4FF 0%, #ffffff 100%)',
+  border: '2px solid #E6F9F5',
   display: cardImageUrl ? 'none' : 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  color: '#1e3a8a',
+  color: '#1A1A2E',
   padding: '15px'
 }}>
                     <h4>{userCard.cardData.name}</h4>

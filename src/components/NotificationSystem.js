@@ -60,11 +60,11 @@ export const NotificationProvider = ({ children }) => {
       position: fixed;
       top: 20px;
       right: 20px;
-      background: linear-gradient(135deg, #474A4A 0%, #2A398D 100%);
-      border: 3px solid #3CAC3B;
+      background: linear-gradient(135deg, #6100E9 0%, #304FFF 100%);
+      border: 3px solid #64FEDA;
       border-radius: 12px;
       padding: 0;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 24px rgba(97,0,233,0.3);
       z-index: 10000;
       min-width: 300px;
       max-width: 400px;
@@ -81,8 +81,8 @@ export const NotificationProvider = ({ children }) => {
       ">
         <div class="toast-icon" style="
           font-size: 24px;
-          background: #3CAC3B;
-          color: white;
+          background: #AFEA00;
+          color: #1A1A2E;
           width: 40px;
           height: 40px;
           border-radius: 50%;
@@ -101,12 +101,12 @@ export const NotificationProvider = ({ children }) => {
             font-size: 16px;
             margin-bottom: 5px;
             color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
           ">${notification.title}</strong>
           <p style="
             margin: 0;
             font-size: 14px;
-            color: #D1D4D1;
+            color: rgba(255,255,255,0.9);
             line-height: 1.4;
           ">${notification.message}</p>
         </div>
@@ -114,7 +114,7 @@ export const NotificationProvider = ({ children }) => {
           position: absolute;
           top: 8px;
           right: 8px;
-          background: #E61D25;
+          background: #FF3D00;
           color: white;
           border: none;
           border-radius: 50%;
@@ -127,7 +127,7 @@ export const NotificationProvider = ({ children }) => {
           align-items: center;
           justify-content: center;
           transition: all 0.2s ease;
-        " onmouseover="this.style.backgroundColor='#C41E3A'; this.style.transform='scale(1.1)'" onmouseout="this.style.backgroundColor='#E61D25'; this.style.transform='scale(1)'">×</button>
+        " onmouseover="this.style.backgroundColor='#D20100'; this.style.transform='scale(1.1)'" onmouseout="this.style.backgroundColor='#FF3D00'; this.style.transform='scale(1)'">×</button>
       </div>
     `;
 
@@ -196,10 +196,18 @@ export const NotificationProvider = ({ children }) => {
 };
 
   const clearAllNotifications = async () => {
-    // We'll implement this in the next step
-    console.log('Clear all notifications');
-  };
-
+  try {
+    const promises = notifications.map(notification => 
+      updateDoc(doc(db, 'tradeNotifications', notification.id), {
+        read: true
+      })
+    );
+    await Promise.all(promises);
+    console.log('All notifications marked as read');
+  } catch (error) {
+    console.error('Error marking all notifications as read:', error);
+  }
+};
   return (
     <NotificationContext.Provider value={{
       notifications,
@@ -234,7 +242,7 @@ export const NotificationBell = () => {
           filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
         }}
         onMouseEnter={(e) => {
-          e.target.style.backgroundColor = 'rgba(255,255,255,0.1)';
+          e.target.style.backgroundColor = 'rgba(100,254,218,0.2)';
           e.target.style.transform = 'scale(1.1)';
         }}
         onMouseLeave={(e) => {
@@ -248,7 +256,7 @@ export const NotificationBell = () => {
             position: 'absolute',
             top: '2px',
             right: '2px',
-            background: '#E61D25',
+            background: '#FF3D00',
             color: 'white',
             borderRadius: '50%',
             width: '20px',
@@ -289,9 +297,9 @@ export const NotificationBell = () => {
             right: 0,
             marginTop: '8px',
             background: 'white',
-            border: '3px solid #2A398D',
+            border: '3px solid #6100E9',
             borderRadius: '12px',
-            boxShadow: '0 12px 32px rgba(0,0,0,0.3)',
+            boxShadow: '0 12px 32px rgba(97,0,233,0.3)',
             minWidth: '320px',
             maxWidth: '400px',
             zIndex: 1000,
@@ -303,21 +311,21 @@ export const NotificationBell = () => {
               justifyContent: 'space-between',
               alignItems: 'center',
               padding: '20px',
-              backgroundColor: '#474A4A',
+              background: 'linear-gradient(135deg, #6100E9 0%, #304FFF 100%)',
               borderRadius: '8px 8px 0 0',
-              borderBottom: '2px solid #2A398D'
+              borderBottom: '2px solid #64FEDA'
             }}>
               <h4 style={{ 
                 margin: 0, 
                 color: 'white',
                 fontSize: '18px',
                 fontWeight: 'bold',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
               }}>🔔 Trade Notifications</h4>
               <button 
                 onClick={() => setShowDropdown(false)}
                 style={{
-                  background: '#E61D25',
+                  background: '#FF3D00',
                   color: 'white',
                   border: 'none',
                   borderRadius: '50%',
@@ -332,11 +340,11 @@ export const NotificationBell = () => {
                   transition: 'all 0.2s ease'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#C41E3A';
+                  e.target.style.backgroundColor = '#D20100';
                   e.target.style.transform = 'scale(1.1)';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = '#E61D25';
+                  e.target.style.backgroundColor = '#FF3D00';
                   e.target.style.transform = 'scale(1)';
                 }}
               >
@@ -353,7 +361,7 @@ export const NotificationBell = () => {
               {notifications.length === 0 ? (
                 <div style={{ 
                   textAlign: 'center',
-                  color: '#474A4A'
+                  color: '#4A4A6A'
                 }}>
                   <div style={{ 
                     fontSize: '48px', 
@@ -375,13 +383,13 @@ export const NotificationBell = () => {
                 notifications.map((notification, index) => (
                   <div key={notification.id} style={{
                     padding: '20px',
-                    borderBottom: index < notifications.length - 1 ? '1px solid #D1D4D1' : 'none',
+                    borderBottom: index < notifications.length - 1 ? '1px solid #E6F9F5' : 'none',
                     backgroundColor: 'white',
                     transition: 'background-color 0.2s ease',
                     cursor: 'pointer'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#f8f9fa';
+                    e.currentTarget.style.backgroundColor = '#F0F4FF';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.backgroundColor = 'white';
@@ -392,8 +400,8 @@ export const NotificationBell = () => {
                       gap: '12px'
                     }}>
                       <div style={{
-                        backgroundColor: '#3CAC3B',
-                        color: 'white',
+                        backgroundColor: '#64FEDA',
+                        color: '#1A1A2E',
                         width: '32px',
                         height: '32px',
                         borderRadius: '50%',
@@ -403,26 +411,26 @@ export const NotificationBell = () => {
                         fontSize: '16px',
                         flexShrink: 0,
                         border: '2px solid white',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                        boxShadow: '0 2px 8px rgba(100,254,218,0.2)'
                       }}>
                         🔄
                       </div>
                       <div style={{ flex: 1 }}>
                         <strong style={{ 
                           display: 'block',
-                          color: '#2A398D',
+                          color: '#1A1A2E',
                           fontSize: '16px',
                           marginBottom: '5px',
                           fontWeight: 'bold'
                         }}>{notification.title}</strong>
                         <p style={{ 
                           margin: '0 0 8px 0',
-                          color: '#474A4A',
+                          color: '#4A4A6A',
                           fontSize: '14px',
                           lineHeight: '1.4'
                         }}>{notification.message}</p>
                         <small style={{ 
-                          color: '#666',
+                          color: '#8888AA',
                           fontSize: '12px',
                           fontStyle: 'italic'
                         }}>
@@ -442,13 +450,13 @@ export const NotificationBell = () => {
             {notifications.length > 0 && (
               <div style={{
                 padding: '15px 20px',
-                backgroundColor: '#D1D4D1',
+                background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 100%)',
                 borderRadius: '0 0 8px 8px',
-                borderTop: '1px solid #474A4A',
+                borderTop: '1px solid #B288FD',
                 textAlign: 'center'
               }}>
                 <button style={{
-                  background: '#2A398D',
+                  background: '#6100E9',
                   color: 'white',
                   border: 'none',
                   padding: '8px 16px',
@@ -459,13 +467,14 @@ export const NotificationBell = () => {
                   transition: 'all 0.2s ease'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#1e2a6b';
+                  e.target.style.backgroundColor = '#304FFF';
                   e.target.style.transform = 'translateY(-1px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = '#2A398D';
+                  e.target.style.backgroundColor = '#6100E9';
                   e.target.style.transform = 'translateY(0)';
-                }}>
+                }}
+                onClick={clearAllNotifications}>
                   Mark All as Read
                 </button>
               </div>

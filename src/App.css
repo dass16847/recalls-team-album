@@ -1,17 +1,17 @@
-/* FIFA World Cup Premium App Background - Joyful & Colorful */
+/* FIFA World Cup 2026 Joyful Light Edition - Premium App Background */
 .App {
   min-height: 100vh;
   background: 
-    radial-gradient(circle at 20% 80%, rgba(42, 57, 141, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(60, 172, 59, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 223, 0, 0.1) 0%, transparent 70%),
-    linear-gradient(135deg, #e3f2fd 0%, #bbdefb 15%, #90caf9 30%, #81c784 45%, #aed581 60%, #fff176 75%, #ffcc02 90%, #42a5f5 100%);
+    radial-gradient(circle at 20% 80%, rgba(97, 0, 233, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(100, 254, 218, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(175, 234, 0, 0.06) 0%, transparent 70%),
+    linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 15%, #F5F0FF 30%, #F0F4FF 45%, #E6F9F5 60%, #F5F0FF 75%, #F0F4FF 90%, #E6F9F5 100%);
   background-attachment: fixed;
   font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   position: relative;
 }
 
-/* Joyful paper texture overlay */
+/* Joyful light texture overlay */
 .App::before {
   content: '';
   position: fixed;
@@ -20,8 +20,8 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(255, 223, 0, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.6) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(175, 234, 0, 0.08) 0%, transparent 50%);
   pointer-events: none;
   z-index: 1;
 }
@@ -30,16 +30,16 @@
 .App header {
   background: 
     linear-gradient(135deg, 
-      rgba(25, 118, 210, 0.95) 0%, 
-      rgba(42, 57, 141, 0.95) 30%, 
-      rgba(60, 172, 59, 0.95) 70%,
-      rgba(25, 118, 210, 0.95) 100%
+      rgba(97, 0, 233, 0.95) 0%, 
+      rgba(48, 79, 255, 0.95) 30%, 
+      rgba(100, 254, 218, 0.95) 70%,
+      rgba(97, 0, 233, 0.95) 100%
     );
   backdrop-filter: blur(10px);
-  border-bottom: 2px solid #2A398D;
+  border-bottom: 2px solid #6100E9;
   box-shadow: 
-    0 4px 20px rgba(42, 57, 141, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    0 4px 20px rgba(97, 0, 233, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
   position: relative;
   z-index: 10;
 }
@@ -51,7 +51,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 223, 0, 0.2) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(175, 234, 0, 0.15) 50%, transparent 100%);
   animation: fifaShine 3s ease-in-out infinite;
 }
 
@@ -61,11 +61,11 @@
 }
 
 .App header h1 {
-  background: linear-gradient(135deg, #ffffff 0%, #D1D4D1 50%, #ffffff 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #F0F4FF 50%, #ffffff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
   font-weight: 700;
   letter-spacing: 1px;
   font-size: 2.2em;
@@ -75,11 +75,11 @@
 /* FIFA Premium Navigation */
 .App nav {
   background: 
-    linear-gradient(135deg, #ffffff 0%, #e3f2fd 25%, #f3e5f5 50%, #e8f5e8 75%, #fff3e0 100%);
-  border-bottom: 3px solid #2A398D;
+    linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 25%, #F5F0FF 50%, #E6F9F5 75%, #F0F4FF 100%);
+  border-bottom: 3px solid #6100E9;
   box-shadow: 
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 2px 10px rgba(42, 57, 141, 0.2);
+    0 2px 10px rgba(97, 0, 233, 0.15);
   position: relative;
   z-index: 9;
 }
@@ -87,9 +87,9 @@
 /* FIFA Premium Navigation Buttons */
 .App nav button {
   background: 
-    linear-gradient(135deg, #ffffff 0%, #D1D4D1 50%, #f8f9fa 100%);
-  border: 2px solid #2A398D;
-  color: #2A398D;
+    linear-gradient(135deg, #ffffff 0%, #F0F4FF 50%, #ffffff 100%);
+  border: 2px solid #6100E9;
+  color: #1A1A2E;
   border-radius: 12px;
   font-weight: 700;
   font-size: 1em;
@@ -99,7 +99,7 @@
   position: relative;
   overflow: hidden;
   box-shadow: 
-    0 2px 8px rgba(42, 57, 141, 0.2),
+    0 2px 8px rgba(97, 0, 233, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
@@ -110,7 +110,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(60, 172, 59, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(100, 254, 218, 0.25), transparent);
   transition: left 0.5s;
 }
 
@@ -121,28 +121,28 @@
 .App nav button:hover {
   transform: translateY(-2px);
   box-shadow: 
-    0 6px 20px rgba(42, 57, 141, 0.3),
+    0 6px 20px rgba(97, 0, 233, 0.25),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  border-color: #3CAC3B;
-  color: #2A398D;
+  border-color: #64FEDA;
+  color: #1A1A2E;
 }
 
 .App nav button:active {
   transform: translateY(0);
   box-shadow: 
-    0 2px 8px rgba(42, 57, 141, 0.2),
-    inset 0 2px 4px rgba(42, 57, 141, 0.1);
+    0 2px 8px rgba(97, 0, 233, 0.15),
+    inset 0 2px 4px rgba(97, 0, 233, 0.1);
 }
 
-/* Active button state - FIFA Blue */
+/* Active button state - FIFA Electric Violet */
 .App nav button[style*="background-color: rgb(0, 123, 255)"],
 .App nav button[style*="background-color: #007bff"],
-.App nav button[style*="background-color: #2A398D"] {
-  background: linear-gradient(135deg, #2A398D 0%, #1e2a6b 100%) !important;
+.App nav button[style*="background-color: #6100E9"] {
+  background: linear-gradient(135deg, #6100E9 0%, #304FFF 100%) !important;
   color: white !important;
   border-color: rgba(255, 255, 255, 0.3) !important;
   box-shadow: 
-    0 4px 15px rgba(42, 57, 141, 0.4),
+    0 4px 15px rgba(97, 0, 233, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
@@ -153,26 +153,27 @@
   text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
-/* Pack count badge - FIFA Green */
+/* Pack count badge - FIFA Mint Cyan */
 .App header span[style*="background-color: rgb(40, 167, 69)"],
 .App header span[style*="background-color: #28a745"],
-.App header span[style*="background-color: #3CAC3B"] {
-  background: linear-gradient(135deg, #3CAC3B 0%, #2e8b2e 100%) !important;
+.App header span[style*="background-color: #64FEDA"] {
+  background: linear-gradient(135deg, #64FEDA 0%, #03C0A7 100%) !important;
   box-shadow: 
-    0 2px 8px rgba(60, 172, 59, 0.4),
+    0 2px 8px rgba(100, 254, 218, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
   border: 2px solid rgba(255, 255, 255, 0.3) !important;
   font-weight: 700 !important;
+  color: #1A1A2E !important;
 }
 
-/* Logout button - FIFA Red */
+/* Logout button - FIFA Flare Orange */
 .App header button[style*="background-color: rgb(220, 53, 69)"],
 .App header button[style*="background-color: #dc3545"],
-.App header button[style*="background-color: #E61D25"] {
-  background: linear-gradient(135deg, #E61D25 0%, #C41E3A 100%) !important;
+.App header button[style*="background-color: #FF3D00"] {
+  background: linear-gradient(135deg, #FF3D00 0%, #D20100 100%) !important;
   border: 2px solid rgba(255, 255, 255, 0.3) !important;
   box-shadow: 
-    0 2px 8px rgba(230, 29, 37, 0.4),
+    0 2px 8px rgba(255, 61, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
   transition: all 0.3s ease !important;
   font-weight: 700 !important;
@@ -180,10 +181,10 @@
 
 .App header button[style*="background-color: rgb(220, 53, 69)"]:hover,
 .App header button[style*="background-color: #dc3545"]:hover,
-.App header button[style*="background-color: #E61D25"]:hover {
+.App header button[style*="background-color: #FF3D00"]:hover {
   transform: translateY(-1px) !important;
   box-shadow: 
-    0 4px 12px rgba(230, 29, 37, 0.5),
+    0 4px 12px rgba(255, 61, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
@@ -192,36 +193,36 @@
   position: relative;
   z-index: 2;
   background: 
-    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.7) 0%, transparent 50%),
-    radial-gradient(circle at 70% 80%, rgba(255, 223, 0, 0.1) 0%, transparent 60%),
-    linear-gradient(135deg, rgba(248,249,250,0.9) 0%, rgba(227,242,253,0.8) 25%, rgba(232,245,232,0.8) 50%, rgba(255,243,224,0.8) 75%, rgba(248,249,250,0.9) 100%);
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.8) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(175, 234, 0, 0.08) 0%, transparent 60%),
+    linear-gradient(135deg, rgba(240,244,255,0.9) 0%, rgba(230,249,245,0.8) 25%, rgba(245,240,255,0.8) 50%, rgba(230,249,245,0.8) 75%, rgba(240,244,255,0.9) 100%);
   border-radius: 20px 20px 0 0;
   margin-top: 10px;
   box-shadow: 
-    0 -4px 20px rgba(42, 57, 141, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    0 -4px 20px rgba(97, 0, 233, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(5px);
 }
 
-/* Admin Panel Button - FIFA Green */
+/* Admin Panel Button - FIFA Neon Lime */
 .App nav button[style*="background-color: rgb(40, 167, 69)"],
 .App nav button[style*="background-color: #28a745"],
-.App nav button[style*="background-color: #3CAC3B"] {
-  background: linear-gradient(135deg, #3CAC3B 0%, #2e8b2e 100%) !important;
-  color: white !important;
+.App nav button[style*="background-color: #AFEA00"] {
+  background: linear-gradient(135deg, #AFEA00 0%, #00CA55 100%) !important;
+  color: #1A1A2E !important;
   border: 2px solid rgba(255, 255, 255, 0.3) !important;
   box-shadow: 
-    0 2px 8px rgba(60, 172, 59, 0.4),
+    0 2px 8px rgba(175, 234, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
   font-weight: 700 !important;
 }
 
 .App nav button[style*="background-color: rgb(40, 167, 69)"]:hover,
 .App nav button[style*="background-color: #28a745"]:hover,
-.App nav button[style*="background-color: #3CAC3B"]:hover {
+.App nav button[style*="background-color: #AFEA00"]:hover {
   transform: translateY(-2px) !important;
   box-shadow: 
-    0 6px 20px rgba(60, 172, 59, 0.5),
+    0 6px 20px rgba(175, 234, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
@@ -231,29 +232,29 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #D1D4D1;
+  background: #F0F4FF;
   border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #2A398D 0%, #3CAC3B 100%);
+  background: linear-gradient(135deg, #6100E9 0%, #64FEDA 100%);
   border-radius: 6px;
-  border: 2px solid #D1D4D1;
+  border: 2px solid #F0F4FF;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #1e2a6b 0%, #2e8b2e 100%);
+  background: linear-gradient(135deg, #304FFF 0%, #03C0A7 100%);
 }
 
 /* FIFA Selection styles */
 ::selection {
-  background: rgba(42, 57, 141, 0.3);
-  color: #474A4A;
+  background: rgba(97, 0, 233, 0.2);
+  color: #1A1A2E;
 }
 
 ::-moz-selection {
-  background: rgba(42, 57, 141, 0.3);
-  color: #474A4A;
+  background: rgba(97, 0, 233, 0.2);
+  color: #1A1A2E;
 }
 
 /* Responsive Design */
@@ -291,10 +292,10 @@
 /* Enhanced FIFA animations */
 @keyframes fifaPulse {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(42, 57, 141, 0.4);
+    box-shadow: 0 0 0 0 rgba(97, 0, 233, 0.3);
   }
   50% {
-    box-shadow: 0 0 0 10px rgba(42, 57, 141, 0);
+    box-shadow: 0 0 0 10px rgba(97, 0, 233, 0);
   }
 }
 
@@ -329,7 +330,7 @@
 }
 
 .App-header {
-  background: linear-gradient(135deg, #474A4A 0%, #2A398D 100%);
+  background: linear-gradient(135deg, #6100E9 0%, #304FFF 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -340,7 +341,7 @@
 }
 
 .App-link {
-  color: #3CAC3B;
+  color: #64FEDA;
   font-weight: bold;
 }
 
@@ -357,7 +358,7 @@
 button:focus,
 input:focus,
 select:focus {
-  outline: 3px solid #3CAC3B;
+  outline: 3px solid #64FEDA;
   outline-offset: 2px;
 }
 
@@ -376,11 +377,11 @@ button:active {
 
 /* FIFA Card-like elements */
 .fifa-card {
-  background: linear-gradient(135deg, #ffffff 0%, #D1D4D1 100%);
-  border: 2px solid #2A398D;
+  background: linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%);
+  border: 2px solid #6100E9;
   border-radius: 12px;
   box-shadow: 
-    0 4px 12px rgba(42, 57, 141, 0.15),
+    0 4px 12px rgba(97, 0, 233, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
   transition: all 0.3s ease;
 }
@@ -388,30 +389,30 @@ button:active {
 .fifa-card:hover {
   transform: translateY(-2px);
   box-shadow: 
-    0 8px 24px rgba(42, 57, 141, 0.2),
+    0 8px 24px rgba(97, 0, 233, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 /* FIFA Success state */
 .fifa-success {
-  background: linear-gradient(135deg, #3CAC3B 0%, #2e8b2e 100%);
-  color: white;
+  background: linear-gradient(135deg, #AFEA00 0%, #00CA55 100%);
+  color: #1A1A2E;
 }
 
 /* FIFA Warning state */
 .fifa-warning {
-  background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
-  color: #474A4A;
+  background: linear-gradient(135deg, #B288FD 0%, #6100E9 100%);
+  color: white;
 }
 
 /* FIFA Error state */
 .fifa-error {
-  background: linear-gradient(135deg, #E61D25 0%, #C41E3A 100%);
+  background: linear-gradient(135deg, #FF3D00 0%, #D20100 100%);
   color: white;
 }
 
 /* FIFA Info state */
 .fifa-info {
-  background: linear-gradient(135deg, #2A398D 0%, #1e2a6b 100%);
+  background: linear-gradient(135deg, #6100E9 0%, #304FFF 100%);
   color: white;
 }

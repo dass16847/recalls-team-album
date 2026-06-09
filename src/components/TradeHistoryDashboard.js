@@ -183,17 +183,17 @@ export const TradeHistoryDashboard = () => {
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: '400px',
-        backgroundColor: '#474A4A',
+        background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 100%)',
         borderRadius: '15px',
-        border: '3px solid #2A398D',
+        border: '3px solid #6100E9',
         margin: '20px',
-        color: 'white'
+        color: '#1A1A2E'
       }}>
         <div style={{
           width: '50px',
           height: '50px',
-          border: '4px solid #D1D4D1',
-          borderTop: '4px solid #3CAC3B',
+          border: '4px solid #E6F9F5',
+          borderTop: '4px solid #64FEDA',
           borderRadius: '50%',
           animation: 'spin 1s linear infinite',
           marginBottom: '20px'
@@ -206,7 +206,7 @@ export const TradeHistoryDashboard = () => {
   return (
     <div style={{ 
       padding: '20px', 
-      backgroundColor: '#f8f9fa', 
+      background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 50%, #F5F0FF 100%)', 
       minHeight: '100vh' 
     }}>
       {/* Header */}
@@ -215,24 +215,24 @@ export const TradeHistoryDashboard = () => {
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: '30px',
-        backgroundColor: '#474A4A',
+        background: 'linear-gradient(135deg, #6100E9 0%, #304FFF 50%, #64FEDA 100%)',
         padding: '25px',
         borderRadius: '15px',
-        border: '3px solid #2A398D'
+        border: '3px solid #AFEA00'
       }}>
         <h2 style={{ 
           color: 'white', 
           margin: 0,
           fontSize: '2.2rem',
-          textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+          textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
         }}>📊 Trade History & Statistics</h2>
         <button 
           onClick={exportToCSV}
           disabled={filteredTrades.length === 0}
           style={{ 
             padding: '12px 24px',
-            backgroundColor: filteredTrades.length === 0 ? '#474A4A' : '#3CAC3B',
-            color: 'white',
+            backgroundColor: filteredTrades.length === 0 ? '#8888AA' : '#AFEA00',
+            color: filteredTrades.length === 0 ? 'white' : '#1A1A2E',
             border: 'none',
             borderRadius: '8px',
             cursor: filteredTrades.length === 0 ? 'not-allowed' : 'pointer',
@@ -243,13 +243,13 @@ export const TradeHistoryDashboard = () => {
           }}
           onMouseEnter={(e) => {
             if (filteredTrades.length > 0) {
-              e.target.style.backgroundColor = '#2e8b2e';
+              e.target.style.backgroundColor = '#00CA55';
               e.target.style.transform = 'translateY(-2px)';
             }
           }}
           onMouseLeave={(e) => {
             if (filteredTrades.length > 0) {
-              e.target.style.backgroundColor = '#3CAC3B';
+              e.target.style.backgroundColor = '#AFEA00';
               e.target.style.transform = 'translateY(0)';
             }
           }}
@@ -266,128 +266,128 @@ export const TradeHistoryDashboard = () => {
         marginBottom: '30px'
       }}>
         <div style={{
-          backgroundColor: 'white',
+          background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
           padding: '25px',
           borderRadius: '12px',
-          border: '3px solid #2A398D',
-          boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+          border: '3px solid #6100E9',
+          boxShadow: '0 6px 16px rgba(97,0,233,0.1)',
           textAlign: 'center',
           transition: 'transform 0.3s ease'
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'translateY(-5px)';
-          e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+          e.currentTarget.style.boxShadow = '0 8px 20px rgba(97,0,233,0.15)';
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+          e.currentTarget.style.boxShadow = '0 6px 16px rgba(97,0,233,0.1)';
         }}>
           <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>📈</div>
           <h3 style={{ 
             fontSize: '2rem', 
             margin: '0 0 8px 0', 
-            color: '#2A398D',
+            color: '#1A1A2E',
             fontWeight: 'bold'
           }}>{statistics.totalTrades}</h3>
           <p style={{ 
             margin: 0, 
-            color: '#474A4A', 
+            color: '#4A4A6A', 
             fontSize: '16px',
             fontWeight: 'bold'
           }}>Total Trades</p>
         </div>
 
         <div style={{
-          backgroundColor: 'white',
+          background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
           padding: '25px',
           borderRadius: '12px',
-          border: '3px solid #3CAC3B',
-          boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+          border: '3px solid #AFEA00',
+          boxShadow: '0 6px 16px rgba(175,234,0,0.1)',
           textAlign: 'center',
           transition: 'transform 0.3s ease'
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'translateY(-5px)';
-          e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+          e.currentTarget.style.boxShadow = '0 8px 20px rgba(175,234,0,0.15)';
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+          e.currentTarget.style.boxShadow = '0 6px 16px rgba(175,234,0,0.1)';
         }}>
           <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>✅</div>
           <h3 style={{ 
             fontSize: '2rem', 
             margin: '0 0 8px 0', 
-            color: '#3CAC3B',
+            color: '#1A1A2E',
             fontWeight: 'bold'
           }}>{statistics.successfulTrades}</h3>
           <p style={{ 
             margin: 0, 
-            color: '#474A4A', 
+            color: '#4A4A6A', 
             fontSize: '16px',
             fontWeight: 'bold'
           }}>Completed</p>
         </div>
 
         <div style={{
-          backgroundColor: 'white',
+          background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
           padding: '25px',
           borderRadius: '12px',
-          border: '3px solid #ffc107',
-          boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+          border: '3px solid #B288FD',
+          boxShadow: '0 6px 16px rgba(178,136,253,0.1)',
           textAlign: 'center',
           transition: 'transform 0.3s ease'
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'translateY(-5px)';
-          e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+          e.currentTarget.style.boxShadow = '0 8px 20px rgba(178,136,253,0.15)';
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+          e.currentTarget.style.boxShadow = '0 6px 16px rgba(178,136,253,0.1)';
         }}>
           <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>⏳</div>
           <h3 style={{ 
             fontSize: '2rem', 
             margin: '0 0 8px 0', 
-            color: '#ffc107',
+            color: '#1A1A2E',
             fontWeight: 'bold'
           }}>{statistics.pendingTrades}</h3>
           <p style={{ 
             margin: 0, 
-            color: '#474A4A', 
+            color: '#4A4A6A', 
             fontSize: '16px',
             fontWeight: 'bold'
           }}>Pending</p>
         </div>
 
         <div style={{
-          backgroundColor: 'white',
+          background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
           padding: '25px',
           borderRadius: '12px',
-          border: '3px solid #E61D25',
-          boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+          border: '3px solid #64FEDA',
+          boxShadow: '0 6px 16px rgba(100,254,218,0.1)',
           textAlign: 'center',
           transition: 'transform 0.3s ease'
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'translateY(-5px)';
-          e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+          e.currentTarget.style.boxShadow = '0 8px 20px rgba(100,254,218,0.15)';
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+          e.currentTarget.style.boxShadow = '0 6px 16px rgba(100,254,218,0.1)';
         }}>
           <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🎯</div>
           <h3 style={{ 
             fontSize: '2rem', 
             margin: '0 0 8px 0', 
-            color: '#E61D25',
+            color: '#1A1A2E',
             fontWeight: 'bold'
           }}>{statistics.successRate}%</h3>
           <p style={{ 
             margin: 0, 
-            color: '#474A4A', 
+            color: '#4A4A6A', 
             fontSize: '16px',
             fontWeight: 'bold'
           }}>Success Rate</p>
@@ -396,12 +396,12 @@ export const TradeHistoryDashboard = () => {
 
       {/* Filters */}
       <div style={{
-        backgroundColor: 'white',
+        background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
         padding: '25px',
         borderRadius: '15px',
-        border: '3px solid #2A398D',
+        border: '3px solid #6100E9',
         marginBottom: '30px',
-        boxShadow: '0 6px 16px rgba(0,0,0,0.1)'
+        boxShadow: '0 6px 16px rgba(97,0,233,0.1)'
       }}>
         <div style={{
           display: 'grid',
@@ -414,7 +414,7 @@ export const TradeHistoryDashboard = () => {
               display: 'block', 
               marginBottom: '8px', 
               fontWeight: 'bold',
-              color: '#474A4A',
+              color: '#1A1A2E',
               fontSize: '16px'
             }}>Status:</label>
             <select 
@@ -423,11 +423,11 @@ export const TradeHistoryDashboard = () => {
               style={{
                 width: '100%',
                 padding: '12px',
-                border: '2px solid #2A398D',
+                border: '2px solid #6100E9',
                 borderRadius: '8px',
                 fontSize: '16px',
                 backgroundColor: 'white',
-                color: '#474A4A',
+                color: '#1A1A2E',
                 fontWeight: 'bold'
               }}
             >
@@ -443,7 +443,7 @@ export const TradeHistoryDashboard = () => {
               display: 'block', 
               marginBottom: '8px', 
               fontWeight: 'bold',
-              color: '#474A4A',
+              color: '#1A1A2E',
               fontSize: '16px'
             }}>Time Period:</label>
             <select 
@@ -452,11 +452,11 @@ export const TradeHistoryDashboard = () => {
               style={{
                 width: '100%',
                 padding: '12px',
-                border: '2px solid #2A398D',
+                border: '2px solid #6100E9',
                 borderRadius: '8px',
                 fontSize: '16px',
                 backgroundColor: 'white',
-                color: '#474A4A',
+                color: '#1A1A2E',
                 fontWeight: 'bold'
               }}
             >
@@ -472,7 +472,7 @@ export const TradeHistoryDashboard = () => {
               display: 'block', 
               marginBottom: '8px', 
               fontWeight: 'bold',
-              color: '#474A4A',
+              color: '#1A1A2E',
               fontSize: '16px'
             }}>Search:</label>
             <input
@@ -483,11 +483,11 @@ export const TradeHistoryDashboard = () => {
               style={{
                 width: '100%',
                 padding: '12px',
-                border: '2px solid #2A398D',
+                border: '2px solid #6100E9',
                 borderRadius: '8px',
                 fontSize: '16px',
                 backgroundColor: 'white',
-                color: '#474A4A'
+                color: '#1A1A2E'
               }}
             />
           </div>
@@ -498,30 +498,34 @@ export const TradeHistoryDashboard = () => {
       <div>
         {filteredTrades.length === 0 ? (
           <div style={{
-            backgroundColor: 'white',
+            background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
             padding: '60px 40px',
             borderRadius: '15px',
-            border: '3px solid #D1D4D1',
+            border: '3px solid #E6F9F5',
             textAlign: 'center',
-            boxShadow: '0 6px 16px rgba(0,0,0,0.1)'
+            boxShadow: '0 6px 16px rgba(97,0,233,0.08)'
           }}>
             <div style={{ fontSize: '4rem', marginBottom: '20px' }}>📊</div>
             <h3 style={{ 
-              color: '#2A398D', 
+              color: '#1A1A2E', 
               fontSize: '1.8rem',
               marginBottom: '15px'
             }}>No Trade History Yet</h3>
             <p style={{ 
-              color: '#474A4A', 
+              color: '#4A4A6A', 
               fontSize: '16px',
               marginBottom: '10px',
               fontWeight: 'bold'
             }}>Your completed trades will appear here once you start trading with other users.</p>
             <p style={{ 
-              color: '#474A4A', 
+              color: '#4A4A6A', 
               fontSize: '14px', 
               marginTop: '20px',
-              fontStyle: 'italic'
+              fontStyle: 'italic',
+              background: 'rgba(100, 254, 218, 0.1)',
+              padding: '15px',
+              borderRadius: '10px',
+              border: '1px solid #64FEDA'
             }}>
               💡 Tip: Visit the Trading Post to start making trades!
             </p>
@@ -531,29 +535,29 @@ export const TradeHistoryDashboard = () => {
             {filteredTrades.map(trade => {
               const getStatusColor = (status) => {
                 switch(status) {
-                  case 'completed': return '#3CAC3B';
-                  case 'pending': return '#ffc107';
-                  case 'cancelled': return '#E61D25';
-                  default: return '#474A4A';
+                  case 'completed': return '#AFEA00';
+                  case 'pending': return '#B288FD';
+                  case 'cancelled': return '#FF3D00';
+                  default: return '#4A4A6A';
                 }
               };
 
               return (
                 <div key={trade.id} style={{
-                  backgroundColor: 'white',
+                  background: 'linear-gradient(135deg, #ffffff 0%, #F0F4FF 100%)',
                   borderRadius: '12px',
                   border: `3px solid ${getStatusColor(trade.status)}`,
-                  boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+                  boxShadow: '0 6px 16px rgba(97,0,233,0.1)',
                   overflow: 'hidden',
                   transition: 'transform 0.3s ease'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(97,0,233,0.15)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(97,0,233,0.1)';
                 }}>
                   {/* Trade Header */}
                   <div style={{
@@ -561,12 +565,12 @@ export const TradeHistoryDashboard = () => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: '20px 25px',
-                    backgroundColor: '#D1D4D1',
+                    background: 'rgba(97, 0, 233, 0.05)',
                     borderBottom: `2px solid ${getStatusColor(trade.status)}`
                   }}>
                     <span style={{
                       backgroundColor: getStatusColor(trade.status),
-                      color: 'white',
+                      color: trade.status === 'completed' ? '#1A1A2E' : 'white',
                       padding: '8px 16px',
                       borderRadius: '20px',
                       fontSize: '14px',
@@ -576,7 +580,7 @@ export const TradeHistoryDashboard = () => {
                       {trade.status.charAt(0).toUpperCase() + trade.status.slice(1)}
                     </span>
                     <div style={{
-                      color: '#474A4A',
+                      color: '#4A4A6A',
                       fontSize: '16px',
                       fontWeight: 'bold'
                     }}>
@@ -591,11 +595,11 @@ export const TradeHistoryDashboard = () => {
                       textAlign: 'center'
                     }}>
                       <strong style={{ 
-                        color: '#2A398D',
+                        color: '#1A1A2E',
                         fontSize: '18px'
                       }}>Trading with: </strong>
                       <span style={{ 
-                        color: '#474A4A',
+                        color: '#6100E9',
                         fontSize: '18px',
                         fontWeight: 'bold'
                       }}>
@@ -610,14 +614,14 @@ export const TradeHistoryDashboard = () => {
                     }}>
                       {/* Cards Given */}
                       <div style={{
-                        backgroundColor: '#f8f9fa',
+                        background: 'rgba(255, 61, 0, 0.05)',
                         padding: '20px',
                         borderRadius: '10px',
-                        border: '2px solid #E61D25'
+                        border: '2px solid #FF3D00'
                       }}>
                         <h4 style={{ 
                           margin: '0 0 15px 0',
-                          color: '#E61D25',
+                          color: '#FF3D00',
                           fontSize: '16px',
                           textAlign: 'center'
                         }}>You gave:</h4>
@@ -627,8 +631,8 @@ export const TradeHistoryDashboard = () => {
                               backgroundColor: 'white',
                               padding: '8px 12px',
                               borderRadius: '6px',
-                              border: '1px solid #E61D25',
-                              color: '#474A4A',
+                              border: '1px solid #FF3D00',
+                              color: '#1A1A2E',
                               fontWeight: 'bold',
                               textAlign: 'center'
                             }}>{card.name}</span>
@@ -636,8 +640,8 @@ export const TradeHistoryDashboard = () => {
                             backgroundColor: 'white',
                             padding: '8px 12px',
                             borderRadius: '6px',
-                            border: '1px solid #E61D25',
-                            color: '#474A4A',
+                            border: '1px solid #FF3D00',
+                            color: '#4A4A6A',
                             fontWeight: 'bold',
                             textAlign: 'center',
                             fontStyle: 'italic'
@@ -647,14 +651,14 @@ export const TradeHistoryDashboard = () => {
 
                       {/* Cards Received */}
                       <div style={{
-                        backgroundColor: '#f8f9fa',
+                        background: 'rgba(175, 234, 0, 0.05)',
                         padding: '20px',
                         borderRadius: '10px',
-                        border: '2px solid #3CAC3B'
+                        border: '2px solid #AFEA00'
                       }}>
                         <h4 style={{ 
                           margin: '0 0 15px 0',
-                          color: '#3CAC3B',
+                          color: '#AFEA00',
                           fontSize: '16px',
                           textAlign: 'center'
                         }}>You received:</h4>
@@ -664,8 +668,8 @@ export const TradeHistoryDashboard = () => {
                               backgroundColor: 'white',
                               padding: '8px 12px',
                               borderRadius: '6px',
-                              border: '1px solid #3CAC3B',
-                              color: '#474A4A',
+                              border: '1px solid #AFEA00',
+                              color: '#1A1A2E',
                               fontWeight: 'bold',
                               textAlign: 'center'
                             }}>{card.name}</span>
@@ -673,8 +677,8 @@ export const TradeHistoryDashboard = () => {
                             backgroundColor: 'white',
                             padding: '8px 12px',
                             borderRadius: '6px',
-                            border: '1px solid #3CAC3B',
-                            color: '#474A4A',
+                            border: '1px solid #AFEA00',
+                            color: '#4A4A6A',
                             fontWeight: 'bold',
                             textAlign: 'center',
                             fontStyle: 'italic'

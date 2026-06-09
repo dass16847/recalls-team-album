@@ -31,7 +31,7 @@ function Login({ onLogin }) {
   return (
     <div style={{ 
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #474A4A 0%, #2A398D 50%, #474A4A 100%)',
+      background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 25%, #F5F0FF 50%, #E6F9F5 75%, #F0F4FF 100%)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -43,8 +43,8 @@ function Login({ onLogin }) {
         backgroundColor: 'white',
         borderRadius: '20px',
         padding: '40px',
-        boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-        border: '4px solid #3CAC3B'
+        boxShadow: '0 20px 60px rgba(97,0,233,0.2)',
+        border: '4px solid #64FEDA'
       }}>
         {/* Header */}
         <div style={{ 
@@ -54,17 +54,17 @@ function Login({ onLogin }) {
           <div style={{ 
             fontSize: '4rem', 
             marginBottom: '15px',
-            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))'
+            filter: 'drop-shadow(0 4px 8px rgba(97,0,233,0.2))'
           }}>🏆</div>
           <h2 style={{ 
-            color: '#2A398D',
+            color: '#1A1A2E',
             fontSize: '2.2rem',
             margin: '0 0 8px 0',
             fontWeight: 'bold',
-            textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+            textShadow: '1px 1px 2px rgba(255,255,255,0.8)'
           }}>Recalls Team Album</h2>
           <p style={{ 
-            color: '#474A4A',
+            color: '#4A4A6A',
             fontSize: '16px',
             margin: 0,
             fontWeight: 'bold'
@@ -77,7 +77,7 @@ function Login({ onLogin }) {
             <label style={{ 
               display: 'block',
               marginBottom: '8px',
-              color: '#474A4A',
+              color: '#1A1A2E',
               fontSize: '16px',
               fontWeight: 'bold'
             }}>
@@ -92,22 +92,22 @@ function Login({ onLogin }) {
                 width: '100%', 
                 padding: '15px', 
                 fontSize: '16px',
-                border: '3px solid #D1D4D1',
+                border: '3px solid #B288FD',
                 borderRadius: '10px',
-                backgroundColor: '#f8f9fa',
-                color: '#474A4A',
+                background: 'linear-gradient(135deg, #F0F4FF 0%, #ffffff 100%)',
+                color: '#1A1A2E',
                 fontWeight: 'bold',
                 transition: 'all 0.3s ease',
                 outline: 'none'
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = '#2A398D';
+                e.target.style.borderColor = '#6100E9';
                 e.target.style.backgroundColor = 'white';
-                e.target.style.boxShadow = '0 0 0 3px rgba(42,57,141,0.1)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(97,0,233,0.1)';
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = '#D1D4D1';
-                e.target.style.backgroundColor = '#f8f9fa';
+                e.target.style.borderColor = '#B288FD';
+                e.target.style.backgroundColor = '#F0F4FF';
                 e.target.style.boxShadow = 'none';
               }}
               required
@@ -118,7 +118,7 @@ function Login({ onLogin }) {
             <label style={{ 
               display: 'block',
               marginBottom: '8px',
-              color: '#474A4A',
+              color: '#1A1A2E',
               fontSize: '16px',
               fontWeight: 'bold'
             }}>
@@ -133,22 +133,22 @@ function Login({ onLogin }) {
                 width: '100%', 
                 padding: '15px', 
                 fontSize: '16px',
-                border: '3px solid #D1D4D1',
+                border: '3px solid #B288FD',
                 borderRadius: '10px',
-                backgroundColor: '#f8f9fa',
-                color: '#474A4A',
+                background: 'linear-gradient(135deg, #F0F4FF 0%, #ffffff 100%)',
+                color: '#1A1A2E',
                 fontWeight: 'bold',
                 transition: 'all 0.3s ease',
                 outline: 'none'
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = '#2A398D';
+                e.target.style.borderColor = '#6100E9';
                 e.target.style.backgroundColor = 'white';
-                e.target.style.boxShadow = '0 0 0 3px rgba(42,57,141,0.1)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(97,0,233,0.1)';
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = '#D1D4D1';
-                e.target.style.backgroundColor = '#f8f9fa';
+                e.target.style.borderColor = '#B288FD';
+                e.target.style.backgroundColor = '#F0F4FF';
                 e.target.style.boxShadow = 'none';
               }}
               required
@@ -162,29 +162,29 @@ function Login({ onLogin }) {
               width: '100%', 
               padding: '18px', 
               fontSize: '18px', 
-              backgroundColor: isLoading ? '#474A4A' : '#2A398D',
+              backgroundColor: isLoading ? '#8888AA' : '#6100E9',
               color: 'white', 
               border: 'none', 
               borderRadius: '12px',
               cursor: isLoading ? 'not-allowed' : 'pointer',
               fontWeight: 'bold',
               transition: 'all 0.3s ease',
-              boxShadow: '0 6px 16px rgba(0,0,0,0.2)',
+              boxShadow: '0 6px 16px rgba(97,0,233,0.2)',
               position: 'relative',
               overflow: 'hidden'
             }}
             onMouseEnter={(e) => {
               if (!isLoading) {
-                e.target.style.backgroundColor = '#1e2a6b';
+                e.target.style.backgroundColor = '#304FFF';
                 e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 8px 20px rgba(0,0,0,0.3)';
+                e.target.style.boxShadow = '0 8px 20px rgba(97,0,233,0.3)';
               }
             }}
             onMouseLeave={(e) => {
               if (!isLoading) {
-                e.target.style.backgroundColor = '#2A398D';
+                e.target.style.backgroundColor = '#6100E9';
                 e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 6px 16px rgba(0,0,0,0.2)';
+                e.target.style.boxShadow = '0 6px 16px rgba(97,0,233,0.2)';
               }
             }}
           >
@@ -198,7 +198,7 @@ function Login({ onLogin }) {
                 <div style={{
                   width: '20px',
                   height: '20px',
-                  border: '3px solid #D1D4D1',
+                  border: '3px solid #E6F9F5',
                   borderTop: '3px solid white',
                   borderRadius: '50%',
                   animation: 'spin 1s linear infinite'
@@ -218,12 +218,12 @@ function Login({ onLogin }) {
           textAlign: 'center', 
           marginTop: '25px',
           padding: '20px',
-          backgroundColor: '#D1D4D1',
+          background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 100%)',
           borderRadius: '12px',
-          border: '2px solid #474A4A'
+          border: '2px solid #B288FD'
         }}>
           <p style={{ 
-            color: '#474A4A',
+            color: '#1A1A2E',
             fontSize: '16px',
             margin: '0 0 10px 0',
             fontWeight: 'bold'
@@ -237,8 +237,8 @@ function Login({ onLogin }) {
             }}
             style={{ 
               background: 'transparent',
-              border: '2px solid #3CAC3B', 
-              color: '#3CAC3B',
+              border: '2px solid #64FEDA', 
+              color: '#1A1A2E',
               padding: '10px 20px',
               borderRadius: '8px',
               cursor: 'pointer',
@@ -247,14 +247,14 @@ function Login({ onLogin }) {
               transition: 'all 0.3s ease'
             }}
             onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#3CAC3B';
-              e.target.style.color = 'white';
+              e.target.style.backgroundColor = '#64FEDA';
+              e.target.style.color = '#1A1A2E';
               e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+              e.target.style.boxShadow = '0 4px 12px rgba(100,254,218,0.3)';
             }}
             onMouseLeave={(e) => {
               e.target.style.backgroundColor = 'transparent';
-              e.target.style.color = '#3CAC3B';
+              e.target.style.color = '#1A1A2E';
               e.target.style.transform = 'translateY(0)';
               e.target.style.boxShadow = 'none';
             }}
@@ -268,8 +268,8 @@ function Login({ onLogin }) {
           <div style={{ 
             marginTop: '20px',
             padding: '15px',
-            backgroundColor: 'rgba(230,29,37,0.1)',
-            border: '2px solid #E61D25',
+            backgroundColor: 'rgba(255,61,0,0.1)',
+            border: '2px solid #FF3D00',
             borderRadius: '10px',
             textAlign: 'center'
           }}>
@@ -278,7 +278,7 @@ function Login({ onLogin }) {
               marginBottom: '8px'
             }}>⚠️</div>
             <p style={{ 
-              color: '#E61D25',
+              color: '#FF3D00',
               fontSize: '16px',
               margin: 0,
               fontWeight: 'bold'
@@ -293,16 +293,16 @@ function Login({ onLogin }) {
           marginTop: '30px',
           textAlign: 'center',
           padding: '20px',
-          backgroundColor: 'rgba(60,172,59,0.1)',
+          backgroundColor: 'rgba(175,234,0,0.1)',
           borderRadius: '12px',
-          border: '2px solid #3CAC3B'
+          border: '2px solid #AFEA00'
         }}>
           <div style={{ 
             fontSize: '32px',
             marginBottom: '10px'
           }}>🎴</div>
           <p style={{ 
-            color: '#474A4A',
+            color: '#1A1A2E',
             fontSize: '14px',
             margin: 0,
             fontWeight: 'bold',

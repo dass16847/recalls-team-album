@@ -1,12 +1,12 @@
-/* Toast Notifications - FIFA World Cup Palette */
+/* Toast Notifications - FIFA World Cup 2026 Joyful Light Edition */
 .trade-toast-notification {
   position: fixed;
   top: 20px;
   right: 20px;
-  background: linear-gradient(135deg, #D1D4D1 0%, #c4c7c4 100%);
-  border: 2px solid #2A398D;
+  background: linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 100%);
+  border: 2px solid #6100E9;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(97,0,233,0.2);
   z-index: 10000;
   animation: slideInRight 0.3s ease-out;
   max-width: 350px;
@@ -22,7 +22,7 @@
 .toast-icon {
   font-size: 24px;
   flex-shrink: 0;
-  color: #2A398D;
+  color: #6100E9;
 }
 
 .toast-message {
@@ -31,7 +31,7 @@
 
 .toast-message strong {
   display: block;
-  color: #2A398D;
+  color: #1A1A2E;
   margin-bottom: 4px;
   font-weight: 600;
 }
@@ -39,7 +39,7 @@
 .toast-message p {
   margin: 0;
   font-size: 14px;
-  color: #474A4A;
+  color: #4A4A6A;
 }
 
 .toast-close {
@@ -47,7 +47,7 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: #474A4A;
+  color: #4A4A6A;
   padding: 0;
   width: 20px;
   height: 20px;
@@ -58,27 +58,27 @@
 }
 
 .toast-close:hover {
-  color: #E61D25;
+  color: #FF3D00;
 }
 
 /* Success Toast */
 .toast-success {
-  border-color: #3CAC3B;
+  border-color: #AFEA00;
 }
 
 .toast-success .toast-icon,
 .toast-success .toast-message strong {
-  color: #3CAC3B;
+  color: #AFEA00;
 }
 
 /* Error Toast */
 .toast-error {
-  border-color: #E61D25;
+  border-color: #FF3D00;
 }
 
 .toast-error .toast-icon,
 .toast-error .toast-message strong {
-  color: #E61D25;
+  color: #FF3D00;
 }
 
 /* Notification Bell */
@@ -95,18 +95,18 @@
   padding: 8px;
   border-radius: 50%;
   transition: background-color 0.2s;
-  color: #2A398D;
+  color: white;
 }
 
 .notification-bell:hover {
-  background-color: rgba(42, 57, 141, 0.1);
+  background-color: rgba(100, 254, 218, 0.2);
 }
 
 .notification-badge {
   position: absolute;
   top: 0;
   right: 0;
-  background: linear-gradient(135deg, #E61D25 0%, #c41620 100%);
+  background: linear-gradient(135deg, #FF3D00 0%, #D20100 100%);
   color: white;
   border-radius: 50%;
   width: 20px;
@@ -116,17 +116,17 @@
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  box-shadow: 0 2px 4px rgba(230, 29, 37, 0.3);
+  box-shadow: 0 2px 4px rgba(255, 61, 0, 0.3);
 }
 
 .notification-dropdown {
   position: absolute;
   top: 100%;
   right: 0;
-  background: linear-gradient(135deg, #D1D4D1 0%, #c4c7c4 100%);
-  border: 1px solid rgba(42, 57, 141, 0.2);
+  background: linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 100%);
+  border: 1px solid rgba(97, 0, 233, 0.2);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(97,0,233,0.2);
   width: 300px;
   max-height: 400px;
   overflow: hidden;
@@ -138,8 +138,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px;
-  border-bottom: 1px solid rgba(42, 57, 141, 0.2);
-  background: linear-gradient(135deg, #474A4A 0%, #3a3d3d 100%);
+  border-bottom: 1px solid rgba(97, 0, 233, 0.2);
+  background: linear-gradient(135deg, #6100E9 0%, #304FFF 100%);
 }
 
 .notification-header h4 {
@@ -153,7 +153,7 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: #D1D4D1;
+  color: rgba(255,255,255,0.8);
   transition: color 0.2s ease;
 }
 
@@ -168,13 +168,13 @@
 
 .notification-item {
   padding: 15px;
-  border-bottom: 1px solid rgba(42, 57, 141, 0.1);
+  border-bottom: 1px solid rgba(97, 0, 233, 0.1);
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .notification-item:hover {
-  background: linear-gradient(135deg, #d8dbd8 0%, #D1D4D1 100%);
+  background: linear-gradient(135deg, #F5F0FF 0%, #F0F4FF 100%);
 }
 
 .notification-item:last-child {
@@ -183,7 +183,7 @@
 
 .notification-content strong {
   display: block;
-  color: #2A398D;
+  color: #1A1A2E;
   margin-bottom: 4px;
   font-weight: 600;
 }
@@ -191,11 +191,11 @@
 .notification-content p {
   margin: 4px 0;
   font-size: 14px;
-  color: #474A4A;
+  color: #4A4A6A;
 }
 
 .notification-content small {
-  color: #474A4A;
+  color: #4A4A6A;
   font-size: 12px;
   opacity: 0.8;
 }
@@ -203,7 +203,7 @@
 .no-notifications {
   padding: 20px;
   text-align: center;
-  color: #474A4A;
+  color: #4A4A6A;
   font-style: italic;
 }
 

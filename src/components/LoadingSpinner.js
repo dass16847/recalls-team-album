@@ -5,20 +5,20 @@ const LoadingSpinner = ({
   type = 'cards', 
   message = 'Loading...', 
   size = 'medium',
-  color = '#2A398D' // Changed default to FIFA Hermes Blue
+  color = '#6100E9' // Changed default to FIFA Electric Violet
 }) => {
   const renderAnimation = () => {
     switch (type) {
       case 'cards':
         return (
           <div className={`card-flip-container ${size}`} style={{
-            '--primary-color': '#2A398D',
-            '--secondary-color': '#3CAC3B',
-            '--accent-color': '#E61D25'
+            '--primary-color': '#6100E9',
+            '--secondary-color': '#64FEDA',
+            '--accent-color': '#AFEA00'
           }}>
             <div className="card-flip card-1" style={{
-              backgroundColor: '#2A398D',
-              border: '2px solid #474A4A',
+              backgroundColor: '#6100E9',
+              border: '2px solid #B288FD',
               borderRadius: '8px',
               position: 'relative'
             }}>
@@ -33,8 +33,8 @@ const LoadingSpinner = ({
               }}>🎴</div>
             </div>
             <div className="card-flip card-2" style={{
-              backgroundColor: '#3CAC3B',
-              border: '2px solid #474A4A',
+              backgroundColor: '#64FEDA',
+              border: '2px solid #B288FD',
               borderRadius: '8px',
               position: 'relative'
             }}>
@@ -43,14 +43,14 @@ const LoadingSpinner = ({
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                color: 'white',
+                color: '#1A1A2E',
                 fontSize: size === 'large' ? '24px' : size === 'medium' ? '18px' : '14px',
                 fontWeight: 'bold'
               }}>🎴</div>
             </div>
             <div className="card-flip card-3" style={{
-              backgroundColor: '#E61D25',
-              border: '2px solid #474A4A',
+              backgroundColor: '#AFEA00',
+              border: '2px solid #B288FD',
               borderRadius: '8px',
               position: 'relative'
             }}>
@@ -59,7 +59,7 @@ const LoadingSpinner = ({
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                color: 'white',
+                color: '#1A1A2E',
                 fontSize: size === 'large' ? '24px' : size === 'medium' ? '18px' : '14px',
                 fontWeight: 'bold'
               }}>🎴</div>
@@ -71,23 +71,23 @@ const LoadingSpinner = ({
         return (
           <div className={`album-loading ${size}`}>
             <div className="album-book" style={{
-              backgroundColor: '#474A4A',
-              border: '3px solid #2A398D',
+              backgroundColor: '#8888AA',
+              border: '3px solid #6100E9',
               borderRadius: '8px',
               position: 'relative',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+              boxShadow: '0 4px 12px rgba(97,0,233,0.2)'
             }}>
               <div className="album-page page-1" style={{
-                backgroundColor: '#D1D4D1',
-                border: '1px solid #2A398D'
+                backgroundColor: '#F0F4FF',
+                border: '1px solid #6100E9'
               }}></div>
               <div className="album-page page-2" style={{
-                backgroundColor: '#D1D4D1',
-                border: '1px solid #3CAC3B'
+                backgroundColor: '#E6F9F5',
+                border: '1px solid #64FEDA'
               }}></div>
               <div className="album-page page-3" style={{
-                backgroundColor: '#D1D4D1',
-                border: '1px solid #E61D25'
+                backgroundColor: '#F5F0FF',
+                border: '1px solid #AFEA00'
               }}></div>
               <div style={{
                 position: 'absolute',
@@ -96,7 +96,7 @@ const LoadingSpinner = ({
                 transform: 'translate(-50%, -50%)',
                 color: 'white',
                 fontSize: size === 'large' ? '32px' : size === 'medium' ? '24px' : '18px',
-                textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+                textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
               }}>📖</div>
             </div>
           </div>
@@ -109,11 +109,11 @@ const LoadingSpinner = ({
               position: 'relative'
             }}>
               <div className="pack-front" style={{
-                backgroundColor: '#2A398D',
-                border: '3px solid #474A4A',
+                backgroundColor: '#6100E9',
+                border: '3px solid #B288FD',
                 borderRadius: '12px',
                 position: 'relative',
-                boxShadow: '0 6px 16px rgba(0,0,0,0.2)'
+                boxShadow: '0 6px 16px rgba(97,0,233,0.2)'
               }}>
                 <div style={{
                   position: 'absolute',
@@ -122,14 +122,14 @@ const LoadingSpinner = ({
                   transform: 'translate(-50%, -50%)',
                   color: 'white',
                   fontSize: size === 'large' ? '48px' : size === 'medium' ? '36px' : '24px',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
                 }}>🎁</div>
               </div>
               <div className="pack-back" style={{
-                backgroundColor: '#3CAC3B',
-                border: '3px solid #474A4A',
+                backgroundColor: '#64FEDA',
+                border: '3px solid #B288FD',
                 borderRadius: '12px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+                boxShadow: '0 4px 12px rgba(100,254,218,0.15)'
               }}></div>
             </div>
           </div>
@@ -146,7 +146,7 @@ const LoadingSpinner = ({
             <div className="dot dot-1" style={{
               width: size === 'large' ? '16px' : size === 'medium' ? '12px' : '8px',
               height: size === 'large' ? '16px' : size === 'medium' ? '12px' : '8px',
-              backgroundColor: '#2A398D',
+              backgroundColor: '#6100E9',
               borderRadius: '50%',
               animation: 'dotPulse 1.4s ease-in-out infinite both',
               animationDelay: '0s'
@@ -154,7 +154,7 @@ const LoadingSpinner = ({
             <div className="dot dot-2" style={{
               width: size === 'large' ? '16px' : size === 'medium' ? '12px' : '8px',
               height: size === 'large' ? '16px' : size === 'medium' ? '12px' : '8px',
-              backgroundColor: '#3CAC3B',
+              backgroundColor: '#64FEDA',
               borderRadius: '50%',
               animation: 'dotPulse 1.4s ease-in-out infinite both',
               animationDelay: '0.2s'
@@ -162,7 +162,7 @@ const LoadingSpinner = ({
             <div className="dot dot-3" style={{
               width: size === 'large' ? '16px' : size === 'medium' ? '12px' : '8px',
               height: size === 'large' ? '16px' : size === 'medium' ? '12px' : '8px',
-              backgroundColor: '#E61D25',
+              backgroundColor: '#AFEA00',
               borderRadius: '50%',
               animation: 'dotPulse 1.4s ease-in-out infinite both',
               animationDelay: '0.4s'
@@ -177,7 +177,7 @@ const LoadingSpinner = ({
             style={{ 
               width: size === 'large' ? '60px' : size === 'medium' ? '40px' : '24px',
               height: size === 'large' ? '60px' : size === 'medium' ? '40px' : '24px',
-              border: `${size === 'large' ? '6px' : size === 'medium' ? '4px' : '3px'} solid #D1D4D1`,
+              border: `${size === 'large' ? '6px' : size === 'medium' ? '4px' : '3px'} solid #E6F9F5`,
               borderTop: `${size === 'large' ? '6px' : size === 'medium' ? '4px' : '3px'} solid ${color}`,
               borderRadius: '50%',
               animation: 'spin 1s linear infinite'
@@ -195,9 +195,9 @@ const LoadingSpinner = ({
       alignItems: 'center',
       justifyContent: 'center',
       padding: size === 'large' ? '40px' : size === 'medium' ? '30px' : '20px',
-      backgroundColor: 'rgba(71, 74, 74, 0.1)',
+      background: 'linear-gradient(135deg, rgba(240,244,255,0.9) 0%, rgba(230,249,245,0.8) 100%)',
       borderRadius: '15px',
-      border: '2px solid #D1D4D1',
+      border: '2px solid #B288FD',
       minHeight: size === 'large' ? '200px' : size === 'medium' ? '150px' : '100px'
     }}>
       {renderAnimation()}
@@ -206,7 +206,7 @@ const LoadingSpinner = ({
           marginTop: size === 'large' ? '25px' : size === 'medium' ? '20px' : '15px',
           fontSize: size === 'large' ? '18px' : size === 'medium' ? '16px' : '14px',
           fontWeight: 'bold',
-          color: '#474A4A',
+          color: '#1A1A2E',
           textAlign: 'center',
           textShadow: '1px 1px 2px rgba(255,255,255,0.8)'
         }}>

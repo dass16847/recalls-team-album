@@ -31,7 +31,7 @@ function PackOpening({ userPacks, onPackOpened }) {
       height: 'auto',
       objectFit: 'contain',
       borderRadius: '8px',
-      boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+      boxShadow: '0 4px 12px rgba(97,0,233,0.15)'
     };
 
     // Special handling for AFZ SJO 16 card (horizontal card)
@@ -50,37 +50,37 @@ function PackOpening({ userPacks, onPackOpened }) {
   const getRandomCardByRarity = (cards) => {
     const rand = Math.random(); // Gets random number between 0 and 1
 
-    // 85% chance for common cards
-    if (rand < 0.85) {
-      const commonCards = cards.filter(card => 
-        card.rarity === 'Common' || card.rarity === 'common' || !card.rarity
-      );
-      if (commonCards.length > 0) {
-        return commonCards[Math.floor(Math.random() * commonCards.length)];
-      }
-    } 
-    // 12% chance for rare cards (85% to 97%)
-    else if (rand < 0.97) {
-      const rareCards = cards.filter(card => 
-        card.rarity === 'Rare' || card.rarity === 'rare'
-      );
-      if (rareCards.length > 0) {
-        return rareCards[Math.floor(Math.random() * rareCards.length)];
-      }
-      // If no rare cards exist, give a common instead
-      const commonCards = cards.filter(card => 
-        card.rarity === 'Common' || card.rarity === 'common' || !card.rarity
-      );
-      return commonCards[Math.floor(Math.random() * commonCards.length)];
-    } 
-    // 3% chance for epic cards (97% to 100%)
-    else {
-      const epicCards = cards.filter(card => 
-        card.rarity === 'Epic' || card.rarity === 'epic'
-      );
-      if (epicCards.length > 0) {
-        return epicCards[Math.floor(Math.random() * epicCards.length)];
-      }
+// 98.89% chance for common cards
+if (rand < 0.9889) {
+  const commonCards = cards.filter(card => 
+    card.rarity === 'Common' || card.rarity === 'common' || !card.rarity
+  );
+  if (commonCards.length > 0) {
+    return commonCards[Math.floor(Math.random() * commonCards.length)];
+  }
+} 
+// 0.56% chance for rare cards (98.89% to 99.45%)
+else if (rand < 0.9945) {
+  const rareCards = cards.filter(card => 
+    card.rarity === 'Rare' || card.rarity === 'rare'
+  );
+  if (rareCards.length > 0) {
+    return rareCards[Math.floor(Math.random() * rareCards.length)];
+  }
+  // If no rare cards exist, give a common instead
+  const commonCards = cards.filter(card => 
+    card.rarity === 'Common' || card.rarity === 'common' || !card.rarity
+  );
+  return commonCards[Math.floor(Math.random() * commonCards.length)];
+} 
+// 0.55% chance for epic cards (99.45% to 100%)
+else {
+  const epicCards = cards.filter(card => 
+    card.rarity === 'Epic' || card.rarity === 'epic'
+  );
+  if (epicCards.length > 0) {
+    return epicCards[Math.floor(Math.random() * epicCards.length)];
+  }
       // If no epic cards exist, give a common instead
       const commonCards = cards.filter(card => 
         card.rarity === 'Common' || card.rarity === 'common' || !card.rarity
@@ -182,27 +182,27 @@ function PackOpening({ userPacks, onPackOpened }) {
   };
 
   return (
-    <div className="pack-opening-container" style={{ backgroundColor: '#f8f9fa', minHeight: '100vh', padding: '20px' }}>
+    <div className="pack-opening-container" style={{ backgroundColor: '#F0F4FF', minHeight: '100vh', padding: '20px' }}>
       <div className="pack-opening-header" style={{ 
         textAlign: 'center', 
         marginBottom: '30px',
         padding: '20px',
-        backgroundColor: '#474A4A',
+        background: 'linear-gradient(135deg, #6100E9 0%, #304FFF 50%, #64FEDA 100%)',
         borderRadius: '15px',
-        border: '3px solid #2A398D'
+        border: '3px solid #AFEA00'
       }}>
         <h2 style={{ color: 'white', margin: '0 0 15px 0', fontSize: '2.5rem' }}>🎁 Pack Opening</h2>
         <div className="pack-count-display">
           <h3 style={{ 
-            color: 'white', 
+            color: '#1A1A2E', 
             margin: 0,
             fontSize: '1.5rem',
-            textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+            textShadow: '1px 1px 2px rgba(255,255,255,0.8)'
           }}>
             You have <span style={{ 
-              color: '#3CAC3B', 
+              color: '#6100E9', 
               fontWeight: 'bold',
-              backgroundColor: 'rgba(255,255,255,0.2)',
+              backgroundColor: 'rgba(100,254,218,0.2)',
               padding: '5px 10px',
               borderRadius: '8px'
             }}>{userPacks}</span> packs available
@@ -216,8 +216,8 @@ function PackOpening({ userPacks, onPackOpened }) {
           backgroundColor: 'white',
           padding: '40px',
           borderRadius: '15px',
-          border: '3px solid #2A398D',
-          boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
+          border: '3px solid #6100E9',
+          boxShadow: '0 8px 24px rgba(97,0,233,0.1)'
         }}>
           <div style={{ marginBottom: '30px' }}>
             <label style={{ 
@@ -225,7 +225,7 @@ function PackOpening({ userPacks, onPackOpened }) {
               marginBottom: '15px', 
               fontSize: '20px', 
               fontWeight: 'bold',
-              color: '#474A4A'
+              color: '#1A1A2E'
             }}>
               How many packs do you want to open?
             </label>
@@ -236,11 +236,11 @@ function PackOpening({ userPacks, onPackOpened }) {
                 padding: '15px 20px',
                 fontSize: '18px',
                 borderRadius: '10px',
-                border: '3px solid #2A398D',
+                border: '3px solid #6100E9',
                 backgroundColor: 'white',
                 cursor: 'pointer',
                 marginBottom: '20px',
-                color: '#474A4A',
+                color: '#1A1A2E',
                 fontWeight: 'bold',
                 minWidth: '200px'
               }}
@@ -262,7 +262,7 @@ function PackOpening({ userPacks, onPackOpened }) {
               borderRadius: '12px',
               border: 'none',
               cursor: userPacks > 0 && packQuantity <= userPacks ? 'pointer' : 'not-allowed',
-              backgroundColor: userPacks > 0 && packQuantity <= userPacks ? '#2A398D' : '#474A4A',
+              backgroundColor: userPacks > 0 && packQuantity <= userPacks ? '#6100E9' : '#8888AA',
               color: 'white',
               transition: 'all 0.3s ease',
               boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
@@ -270,14 +270,14 @@ function PackOpening({ userPacks, onPackOpened }) {
             }}
             onMouseEnter={(e) => {
               if (userPacks > 0 && packQuantity <= userPacks) {
-                e.target.style.backgroundColor = '#1e2a6b';
+                e.target.style.backgroundColor = '#304FFF';
                 e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 6px 16px rgba(0,0,0,0.3)';
+                e.target.style.boxShadow = '0 6px 16px rgba(97,0,233,0.3)';
               }
             }}
             onMouseLeave={(e) => {
               if (userPacks > 0 && packQuantity <= userPacks) {
-                e.target.style.backgroundColor = '#2A398D';
+                e.target.style.backgroundColor = '#6100E9';
                 e.target.style.transform = 'translateY(0)';
                 e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
               }
@@ -294,14 +294,14 @@ function PackOpening({ userPacks, onPackOpened }) {
           backgroundColor: 'white',
           padding: '60px 40px',
           borderRadius: '15px',
-          border: '3px solid #3CAC3B',
-          boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
+          border: '3px solid #64FEDA',
+          boxShadow: '0 8px 24px rgba(100,254,218,0.1)'
         }}>
           <h3 style={{ 
-            color: '#2A398D', 
+            color: '#1A1A2E', 
             fontSize: '2rem', 
             marginBottom: '30px',
-            textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+            textShadow: '1px 1px 2px rgba(255,255,255,0.8)'
           }}>
             ✨ Opening {packQuantity} pack{packQuantity > 1 ? 's' : ''}...
           </h3>
@@ -313,7 +313,7 @@ function PackOpening({ userPacks, onPackOpened }) {
                 style={{ 
                   animationDelay: `${i * 0.2}s`,
                   fontSize: '4rem',
-                  filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))'
+                  filter: 'drop-shadow(0 4px 8px rgba(97,0,233,0.2))'
                 }}
               >
                 🎁
@@ -322,7 +322,7 @@ function PackOpening({ userPacks, onPackOpened }) {
           </div>
           <p style={{ 
             marginTop: '30px', 
-            color: '#474A4A',
+            color: '#4A4A6A',
             fontSize: '18px',
             fontWeight: 'bold'
           }}>
@@ -336,15 +336,15 @@ function PackOpening({ userPacks, onPackOpened }) {
           backgroundColor: 'white',
           padding: '30px',
           borderRadius: '15px',
-          border: '3px solid #3CAC3B',
-          boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
+          border: '3px solid #64FEDA',
+          boxShadow: '0 8px 24px rgba(100,254,218,0.1)'
         }}>
           <h3 style={{ 
             textAlign: 'center', 
-            color: '#2A398D', 
+            color: '#1A1A2E', 
             fontSize: '2rem',
             marginBottom: '30px',
-            textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+            textShadow: '1px 1px 2px rgba(255,255,255,0.8)'
           }}>
             🎉 You opened {packQuantity} pack{packQuantity > 1 ? 's' : ''} and got:
           </h3>
@@ -361,20 +361,20 @@ function PackOpening({ userPacks, onPackOpened }) {
               return (
                 <div key={index} className="result-card" style={{ 
                   position: 'relative',
-                  backgroundColor: '#D1D4D1',
+                  backgroundColor: '#F0F4FF',
                   borderRadius: '15px',
                   padding: '20px',
-                  border: '3px solid #2A398D',
-                  boxShadow: '0 6px 16px rgba(0,0,0,0.1)',
+                  border: '3px solid #6100E9',
+                  boxShadow: '0 6px 16px rgba(97,0,233,0.1)',
                   transition: 'transform 0.3s ease',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-5px)';
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(97,0,233,0.15)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(97,0,233,0.1)';
                 }}>
                   {/* Enhanced Stack effect - show multiple card shadows behind */}
                   {isStacked && (
@@ -387,10 +387,10 @@ function PackOpening({ userPacks, onPackOpened }) {
                           left: '6px',
                           width: '100%',
                           height: '100%',
-                          backgroundColor: 'rgba(42, 57, 141, 0.4)',
+                          backgroundColor: 'rgba(97, 0, 233, 0.3)',
                           borderRadius: '15px',
                           zIndex: -2,
-                          border: '2px solid rgba(42, 57, 141, 0.3)'
+                          border: '2px solid rgba(97, 0, 233, 0.2)'
                         }}
                       />
                       <div 
@@ -401,10 +401,10 @@ function PackOpening({ userPacks, onPackOpened }) {
                           left: '12px',
                           width: '100%',
                           height: '100%',
-                          backgroundColor: 'rgba(42, 57, 141, 0.3)',
+                          backgroundColor: 'rgba(97, 0, 233, 0.2)',
                           borderRadius: '15px',
                           zIndex: -3,
-                          border: '2px solid rgba(42, 57, 141, 0.2)'
+                          border: '2px solid rgba(97, 0, 233, 0.15)'
                         }}
                       />
                       {card.count > 2 && (
@@ -416,10 +416,10 @@ function PackOpening({ userPacks, onPackOpened }) {
                             left: '18px',
                             width: '100%',
                             height: '100%',
-                            backgroundColor: 'rgba(42, 57, 141, 0.2)',
+                            backgroundColor: 'rgba(97, 0, 233, 0.15)',
                             borderRadius: '15px',
                             zIndex: -4,
-                            border: '2px solid rgba(42, 57, 141, 0.1)'
+                            border: '2px solid rgba(97, 0, 233, 0.1)'
                           }}
                         />
                       )}
@@ -432,8 +432,8 @@ function PackOpening({ userPacks, onPackOpened }) {
                       position: 'absolute',
                       top: '-10px',
                       right: '-10px',
-                      backgroundColor: '#f0f8ff',
-                      color: '#1e3a8a',
+                      backgroundColor: '#AFEA00',
+                      color: '#1A1A2E',
                       borderRadius: '50%',
                       width: '35px',
                       height: '35px',
@@ -443,8 +443,8 @@ function PackOpening({ userPacks, onPackOpened }) {
                       fontSize: '16px',
                       fontWeight: 'bold',
                       zIndex: 20,
-                      border: '2px solid #1e3a8a',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                      border: '2px solid white',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
                     }}>
                       x{card.count}
                     </div>
@@ -458,10 +458,10 @@ function PackOpening({ userPacks, onPackOpened }) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: '#f8f9fa', // Changed from white to light gray-blue
+                    backgroundColor: '#ffffff',
                     borderRadius: '10px',
-                    border: '2px solid #D1D4D1', // Changed from #474A4A to lighter border
-                    boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)' // Added subtle inset shadow
+                    border: '2px solid #E6F9F5',
+                    boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.03)'
                   }}>
                     {cardImageUrl ? (
                       <img 
@@ -483,19 +483,19 @@ function PackOpening({ userPacks, onPackOpened }) {
                         alignItems: 'center',
                         justifyContent: 'center',
                         height: '100%',
-                        color: '#474A4A'
+                        color: '#1A1A2E'
                       }}
                     >
-                      <h4 style={{ margin: '0 0 10px 0', color: '#2A398D' }}>{card.name}</h4>
+                      <h4 style={{ margin: '0 0 10px 0', color: '#6100E9' }}>{card.name}</h4>
                       <p style={{ margin: '0 0 10px 0', fontWeight: 'bold' }}>{card.team}</p>
                       <span className={`card-rarity rarity-${card.rarity?.toLowerCase() || 'common'}`} style={{
                         padding: '5px 10px',
                         borderRadius: '15px',
-                        backgroundColor: '#f8f9fa', // Changed to light background
-                        color: '#2A398D', // Changed to dark blue text
+                        backgroundColor: '#F0F4FF',
+                        color: '#1A1A2E',
                         fontSize: '12px',
                         fontWeight: 'bold',
-                        border: '2px solid #2A398D' // Added border
+                        border: '2px solid #6100E9'
                       }}>
                         {card.rarity}
                       </span>
@@ -504,34 +504,38 @@ function PackOpening({ userPacks, onPackOpened }) {
                   <div className="card-info" style={{ textAlign: 'center' }}>
                     <h4 style={{ 
                       margin: '0 0 8px 0', 
-                      color: '#2A398D',
+                      color: '#1A1A2E',
                       fontSize: '18px',
                       fontWeight: 'bold'
                     }}>{card.name}</h4>
                     <p style={{ 
                       margin: '0 0 8px 0', 
-                      color: '#474A4A',
+                      color: '#4A4A6A',
                       fontWeight: 'bold'
                     }}>{card.team}</p>
                     <span className={`card-rarity rarity-${card.rarity?.toLowerCase() || 'common'}`} style={{
                       padding: '6px 12px',
                       borderRadius: '15px',
-                      backgroundColor: '#f8f9fa', // Changed to light background
-                      color: '#2A398D', // Changed to dark blue text
+                      backgroundColor: '#F0F4FF',
+                      color: '#1A1A2E',
                       fontSize: '14px',
                       fontWeight: 'bold',
                       display: 'inline-block',
-                      border: '2px solid #2A398D' // Added border for definition
+                      border: '2px solid #6100E9'
                     }}>
                       {card.rarity}
                     </span>
                     {isStacked && (
                       <p style={{ 
-                        color: '#1e3a8a', 
+                        color: '#AFEA00', 
                         fontWeight: 'bold', 
                         fontSize: '16px',
                         margin: '10px 0 0 0',
-                        textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+                        textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+                        backgroundColor: 'rgba(175,234,0,0.1)',
+                        padding: '8px 12px',
+                        borderRadius: '8px',
+                        border: '2px solid #AFEA00'
                       }}>
                         Got {card.count} copies! 🎉
                       </p>
@@ -543,15 +547,15 @@ function PackOpening({ userPacks, onPackOpened }) {
           </div>
           <div style={{ textAlign: 'center', marginTop: '30px' }}>
             <p style={{ 
-              backgroundColor: '#3CAC3B', 
+              backgroundColor: '#64FEDA', 
               padding: '20px', 
               borderRadius: '12px', 
               marginBottom: '20px',
-              color: 'white',
+              color: '#1A1A2E',
               fontSize: '18px',
               fontWeight: 'bold',
-              border: '3px solid #2A398D',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+              border: '3px solid #6100E9',
+              boxShadow: '0 4px 12px rgba(100,254,218,0.1)'
             }}>
               🎉 Pack opening complete! You opened {packQuantity} pack{packQuantity > 1 ? 's' : ''} and got {openedCards.reduce((total, card) => total + card.count, 0)} cards total.
               {openedCards.some(card => card.count > 1) && (
@@ -567,20 +571,20 @@ function PackOpening({ userPacks, onPackOpened }) {
                 borderRadius: '10px',
                 border: 'none',
                 cursor: 'pointer',
-                backgroundColor: '#2A398D',
+                backgroundColor: '#6100E9',
                 color: 'white',
                 transition: 'all 0.3s ease',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                boxShadow: '0 4px 12px rgba(97,0,233,0.2)'
               }}
               onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#1e2a6b';
+                e.target.style.backgroundColor = '#304FFF';
                 e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 6px 16px rgba(0,0,0,0.3)';
+                e.target.style.boxShadow = '0 6px 16px rgba(97,0,233,0.3)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.backgroundColor = '#2A398D';
+                e.target.style.backgroundColor = '#6100E9';
                 e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                e.target.style.boxShadow = '0 4px 12px rgba(97,0,233,0.2)';
               }}
             >
               ✨ Close Results
