@@ -432,7 +432,7 @@ else {
                       position: 'absolute',
                       top: '-10px',
                       right: '-10px',
-                      backgroundColor: '#AFEA00',
+                      backgroundColor: '#aaf6aa',
                       color: '#1A1A2E',
                       borderRadius: '50%',
                       width: '35px',
@@ -527,15 +527,15 @@ else {
                     </span>
                     {isStacked && (
                       <p style={{ 
-                        color: '#AFEA00', 
+                        color: '#1A1A2E',                    // CHANGED: Dark text instead of green
                         fontWeight: 'bold', 
                         fontSize: '16px',
                         margin: '10px 0 0 0',
-                        textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
-                        backgroundColor: 'rgba(175,234,0,0.1)',
+                        textShadow: '2px 2px 4px rgba(0,0,0,0.3)',  // CHANGED: Stronger shadow
+                        backgroundColor: '#E8F5E8',          // CHANGED: Light green background
                         padding: '8px 12px',
                         borderRadius: '8px',
-                        border: '2px solid #AFEA00'
+                        border: '2px solid #AFEA00'          // KEEP: Bright green border
                       }}>
                         Got {card.count} copies! 🎉
                       </p>

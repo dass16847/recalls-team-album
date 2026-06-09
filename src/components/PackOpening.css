@@ -4,7 +4,7 @@
     radial-gradient(circle at 30% 20%, rgba(100, 254, 218, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 70% 80%, rgba(97, 0, 233, 0.12) 0%, transparent 50%),
     radial-gradient(circle at 50% 50%, rgba(175, 234, 0, 0.08) 0%, transparent 70%),
-    linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 25%, #F5F0FF 50%, #E6F9F5 75%, #F0F4FF 100%);
+    linear-gradient(135deg, #E6F0FF 0%, #D4E6F1 25%, #E8E6FF 50%, #D4E6F1 75%, #E6F0FF 100%);
   border-radius: 20px;
   padding: 40px;
   margin: 20px 0;
@@ -367,7 +367,7 @@
 /* FIFA COUNTER BADGE ANIMATION */
 .result-card div[style*="x"] {
   animation: fifaBadgePop 0.5s ease-out 0.3s both;
-  background: #AFEA00 !important;
+  background: #aaf6aa !important;
   color: #1A1A2E !important;
   border: 3px solid white !important;
 }
@@ -474,7 +474,7 @@
 .card-info p[style*="color: #ff6b35"],
 .card-info p[style*="color: #1e3a8a"] {
   background: linear-gradient(135deg, rgba(175, 234, 0, 0.1) 0%, rgba(175, 234, 0, 0.05) 100%) !important;
-  border: 2px solid #AFEA00 !important;
+  border: 2px solid #aaf6aa !important;
   border-radius: 8px !important;
   padding: 8px 12px !important;
   animation: fifaDuplicateGlow 2s ease-in-out infinite !important;
@@ -504,7 +504,7 @@
 }
 
 .rarity-common {
-  background: linear-gradient(135deg, #AFEA00 0%, #00CA55 100%);
+  background: linear-gradient(135deg, #aaf6aa 0%, #00CA55 100%);
   color: #1A1A2E;
   box-shadow: 0 3px 10px rgba(175, 234, 0, 0.3);
 }
