@@ -602,24 +602,87 @@ return (
   minHeight: '100vh',
   background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 50%, #F5F0FF 100%)'
 }}>
-      <header style={{ padding: '20px', backgroundColor: 'rgba(97, 0, 233, 0.95)', borderBottom: '2px solid #6100E9' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto' }}>
-          <h1 style={{ color: 'white', margin: 0 }}>🏆 Recalls Team Album</h1>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-            <span style={{ color: 'white', fontWeight: 'bold' }}>Welcome, {user.email}!</span>
-            <span style={{ backgroundColor: '#64FEDA', color: '#1A1A2E', padding: '4px 8px', borderRadius: '12px', fontSize: '14px', fontWeight: 'bold' }}>
-              {userPacks} packs
-            </span>
-            <NotificationBell />
-            <button 
-              onClick={handleLogout}
-              style={{ padding: '8px 16px', backgroundColor: '#FF3D00', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      </header>
+      <header style={{ 
+  padding: '20px', 
+  backgroundColor: 'rgba(97, 0, 233, 0.95)', 
+  borderBottom: '2px solid #6100E9',
+  position: 'relative',
+  overflow: 'hidden'
+}}>
+  {/* Animated Stars Background */}
+  <div style={{
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: 'linear-gradient(135deg, rgba(97, 0, 233, 0.95) 0%, rgba(48, 79, 255, 0.95) 50%, rgba(100, 254, 218, 0.95) 100%)',
+    zIndex: 1
+  }}>
+    {/* Moving Stars */}
+    {[...Array(50)].map((_, i) => (
+      <div
+        key={i}
+        style={{
+          position: 'absolute',
+          width: Math.random() * 4 + 2 + 'px',
+          height: Math.random() * 4 + 2 + 'px',
+          backgroundColor: i % 3 === 0 ? '#AFEA00' : i % 3 === 1 ? '#64FEDA' : '#B288FD',
+          borderRadius: '50%',
+          left: Math.random() * 100 + '%',
+          animationName: 'floatUp',
+          animationDuration: (Math.random() * 3 + 2) + 's',
+          animationIterationCount: 'infinite',
+          animationTimingFunction: 'linear',
+          animationDelay: Math.random() * 2 + 's',
+          boxShadow: `0 0 ${Math.random() * 10 + 5}px currentColor`,
+          opacity: Math.random() * 0.8 + 0.2
+        }}
+      />
+    ))}
+  </div>
+
+  {/* Header Content */}
+  <div style={{ 
+    display: 'flex', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    maxWidth: '1200px', 
+    margin: '0 auto',
+    position: 'relative',
+    zIndex: 2
+  }}>
+    <h1 style={{ 
+      color: 'white', 
+      margin: 0,
+      fontSize: '2.8rem',
+      fontWeight: '900',
+      letterSpacing: '2px',
+      textShadow: '0 0 20px rgba(175,234,0,0.8), 0 0 40px rgba(100,254,218,0.6), 2px 2px 4px rgba(0,0,0,0.5)',
+      background: 'linear-gradient(45deg, #AFEA00, #64FEDA, #B288FD, #AFEA00)',
+      backgroundSize: '400% 400%',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      animation: 'titleGlow 3s ease-in-out infinite',
+      filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.5))'
+    }}>
+      ⭐ REPRIR LEGENDS COLLECTION ⭐
+    </h1>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+      <span style={{ color: 'white', fontWeight: 'bold' }}>Welcome, {user.email}!</span>
+      <span style={{ backgroundColor: '#64FEDA', color: '#1A1A2E', padding: '4px 8px', borderRadius: '12px', fontSize: '14px', fontWeight: 'bold' }}>
+        {userPacks} packs
+      </span>
+      <NotificationBell />
+      <button 
+        onClick={handleLogout}
+        style={{ padding: '8px 16px', backgroundColor: '#FF3D00', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+</header>
 
       <nav style={{ backgroundColor: '#F0F4FF', padding: '10px 0' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', gap: '20px', paddingLeft: '20px' }}>

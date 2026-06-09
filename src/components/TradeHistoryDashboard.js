@@ -597,10 +597,11 @@ export const TradeHistoryDashboard = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {filteredTrades.map(trade => {
               const getStatusColor = (status) => {
-                switch(status) {
+                switch(status || 'unknown') {
                   case 'completed': return '#AFEA00';
                   case 'pending': return '#B288FD';
                   case 'cancelled': return '#FF3D00';
+                  case 'unknown': return '#8888AA';
                   default: return '#4A4A6A';
                 }
               };
@@ -609,7 +610,7 @@ export const TradeHistoryDashboard = () => {
                 <div key={trade.id} style={{
                   background: 'linear-gradient(135deg, #ffffff 0%, #E6F0FF 100%)',
                   borderRadius: '12px',
-                  border: `3px solid ${getStatusColor(trade.status)}`,
+                  border: `3px solid ${getStatusColor(trade.status || 'unknown')}`,
                   boxShadow: '0 6px 16px rgba(97,0,233,0.1)',
                   overflow: 'hidden',
                   transition: 'transform 0.3s ease'
@@ -640,7 +641,7 @@ export const TradeHistoryDashboard = () => {
                       fontWeight: 'bold',
                       textTransform: 'uppercase'
                     }}>
-                      {trade.status.charAt(0).toUpperCase() + trade.status.slice(1)}
+                      {(trade.status || 'unknown').charAt(0).toUpperCase() + (trade.status || 'unknown').slice(1)}
                     </span>
                     <div style={{
                       color: '#4A4A6A',
