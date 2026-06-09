@@ -209,7 +209,11 @@ export const TradeHistoryDashboard = () => {
 
     try {
       const csvData = filteredTrades.map(trade => ({
-        Date: trade.createdAt.toLocaleDateString(),
+        Date: trade.createdAt ? (
+  trade.createdAt.toDate ? 
+    trade.createdAt.toDate().toLocaleDateString() : 
+    new Date(trade.createdAt).toLocaleDateString()
+) : 'Unknown Date',
         Status: trade.status,
         'Trading Partner': trade.senderName === auth.currentUser.email ? trade.receiverName : trade.senderName,
         'Cards Given': trade.receiverId === auth.currentUser.uid ? 
@@ -648,7 +652,11 @@ export const TradeHistoryDashboard = () => {
                       fontSize: '16px',
                       fontWeight: 'bold'
                     }}>
-                      {trade.createdAt.toLocaleDateString()}
+                      {trade.createdAt ? (
+                          trade.createdAt.toDate ? 
+                            trade.createdAt.toDate().toLocaleDateString() : 
+                            new Date(trade.createdAt).toLocaleDateString()
+                        ) : 'Unknown Date'}
                     </div>
                   </div>
 

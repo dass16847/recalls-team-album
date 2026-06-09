@@ -474,7 +474,7 @@
 .card-info p[style*="color: #ff6b35"],
 .card-info p[style*="color: #1e3a8a"] {
   background: linear-gradient(135deg, rgba(175, 234, 0, 0.1) 0%, rgba(175, 234, 0, 0.05) 100%) !important;
-  border: 2px solid #aaf6aa !important;
+  border: 2px solid #0c2c0c !important;
   border-radius: 8px !important;
   padding: 8px 12px !important;
   animation: fifaDuplicateGlow 2s ease-in-out infinite !important;
