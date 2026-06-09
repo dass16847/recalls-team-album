@@ -353,11 +353,11 @@ export const NotificationBell = () => {
             </div>
 
             {/* Notification List */}
-            <div style={{
-              maxHeight: '400px',
-              overflowY: 'auto',
-              padding: notifications.length === 0 ? '40px 20px' : '0'
-            }}>
+              <div style={{
+                maxHeight: '400px',
+                overflowY: 'auto',
+                padding: notifications.length === 0 ? '40px 20px' : '10px 0'
+              }}>
               {notifications.length === 0 ? (
                 <div style={{ 
                   textAlign: 'center',
@@ -381,13 +381,15 @@ export const NotificationBell = () => {
                 </div>
               ) : (
                 notifications.map((notification, index) => (
-                  <div key={notification.id} style={{
-                    padding: '20px',
-                    borderBottom: index < notifications.length - 1 ? '1px solid #E6F9F5' : 'none',
-                    backgroundColor: 'white',
-                    transition: 'background-color 0.2s ease',
-                    cursor: 'pointer'
-                  }}
+  <div key={notification.id} style={{
+    padding: '20px',
+    borderBottom: index < notifications.length - 1 ? '1px solid #E6F9F5' : 'none',
+    backgroundColor: 'white',
+    transition: 'background-color 0.2s ease',
+    cursor: 'pointer',
+    display: 'block',
+    width: '100%'
+  }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = '#F0F4FF';
                   }}
