@@ -861,6 +861,23 @@ const handleDrop = async (e, slotName, pageId) => {
             })}
           </div>
         )}
+                {/* ADD THIS ENTIRE BLOCK RIGHT HERE */}
+        {currentPageData.id === 1 && (
+          <div 
+            className="spotify-link-container"
+            onClick={() => window.open('https://open.spotify.com/album/3cLao7JVaEFsplFdY8TkJT', '_blank')}
+          >
+            <div className="spotify-content">
+              <div className="spotify-icon">🎵</div>
+              <div className="spotify-text">
+                <h3>REPRIR TEAM SOUNDTRACK</h3>
+                <p>Listen on Spotify</p>
+                <div className="spotify-logo">♪ Spotify</div>
+              </div>
+              <div className="play-button">▶️</div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="album-navigation">

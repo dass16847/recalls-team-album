@@ -1,4 +1,5 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect, createContext, useContext, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { collection, query, where, onSnapshot, orderBy, limit, updateDoc, doc } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import './NotificationSystem.css';
@@ -185,29 +186,30 @@ export const NotificationProvider = ({ children }) => {
   };
 
   const markAsRead = async (notificationId) => {
-  try {
-    await updateDoc(doc(db, 'tradeNotifications', notificationId), {
-      read: true
-    });
-    console.log('Marked notification as read:', notificationId);
-  } catch (error) {
-    console.error('Error marking notification as read:', error);
-  }
-};
+    try {
+      await updateDoc(doc(db, 'tradeNotifications', notificationId), {
+        read: true
+      });
+      console.log('Marked notification as read:', notificationId);
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
+    }
+  };
 
   const clearAllNotifications = async () => {
-  try {
-    const promises = notifications.map(notification => 
-      updateDoc(doc(db, 'tradeNotifications', notification.id), {
-        read: true
-      })
-    );
-    await Promise.all(promises);
-    console.log('All notifications marked as read');
-  } catch (error) {
-    console.error('Error marking all notifications as read:', error);
-  }
-};
+    try {
+      const promises = notifications.map(notification => 
+        updateDoc(doc(db, 'tradeNotifications', notification.id), {
+          read: true
+        })
+      );
+      await Promise.all(promises);
+      console.log('All notifications marked as read');
+    } catch (error) {
+      console.error('Error marking all notifications as read:', error);
+    }
+  };
+
   return (
     <NotificationContext.Provider value={{
       notifications,
@@ -224,11 +226,23 @@ export const NotificationProvider = ({ children }) => {
 export const NotificationBell = () => {
   const { notifications, unreadCount, clearAllNotifications } = useNotifications();
   const [showDropdown, setShowDropdown] = useState(false);
+  const buttonRef = useRef(null);
+  const [buttonPosition, setButtonPosition] = useState({ top: 0, right: 0 });
 
   return (
     <div style={{ position: 'relative', display: 'inline-block' }}>
       <button 
-        onClick={() => setShowDropdown(!showDropdown)}
+        ref={buttonRef}
+        onClick={() => {
+          if (buttonRef.current) {
+            const rect = buttonRef.current.getBoundingClientRect();
+            setButtonPosition({
+              top: rect.bottom + 8,
+              right: window.innerWidth - rect.right
+            });
+          }
+          setShowDropdown(!showDropdown);
+        }}
         style={{
           background: 'transparent',
           border: 'none',
@@ -275,7 +289,7 @@ export const NotificationBell = () => {
         )}
       </button>
 
-      {showDropdown && (
+      {showDropdown && createPortal(
         <>
           {/* Backdrop */}
           <div 
@@ -285,24 +299,24 @@ export const NotificationBell = () => {
               left: 0,
               right: 0,
               bottom: 0,
-              zIndex: 999
+              zIndex: 9998,
+              backgroundColor: 'transparent'
             }}
             onClick={() => setShowDropdown(false)}
           />
 
           {/* Dropdown */}
           <div style={{
-            position: 'absolute',
-            top: '100%',
-            right: 0,
-            marginTop: '8px',
+            position: 'fixed',
+            top: `${buttonPosition.top}px`,
+            right: `${buttonPosition.right}px`,
             background: 'white',
             border: '3px solid #6100E9',
             borderRadius: '12px',
             boxShadow: '0 12px 32px rgba(97,0,233,0.3)',
             minWidth: '320px',
             maxWidth: '400px',
-            zIndex: 1000,
+            zIndex: 9999,
             animation: 'dropdownSlide 0.2s ease-out'
           }}>
             {/* Header */}
@@ -353,11 +367,11 @@ export const NotificationBell = () => {
             </div>
 
             {/* Notification List */}
-              <div style={{
-                maxHeight: '400px',
-                overflowY: 'auto',
-                padding: notifications.length === 0 ? '40px 20px' : '10px 0'
-              }}>
+            <div style={{
+              maxHeight: '400px',
+              overflowY: 'auto',
+              padding: notifications.length === 0 ? '40px 20px' : '0'
+            }}>
               {notifications.length === 0 ? (
                 <div style={{ 
                   textAlign: 'center',
@@ -381,15 +395,13 @@ export const NotificationBell = () => {
                 </div>
               ) : (
                 notifications.map((notification, index) => (
-  <div key={notification.id} style={{
-    padding: '20px',
-    borderBottom: index < notifications.length - 1 ? '1px solid #E6F9F5' : 'none',
-    backgroundColor: 'white',
-    transition: 'background-color 0.2s ease',
-    cursor: 'pointer',
-    display: 'block',
-    width: '100%'
-  }}
+                  <div key={notification.id} style={{
+                    padding: '20px',
+                    borderBottom: index < notifications.length - 1 ? '1px solid #E6F9F5' : 'none',
+                    backgroundColor: 'white',
+                    transition: 'background-color 0.2s ease',
+                    cursor: 'pointer'
+                  }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = '#F0F4FF';
                   }}
@@ -482,7 +494,8 @@ export const NotificationBell = () => {
               </div>
             )}
           </div>
-        </>
+        </>,
+        document.body
       )}
 
       {/* Add CSS animations */}

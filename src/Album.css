@@ -747,3 +747,111 @@
 .fifa-success-animation {
   animation: fifaSuccess 0.6s ease-out;
 }
+/* Spotify Link Container for Page 1 */
+.spotify-link-container {
+  position: absolute;
+  top: 871px;
+  left: 44px;
+  width: 638px;
+  height: 349px;
+  background: linear-gradient(135deg, #1DB954 0%, #1ed760 50%, #1DB954 100%);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 25px rgba(29, 185, 84, 0.3);
+  border: 3px solid #64FEDA;
+  overflow: hidden;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spotify-link-container:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(29, 185, 84, 0.4);
+  border-color: #AFEA00;
+}
+
+.spotify-link-container:active {
+  transform: translateY(-1px) scale(1.01);
+}
+
+.spotify-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  height: 80%;
+  color: white;
+  padding: 20px;
+}
+
+.spotify-icon {
+  font-size: 4em;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.spotify-text {
+  flex: 1;
+  text-align: center;
+  margin: 0 20px;
+}
+
+.spotify-text h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.8em;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  color: white;
+}
+
+.spotify-text p {
+  margin: 0 0 15px 0;
+  font-size: 1.2em;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+.spotify-logo {
+  font-size: 1.1em;
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+.play-button {
+  font-size: 3em;
+  animation: bounce 1.5s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+/* Responsive scaling for smaller screens */
+@media (max-width: 1200px) {
+  .spotify-link-container {
+    transform: scale(0.8);
+    transform-origin: top left;
+  }
+}
+
+@media (max-width: 900px) {
+  .spotify-link-container {
+    transform: scale(0.6);
+    transform-origin: top left;
+  }
+}
+
+@media (max-width: 700px) {
+  .spotify-link-container {
+    transform: scale(0.45);
+    transform-origin: top left;
+  }
+}
