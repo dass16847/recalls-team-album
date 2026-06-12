@@ -750,7 +750,7 @@ const handleDrop = async (e, slotName, pageId) => {
                   cardImg.crossOrigin = 'anonymous';
 
                   try {
-                                        await new Promise((resolve, reject) => {
+                                          await new Promise((resolve, reject) => {
                       cardImg.onload = () => {
                         // Apply card styling (like rotation for SJO 16 AFZ)
                         const cardStyle = getCardImageStyle(placedCard.cardData.name, 'album');
@@ -759,14 +759,22 @@ const handleDrop = async (e, slotName, pageId) => {
 
                         // Handle special transformations
                         if (cardStyle.transform && cardStyle.transform.includes('rotate(90deg)')) {
-                          const centerX = slot.position.left + slot.position.width / 2;
-                          const centerY = slot.position.top + slot.position.height / 2;
+                          // Special positioning for SJO 16 AFZ card in PDF only
+                          const adjustedLeft = placedCard.cardData.name === 'SJO 16 AFZ' ? 
+                            slot.position.left - 24 : slot.position.left;
+                          const adjustedTop = placedCard.cardData.name === 'SJO 16 AFZ' ? 
+                            slot.position.top - 24 : slot.position.top;
+
+                          const centerX = adjustedLeft + slot.position.width / 2;
+                          const centerY = adjustedTop + slot.position.height / 2;
 
                           ctx.translate(centerX, centerY);
                           ctx.rotate(Math.PI / 2); // 90 degrees
 
-                          // Apply scaling if specified
-                          if (cardStyle.transform.includes('scale(')) {
+                          // Apply PDF-specific scaling for SJO 16 AFZ
+                          if (placedCard.cardData.name === 'SJO 16 AFZ') {
+                            ctx.scale(0.66, 1.7); // PDF-specific scale
+                          } else if (cardStyle.transform.includes('scale(')) {
                             const scaleMatch = cardStyle.transform.match(/scale\(([^)]+)\)/);
                             if (scaleMatch) {
                               const scales = scaleMatch[1].split(',').map(s => parseFloat(s.trim()));
@@ -777,8 +785,11 @@ const handleDrop = async (e, slotName, pageId) => {
                           ctx.drawImage(cardImg, -slot.position.width / 2, -slot.position.height / 2, 
                                       slot.position.width, slot.position.height);
                         } else {
-                          // Normal card placement - use exact album coordinates
-                          ctx.drawImage(cardImg, slot.position.left, slot.position.top, 
+                          // Normal card placement with PDF position adjustments only
+                          const adjustedLeft = slot.position.left - 22; // PDF adjustment for all normal cards
+                          const adjustedTop = slot.position.top - 22;
+
+                          ctx.drawImage(cardImg, adjustedLeft, adjustedTop, 
                                       slot.position.width, slot.position.height);
                         }
 
@@ -790,30 +801,36 @@ const handleDrop = async (e, slotName, pageId) => {
                     });
                   } catch (error) {
                     console.log('Failed to load card image:', cardImageUrl);
-                    // Draw fallback card
+                    // Draw fallback card with position adjustments
+                    const adjustedLeft = slot.position.left - 22;
+                    const adjustedTop = slot.position.top - 22;
+
                     ctx.fillStyle = '#E6F9F5';
-                    ctx.fillRect(slot.position.left, slot.position.top, 
+                    ctx.fillRect(adjustedLeft, adjustedTop, 
                                slot.position.width, slot.position.height);
 
                     ctx.fillStyle = '#1A1A2E';
                     ctx.font = 'bold 24px Arial';
                     ctx.textAlign = 'center';
                     ctx.fillText(placedCard.cardData.name, 
-                               slot.position.left + slot.position.width / 2,
-                               slot.position.top + slot.position.height / 2);
+                               adjustedLeft + slot.position.width / 2,
+                               adjustedTop + slot.position.height / 2);
                   }
                 } else {
-                  // Draw fallback card without image
+                  // Draw fallback card without image with position adjustments
+                  const adjustedLeft = slot.position.left - 22;
+                  const adjustedTop = slot.position.top - 22;
+
                   ctx.fillStyle = '#E6F9F5';
-                  ctx.fillRect(slot.position.left, slot.position.top, 
+                  ctx.fillRect(adjustedLeft, adjustedTop, 
                              slot.position.width, slot.position.height);
 
                   ctx.fillStyle = '#1A1A2E';
                   ctx.font = 'bold 24px Arial';
                   ctx.textAlign = 'center';
                   ctx.fillText(placedCard.cardData.name, 
-                             slot.position.left + slot.position.width / 2,
-                             slot.position.top + slot.position.height / 2);
+                             adjustedLeft + slot.position.width / 2,
+                             adjustedTop + slot.position.height / 2);
                 }
               }
             }

@@ -109,8 +109,8 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
                     className="flipbook-card-slot"
                     style={{
                       position: 'absolute',
-                        top: `${slot.position.top * 0.67}px`, // Better scale for larger flipbook
-                      left: `${slot.position.left * 0.67}px`,
+                    top: `${(slot.position.top * 0.67) - 22}px`, // Adjust top by -22px for all cards
+                      left: `${(slot.position.left * 0.67) - 20}px`, // Adjust left by -20px for all cards
                       width: `${slot.position.width * 0.67}px`,
                       height: `${slot.position.height * 0.67}px`
                     }}
@@ -123,11 +123,19 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
                             <img 
                               src={cardImageUrl} 
                               alt={placedCard.cardData.name}
-                                                            style={{
+                                                              style={{
                                 ...getCardImageStyle(placedCard.cardData.name, 'album'), // Use 'album' style for flipbook too
                                 width: '100%',
                                 height: '100%',
-                                borderRadius: '4px'
+                                borderRadius: '4px',
+                                // Apply flipbook-specific corrections
+                                ...(placedCard.cardData.name === 'SJO 16 AFZ' ? {
+                                  objectFit: 'fit', // Override for SJO card in flipbook
+                                  transform: 'rotate(90deg) scale(0.66, 1.7)', // Override scale for flipbook
+                                  position: 'relative',
+                                  top: '-24px',
+                                  left: '-24px'
+                                } : {})
                               }}
                             />
                           ) : (
