@@ -109,8 +109,8 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
                     className="flipbook-card-slot"
                     style={{
                       position: 'absolute',
-                      top: `${(slot.position.top * 0.67) - (placedCard && placedCard.cardData.name === 'SJO 16 AFZ' ? 46 : 22)}px`,
-                      left: `${(slot.position.left * 0.67) - (placedCard && placedCard.cardData.name === 'SJO 16 AFZ' ? 44 : 20)}px`,
+                                           top: `${placedCard && placedCard.cardData.name === 'SJO 16 AFZ' ? 280 : (slot.position.top * 0.67) - 22}px`,
+                      left: `${placedCard && placedCard.cardData.name === 'SJO 16 AFZ' ? 25 : (slot.position.left * 0.67) - 20}px`,
                       width: `${slot.position.width * 0.67}px`,
                       height: `${slot.position.height * 0.67}px`
                     }}
