@@ -1,6 +1,6 @@
 /* Flipbook Container */
 .flipbook-container {
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 20px;
   font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
@@ -39,8 +39,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 600px;
-  perspective: 2000px;
+  min-height: 700px;
+  perspective: 3000px;
   margin-bottom: 30px;
 }
 
@@ -48,32 +48,36 @@
 .flipbook-book {
   position: relative;
   transform-style: preserve-3d;
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Closed Book */
 .book-closed .flipbook-book {
-  transform: rotateY(0deg);
+  transform: rotateY(0deg) rotateX(5deg);
 }
 
 .book-cover {
-  width: 400px;
-  height: 500px;
+  width: 600px;
+  height: 750px;
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 20px;
   overflow: hidden;
   box-shadow: 
-    0 20px 40px rgba(0,0,0,0.3),
-    inset 0 0 0 3px #6100E9;
-  transition: all 0.3s ease;
+    0 30px 60px rgba(0,0,0,0.4),
+    inset 0 0 0 4px #6100E9,
+    0 0 0 8px rgba(97, 0, 233, 0.2);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
+  transform: rotateX(5deg);
 }
 
 .book-cover:hover {
-  transform: translateY(-10px) scale(1.02);
+  transform: translateY(-15px) rotateX(8deg) scale(1.02);
   box-shadow: 
-    0 30px 60px rgba(0,0,0,0.4),
-    inset 0 0 0 3px #64FEDA;
+    0 40px 80px rgba(0,0,0,0.5),
+    inset 0 0 0 4px #64FEDA,
+    0 0 0 8px rgba(100, 254, 218, 0.3),
+    0 0 30px rgba(175, 234, 0, 0.4);
 }
 
 .cover-front {
@@ -82,106 +86,142 @@
   background-size: cover;
   background-position: center;
   background-color: #F0F4FF;
+  position: relative;
+}
+
+.cover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(97, 0, 233, 0.7) 0%, rgba(100, 254, 218, 0.6) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.book-cover:hover .cover-overlay {
+  opacity: 1;
 }
 
 .cover-title {
   text-align: center;
   color: white;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-  background: rgba(97, 0, 233, 0.8);
-  padding: 30px;
-  border-radius: 15px;
-  border: 2px solid #64FEDA;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+  padding: 40px;
+  border-radius: 20px;
+  border: 3px solid #AFEA00;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
 }
 
 .cover-title h1 {
-  font-size: 2.5em;
-  margin: 0 0 10px 0;
+  font-size: 3em;
+  margin: 0 0 15px 0;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
 }
 
 .cover-title h2 {
-  font-size: 1.5em;
-  margin: 0 0 15px 0;
+  font-size: 1.8em;
+  margin: 0 0 20px 0;
   color: #64FEDA;
+  font-weight: 600;
 }
 
 .cover-title p {
-  font-size: 1.1em;
+  font-size: 1.3em;
   margin: 0;
   opacity: 0.9;
   animation: pulse 2s ease-in-out infinite;
+  font-weight: 600;
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.9; }
-  50% { opacity: 0.6; }
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
 }
 
 /* Open Book */
 .book-open .flipbook-book {
-  transform: rotateY(-15deg);
+  transform: rotateY(-20deg) rotateX(5deg);
+}
+
+.book-closing .flipbook-book {
+  transform: rotateY(0deg) rotateX(5deg);
+  transition: all 0.8s ease-in-out;
 }
 
 .book-spread {
   display: flex;
   transform-style: preserve-3d;
-  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
 }
 
 .book-spread.turning {
-  transform: rotateY(10deg);
+  transform: rotateY(15deg) scale(0.95);
 }
 
 /* Individual Pages */
 .flipbook-page {
-  width: 432px;
-  height: 540px;
+  width: 540px;
+  height: 675px;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  border-radius: 12px;
+  box-shadow: 
+    0 15px 40px rgba(0,0,0,0.25),
+    inset 0 0 0 2px rgba(97, 0, 233, 0.1);
   overflow: hidden;
   position: relative;
-  margin: 0 5px;
+  margin: 0 8px;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .left-page {
-  transform: rotateY(5deg);
-  border-right: 2px solid #E0E0E0;
+  transform: rotateY(8deg);
+  border-right: 3px solid #E0E0E0;
+  box-shadow: 
+    0 15px 40px rgba(0,0,0,0.25),
+    inset -5px 0 15px rgba(0,0,0,0.1);
 }
 
 .right-page {
-  transform: rotateY(-5deg);
-  border-left: 2px solid #E0E0E0;
+  transform: rotateY(-8deg);
+  border-left: 3px solid #E0E0E0;
+  box-shadow: 
+    0 15px 40px rgba(0,0,0,0.25),
+    inset 5px 0 15px rgba(0,0,0,0.1);
 }
 
 .page-content {
   width: 100%;
   height: 100%;
-  background-size: 432px 540px;
+  background-size: 540px 675px;
   background-repeat: no-repeat;
   background-position: center;
   background-color: #F0F4FF;
   position: relative;
-  padding: 20px;
+  padding: 25px;
   box-sizing: border-box;
 }
 
 .page-title {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .page-title h2 {
   color: #1A1A2E;
-  font-size: 1.8em;
+  font-size: 2.2em;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
 }
 
 /* Positioned Slots for Flipbook */
@@ -194,60 +234,57 @@
 }
 
 .flipbook-card-slot {
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .flipbook-placed-card {
   width: 100%;
   height: 100%;
-  border-radius: 4px;
+  border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  border: 1px solid #64FEDA;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  border: 2px solid #64FEDA;
+  transition: all 0.3s ease;
+}
+
+.flipbook-placed-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 18px rgba(100, 254, 218, 0.4);
 }
 
 .flipbook-card-fallback {
   width: 100%;
   height: 100%;
   background: linear-gradient(145deg, #F0F4FF, #E6F9F5);
-  border: 1px solid #64FEDA;
-  border-radius: 4px;
+  border: 2px solid #64FEDA;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7em;
+  font-size: 0.8em;
   font-weight: bold;
   color: #1A1A2E;
   text-align: center;
-  padding: 2px;
+  padding: 4px;
 }
 
 /* Page Numbers */
 .page-number {
   position: absolute;
-  bottom: 15px;
-  right: 20px;
-  background: rgba(97, 0, 233, 0.8);
+  bottom: 20px;
+  right: 25px;
+  background: linear-gradient(135deg, #6100E9, #304FFF);
   color: white;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 0.9em;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 1em;
   font-weight: bold;
+  box-shadow: 0 4px 12px rgba(97, 0, 233, 0.3);
 }
 
 .left-page .page-number {
   right: auto;
-  left: 20px;
-}
-
-/* Empty Page */
-.empty-page {
-  background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #6C757D;
-  font-style: italic;
+  left: 25px;
 }
 
 /* Navigation */
@@ -255,37 +292,42 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 30px;
-  padding: 25px;
+  gap: 40px;
+  padding: 30px;
   background: linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 50%, #F5F0FF 100%);
-  border-radius: 15px;
-  border: 2px solid #6100E9;
+  border-radius: 20px;
+  border: 3px solid #6100E9;
+  box-shadow: 0 8px 25px rgba(97, 0, 233, 0.15);
 }
 
 .flipbook-nav-btn {
   background: linear-gradient(135deg, #6100E9 0%, #304FFF 100%);
   color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  padding: 12px 25px;
-  border-radius: 25px;
-  font-size: 1.1em;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  padding: 15px 35px;
+  border-radius: 30px;
+  font-size: 1.2em;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(97, 0, 233, 0.25);
-  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 8px 25px rgba(97, 0, 233, 0.3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .flipbook-nav-btn:hover:not(:disabled) {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 10px 30px rgba(97, 0, 233, 0.35);
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 0 15px 40px rgba(97, 0, 233, 0.4);
   border-color: #64FEDA;
+  background: linear-gradient(135deg, #304FFF 0%, #64FEDA 100%);
 }
 
 .flipbook-nav-btn:disabled {
   background: linear-gradient(135deg, #8888AA 0%, #4A4A6A 100%);
   cursor: not-allowed;
   transform: none;
-  box-shadow: 0 3px 10px rgba(136, 136, 170, 0.2);
+  box-shadow: 0 4px 15px rgba(136, 136, 170, 0.2);
+  opacity: 0.6;
 }
 
 .close-btn {
@@ -297,57 +339,62 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .flipbook-page {
-    width: 350px;
-    height: 440px;
+    width: 450px;
+    height: 560px;
   }
 
   .page-content {
-    background-size: 350px 440px;
+    background-size: 450px 560px;
   }
 
   .book-cover {
-    width: 320px;
-    height: 400px;
+    width: 500px;
+    height: 625px;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .flipbook-page {
-    width: 280px;
-    height: 350px;
+    width: 380px;
+    height: 475px;
   }
 
   .page-content {
-    background-size: 280px 350px;
-    padding: 15px;
+    background-size: 380px 475px;
+    padding: 20px;
   }
 
   .book-cover {
-    width: 260px;
-    height: 320px;
+    width: 420px;
+    height: 525px;
   }
 
   .flipbook-navigation {
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .book-spread {
     flex-direction: column;
     align-items: center;
   }
 
   .flipbook-page {
-    width: 300px;
-    height: 380px;
-    margin: 5px 0;
+    width: 400px;
+    height: 500px;
+    margin: 8px 0;
   }
 
   .left-page, .right-page {
     transform: none;
+  }
+
+  .book-cover {
+    width: 400px;
+    height: 500px;
   }
 }

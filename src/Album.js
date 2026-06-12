@@ -681,7 +681,7 @@ const handleDrop = async (e, slotName, pageId) => {
       }
     }
   };
-    // PDF Download functionality
+  // PDF Download functionality - Instant generation using stored data
   const generatePDF = async () => {
     try {
       // Show loading state
@@ -692,78 +692,148 @@ const handleDrop = async (e, slotName, pageId) => {
       }
 
       const pdf = new jsPDF('p', 'mm', 'a4');
-      const pageWidth = 210; // A4 width in mm
-      const pageHeight = 297; // A4 height in mm
       let isFirstPage = true;
 
-      // Temporarily switch to interactive mode if in flipbook mode
-      const originalViewMode = viewMode;
-      if (viewMode === 'flipbook') {
-        setViewMode('interactive');
-        await new Promise(resolve => setTimeout(resolve, 500)); // Wait for render
-      }
-
-      // Generate each album page
+      // Process each album page using stored data
       for (let pageIndex = 0; pageIndex < albumPages.length; pageIndex++) {
-        // Temporarily navigate to this page
-        setCurrentPage(pageIndex);
-        await new Promise(resolve => setTimeout(resolve, 300)); // Wait for page to render
+        const page = albumPages[pageIndex];
 
-        // Capture the album page
-        const albumPageElement = document.querySelector('.album-page-with-background') || 
-                                document.querySelector('.album-page');
+        if (!isFirstPage) {
+          pdf.addPage();
+        }
 
-        if (albumPageElement) {
-          const canvas = await html2canvas(albumPageElement, {
-            scale: 2,
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: '#F0F4FF'
-          });
+        // Create a temporary canvas to compose the page
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
 
-          const imgData = canvas.toDataURL('image/png');
-          const imgWidth = pageWidth - 20; // Leave margins
-          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        // Set canvas size to match album page dimensions
+        canvas.width = 1080;
+        canvas.height = 1350;
 
-          if (!isFirstPage) {
-            pdf.addPage();
+        // Fill background color
+        ctx.fillStyle = '#F0F4FF';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        try {
+          // Load and draw background image if it exists
+          if (page.backgroundImage) {
+            const bgImg = new Image();
+            bgImg.crossOrigin = 'anonymous';
+
+            await new Promise((resolve, reject) => {
+              bgImg.onload = () => {
+                ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+                resolve();
+              };
+              bgImg.onerror = reject;
+              bgImg.src = page.backgroundImage;
+            });
+          } else {
+            // Draw page title for pages without background
+            ctx.fillStyle = '#1A1A2E';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(page.title, canvas.width / 2, 100);
           }
 
-          // Add page title
-          pdf.setFontSize(16);
-          pdf.setTextColor(26, 26, 46); // #1A1A2E
-          pdf.text(albumPages[pageIndex].title, pageWidth / 2, 15, { align: 'center' });
+          // Draw placed cards on top of background
+          if (page.slots) {
+            for (const slot of page.slots) {
+              const slotKey = `${page.id}-${slot.name}`;
+              const placedCard = placedCards[slotKey];
 
-          // Add the page image
-          const yPosition = Math.min(25, (pageHeight - imgHeight) / 2);
-          pdf.addImage(imgData, 'PNG', 10, yPosition, imgWidth, Math.min(imgHeight, pageHeight - 40));
+              if (placedCard) {
+                const cardImageUrl = getCardImageUrl(placedCard.cardData.name);
 
-          // Add page number
-          pdf.setFontSize(10);
-          pdf.text(`Page ${pageIndex + 1} of ${albumPages.length}`, pageWidth - 20, pageHeight - 10);
+                if (cardImageUrl) {
+                  const cardImg = new Image();
+                  cardImg.crossOrigin = 'anonymous';
 
-          isFirstPage = false;
+                  try {
+                    await new Promise((resolve, reject) => {
+                      cardImg.onload = () => {
+                        // Apply card styling (like rotation for SJO 16 AFZ)
+                        const cardStyle = getCardImageStyle(placedCard.cardData.name, 'album');
+
+                        ctx.save();
+
+                        // Handle special transformations
+                        if (cardStyle.transform && cardStyle.transform.includes('rotate(90deg)')) {
+                          const centerX = slot.position.left + slot.position.width / 2;
+                          const centerY = slot.position.top + slot.position.height / 2;
+
+                          ctx.translate(centerX, centerY);
+                          ctx.rotate(Math.PI / 2); // 90 degrees
+
+                          // Apply scaling if specified
+                          if (cardStyle.transform.includes('scale(')) {
+                            const scaleMatch = cardStyle.transform.match(/scale\(([^)]+)\)/);
+                            if (scaleMatch) {
+                              const scales = scaleMatch[1].split(',').map(s => parseFloat(s.trim()));
+                              ctx.scale(scales[0] || 1, scales[1] || scales[0] || 1);
+                            }
+                          }
+
+                          ctx.drawImage(cardImg, -slot.position.width / 2, -slot.position.height / 2, 
+                                      slot.position.width, slot.position.height);
+                        } else {
+                          // Normal card placement
+                          ctx.drawImage(cardImg, slot.position.left, slot.position.top, 
+                                      slot.position.width, slot.position.height);
+                        }
+
+                        ctx.restore();
+                        resolve();
+                      };
+                      cardImg.onerror = () => resolve(); // Continue even if card image fails
+                      cardImg.src = cardImageUrl;
+                    });
+                  } catch (error) {
+                    console.log('Failed to load card image:', cardImageUrl);
+                    // Draw fallback card
+                    ctx.fillStyle = '#E6F9F5';
+                    ctx.fillRect(slot.position.left, slot.position.top, 
+                               slot.position.width, slot.position.height);
+
+                    ctx.fillStyle = '#1A1A2E';
+                    ctx.font = 'bold 24px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(placedCard.cardData.name, 
+                               slot.position.left + slot.position.width / 2,
+                               slot.position.top + slot.position.height / 2);
+                  }
+                } else {
+                  // Draw fallback card without image
+                  ctx.fillStyle = '#E6F9F5';
+                  ctx.fillRect(slot.position.left, slot.position.top, 
+                             slot.position.width, slot.position.height);
+
+                  ctx.fillStyle = '#1A1A2E';
+                  ctx.font = 'bold 24px Arial';
+                  ctx.textAlign = 'center';
+                  ctx.fillText(placedCard.cardData.name, 
+                             slot.position.left + slot.position.width / 2,
+                             slot.position.top + slot.position.height / 2);
+                }
+              }
+            }
+          }
+
+        } catch (error) {
+          console.log('Error processing page:', pageIndex, error);
+          // Continue with next page even if this one fails
         }
+
+        // Convert canvas to image and add to PDF
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297); // Full A4 size
+
+        isFirstPage = false;
       }
 
-      // Add completion info on last page
-      pdf.addPage();
-      pdf.setFontSize(20);
-      pdf.setTextColor(97, 0, 233); // #6100E9
-      pdf.text('🎉 ALBUM COMPLETED! 🎉', pageWidth / 2, 50, { align: 'center' });
-
-      pdf.setFontSize(14);
-      pdf.setTextColor(26, 26, 46);
-      pdf.text('REPRIR Team Digital Album', pageWidth / 2, 70, { align: 'center' });
-      pdf.text(`Completed: ${new Date().toLocaleDateString()}`, pageWidth / 2, 85, { align: 'center' });
-      pdf.text(`Total Cards Collected: ${calculateFilledSlots()} of ${calculateTotalSlots()}`, pageWidth / 2, 100, { align: 'center' });
-
       // Save the PDF
-      pdf.save(`REPRIR-Team-Album-${new Date().toISOString().split('T')[0]}.pdf`);
-
-      // Restore original state
-      setViewMode(originalViewMode);
-      setCurrentPage(0); // Go back to first page
+      const fileName = `REPRIR-Team-Album-Complete-${new Date().toISOString().split('T')[0]}.pdf`;
+      pdf.save(fileName);
 
       // Reset button
       if (downloadBtn) {
@@ -771,7 +841,7 @@ const handleDrop = async (e, slotName, pageId) => {
         downloadBtn.disabled = false;
       }
 
-      alert('✅ PDF generated successfully! Check your downloads folder.');
+      alert('✅ PDF generated instantly! Check your downloads folder.');
 
     } catch (error) {
       console.error('Error generating PDF:', error);
@@ -785,9 +855,6 @@ const handleDrop = async (e, slotName, pageId) => {
       }
     }
   };
-  if (loading) {
-    return <LoadingSpinner type="pack" message="🎁 Opening Your Album..." size="large" />;
-  }
 
    // Flipbook View Mode
   if (viewMode === 'flipbook') {

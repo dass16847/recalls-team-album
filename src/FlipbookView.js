@@ -6,8 +6,9 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
   const [currentSpread, setCurrentSpread] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isBookOpen, setIsBookOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
-  // Create page spreads (pairs of pages)
+  // Create page spreads (pairs of pages) - Remove empty pages at the end
   const createSpreads = () => {
     const spreads = [];
 
@@ -18,13 +19,26 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
       spreadIndex: 0
     });
 
-    // Remaining spreads: pairs of pages
+    // Remaining spreads: pairs of pages (skip empty pages)
     for (let i = 2; i < albumPages.length; i += 2) {
-      spreads.push({
-        leftPage: albumPages[i],
-        rightPage: albumPages[i + 1] || null, // Handle odd number of pages
-        spreadIndex: spreads.length
-      });
+      const leftPage = albumPages[i];
+      const rightPage = albumPages[i + 1];
+
+      // Only add spread if both pages exist (no empty white pages)
+      if (leftPage && rightPage) {
+        spreads.push({
+          leftPage: leftPage,
+          rightPage: rightPage,
+          spreadIndex: spreads.length
+        });
+      } else if (leftPage && !rightPage) {
+        // If only left page exists, add it as a single page spread
+        spreads.push({
+          leftPage: leftPage,
+          rightPage: null,
+          spreadIndex: spreads.length
+        });
+      }
     }
 
     return spreads;
@@ -37,8 +51,12 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
   };
 
   const closeBook = () => {
-    setIsBookOpen(false);
-    setCurrentSpread(0);
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsBookOpen(false);
+      setCurrentSpread(0);
+      setIsClosing(false);
+    }, 800);
   };
 
   const nextSpread = () => {
@@ -47,7 +65,7 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
       setTimeout(() => {
         setCurrentSpread(currentSpread + 1);
         setIsAnimating(false);
-      }, 600);
+      }, 800);
     }
   };
 
@@ -57,12 +75,12 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
       setTimeout(() => {
         setCurrentSpread(currentSpread - 1);
         setIsAnimating(false);
-      }, 600);
+      }, 800);
     }
   };
 
   const renderPage = (page, isLeft = true) => {
-    if (!page) return <div className="flipbook-page empty-page"></div>;
+    if (!page) return null;
 
     return (
       <div className={`flipbook-page ${isLeft ? 'left-page' : 'right-page'}`}>
@@ -91,10 +109,10 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
                     className="flipbook-card-slot"
                     style={{
                       position: 'absolute',
-                      top: `${slot.position.top * 0.4}px`, // Scale down for flipbook
-                      left: `${slot.position.left * 0.4}px`,
-                      width: `${slot.position.width * 0.4}px`,
-                      height: `${slot.position.height * 0.4}px`
+                      top: `${slot.position.top * 0.5}px`, // Scale for flipbook
+                      left: `${slot.position.left * 0.5}px`,
+                      width: `${slot.position.width * 0.5}px`,
+                      height: `${slot.position.height * 0.5}px`
                     }}
                   >
                     {placedCard && (
@@ -144,7 +162,7 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
         </div>
       </div>
 
-      <div className={`flipbook-wrapper ${isBookOpen ? 'book-open' : 'book-closed'}`}>
+      <div className={`flipbook-wrapper ${isBookOpen ? 'book-open' : 'book-closed'} ${isClosing ? 'book-closing' : ''}`}>
         <div className="flipbook-book">
           {!isBookOpen ? (
             // Closed book cover
@@ -155,10 +173,12 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
                   backgroundImage: albumPages[0].backgroundImage ? `url(${albumPages[0].backgroundImage})` : 'none'
                 }}
               >
-                <div className="cover-title">
-                  <h1>REPRIR TEAM</h1>
-                  <h2>DIGITAL ALBUM</h2>
-                  <p>Click to Open</p>
+                <div className="cover-overlay">
+                  <div className="cover-title">
+                    <h1>REPRIR TEAM</h1>
+                    <h2>DIGITAL ALBUM</h2>
+                    <p>Click to Open</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -166,7 +186,7 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
             // Open book spreads
             <div className={`book-spread ${isAnimating ? 'turning' : ''}`}>
               {renderPage(spreads[currentSpread]?.leftPage, true)}
-              {renderPage(spreads[currentSpread]?.rightPage, false)}
+              {spreads[currentSpread]?.rightPage && renderPage(spreads[currentSpread]?.rightPage, false)}
             </div>
           )}
         </div>
