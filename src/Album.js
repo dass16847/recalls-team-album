@@ -4,10 +4,13 @@ import { db, auth } from './firebase';
 import './Album.css';
 import LoadingSpinner from './components/LoadingSpinner';
 import { getCardImage } from './utils/cardImages';
+import FlipbookView from './FlipbookView';
 // Add this after your imports in Album.js
 import testRafa from './images/cards/rafa.png';
 import testIre from './images/cards/ire-vargas.png';
 import testPawel from './images/cards/pawel.png';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 console.log('=== DIRECT IMPORT TEST ===');
 console.log('Direct RAFA import:', testRafa);
@@ -39,6 +42,7 @@ const Album = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
   const [isSelectionMode, setIsSelectionMode] = useState(false);
+    const [viewMode, setViewMode] = useState('interactive'); // 'interactive' or 'flipbook'
 
   // Helper function to get card image URL with proper fallbacks
   const getCardImageUrl = (cardName) => {
@@ -677,16 +681,198 @@ const handleDrop = async (e, slotName, pageId) => {
       }
     }
   };
+    // PDF Download functionality
+  const generatePDF = async () => {
+    try {
+      // Show loading state
+      const downloadBtn = document.querySelector('.pdf-download-btn');
+      if (downloadBtn) {
+        downloadBtn.textContent = '📄 Generating PDF...';
+        downloadBtn.disabled = true;
+      }
+
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = 210; // A4 width in mm
+      const pageHeight = 297; // A4 height in mm
+      let isFirstPage = true;
+
+      // Temporarily switch to interactive mode if in flipbook mode
+      const originalViewMode = viewMode;
+      if (viewMode === 'flipbook') {
+        setViewMode('interactive');
+        await new Promise(resolve => setTimeout(resolve, 500)); // Wait for render
+      }
+
+      // Generate each album page
+      for (let pageIndex = 0; pageIndex < albumPages.length; pageIndex++) {
+        // Temporarily navigate to this page
+        setCurrentPage(pageIndex);
+        await new Promise(resolve => setTimeout(resolve, 300)); // Wait for page to render
+
+        // Capture the album page
+        const albumPageElement = document.querySelector('.album-page-with-background') || 
+                                document.querySelector('.album-page');
+
+        if (albumPageElement) {
+          const canvas = await html2canvas(albumPageElement, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#F0F4FF'
+          });
+
+          const imgData = canvas.toDataURL('image/png');
+          const imgWidth = pageWidth - 20; // Leave margins
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+          if (!isFirstPage) {
+            pdf.addPage();
+          }
+
+          // Add page title
+          pdf.setFontSize(16);
+          pdf.setTextColor(26, 26, 46); // #1A1A2E
+          pdf.text(albumPages[pageIndex].title, pageWidth / 2, 15, { align: 'center' });
+
+          // Add the page image
+          const yPosition = Math.min(25, (pageHeight - imgHeight) / 2);
+          pdf.addImage(imgData, 'PNG', 10, yPosition, imgWidth, Math.min(imgHeight, pageHeight - 40));
+
+          // Add page number
+          pdf.setFontSize(10);
+          pdf.text(`Page ${pageIndex + 1} of ${albumPages.length}`, pageWidth - 20, pageHeight - 10);
+
+          isFirstPage = false;
+        }
+      }
+
+      // Add completion info on last page
+      pdf.addPage();
+      pdf.setFontSize(20);
+      pdf.setTextColor(97, 0, 233); // #6100E9
+      pdf.text('🎉 ALBUM COMPLETED! 🎉', pageWidth / 2, 50, { align: 'center' });
+
+      pdf.setFontSize(14);
+      pdf.setTextColor(26, 26, 46);
+      pdf.text('REPRIR Team Digital Album', pageWidth / 2, 70, { align: 'center' });
+      pdf.text(`Completed: ${new Date().toLocaleDateString()}`, pageWidth / 2, 85, { align: 'center' });
+      pdf.text(`Total Cards Collected: ${calculateFilledSlots()} of ${calculateTotalSlots()}`, pageWidth / 2, 100, { align: 'center' });
+
+      // Save the PDF
+      pdf.save(`REPRIR-Team-Album-${new Date().toISOString().split('T')[0]}.pdf`);
+
+      // Restore original state
+      setViewMode(originalViewMode);
+      setCurrentPage(0); // Go back to first page
+
+      // Reset button
+      if (downloadBtn) {
+        downloadBtn.textContent = '📄 Download PDF Album';
+        downloadBtn.disabled = false;
+      }
+
+      alert('✅ PDF generated successfully! Check your downloads folder.');
+
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('❌ Error generating PDF. Please try again.');
+
+      // Reset button on error
+      const downloadBtn = document.querySelector('.pdf-download-btn');
+      if (downloadBtn) {
+        downloadBtn.textContent = '📄 Download PDF Album';
+        downloadBtn.disabled = false;
+      }
+    }
+  };
   if (loading) {
     return <LoadingSpinner type="pack" message="🎁 Opening Your Album..." size="large" />;
   }
 
+   // Flipbook View Mode
+  if (viewMode === 'flipbook') {
+    return (
+      <div>
+        {/* View Mode Toggle */}
+        <div style={{ 
+          textAlign: 'center', 
+          marginBottom: '20px',
+          padding: '15px',
+          background: 'linear-gradient(135deg, #F0F4FF 0%, #E6F9F5 100%)',
+          borderRadius: '15px',
+          border: '2px solid #6100E9'
+        }}>
+          <button
+            onClick={() => setViewMode('interactive')}
+            style={{
+              padding: '12px 25px',
+              backgroundColor: '#6100E9',
+              color: 'white',
+              border: 'none',
+              borderRadius: '25px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              boxShadow: '0 4px 15px rgba(97, 0, 233, 0.3)',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = 'translateY(-2px)';
+              e.target.style.boxShadow = '0 6px 20px rgba(97, 0, 233, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = 'translateY(0)';
+              e.target.style.boxShadow = '0 4px 15px rgba(97, 0, 233, 0.3)';
+            }}
+          >
+            🎯 Switch to Interactive Mode
+          </button>
+        </div>
+
+        <FlipbookView 
+          albumPages={albumPages}
+          placedCards={placedCards}
+          getCardImageUrl={getCardImageUrl}
+          getCardImageStyle={getCardImageStyle}
+        />
+      </div>
+    );
+  }
+
+  // Interactive View Mode (your existing album)
   return (
     <div className="album-container">
       <div className="album-header">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
           <h2>Team Album</h2>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            {/* View Mode Toggle Button */}
+            <button
+              onClick={() => setViewMode('flipbook')}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#64FEDA',
+                color: '#1A1A2E',
+                border: 'none',
+                borderRadius: '20px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                boxShadow: '0 4px 12px rgba(100, 254, 218, 0.3)',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.backgroundColor = '#AFEA00';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.backgroundColor = '#64FEDA';
+              }}
+            >
+              📖 Flipbook View
+            </button>
+
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>
                 {calculateCompletionPercentage()}% Complete
@@ -699,25 +885,81 @@ const handleDrop = async (e, slotName, pageId) => {
         </div>
 
         {/* Progress Bar */}
-<div style={{
-  width: '100%',
-  height: '20px',
-  backgroundColor: '#ffffff',
-  border: '2px solid #6100E9',
-  borderRadius: '10px',
-  overflow: 'hidden',
-  marginBottom: '10px',
-  boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-}}>
-  <div style={{
-    width: `${calculateCompletionPercentage()}%`,
-    height: '100%',
-    backgroundColor: calculateCompletionPercentage() === 100 ? '#AFEA00' : '#64FEDA',
-    transition: 'width 0.5s ease',
-    borderRadius: '8px',
-    boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
-  }}></div>
-</div>
+        <div style={{
+          width: '100%',
+          height: '20px',
+          backgroundColor: '#ffffff',
+          border: '2px solid #6100E9',
+          borderRadius: '10px',
+          overflow: 'hidden',
+          marginBottom: '10px',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+        }}>
+          <div style={{
+            width: `${calculateCompletionPercentage()}%`,
+            height: '100%',
+            backgroundColor: calculateCompletionPercentage() === 100 ? '#AFEA00' : '#64FEDA',
+            transition: 'width 0.5s ease',
+            borderRadius: '8px',
+            boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
+          }}></div>
+        </div>
+
+        {/* PDF Download Button - Only shows when album is complete */}
+        {calculateCompletionPercentage() === 100 && (
+          <div style={{
+            textAlign: 'center',
+            marginBottom: '15px',
+            padding: '15px',
+            background: 'linear-gradient(135deg, #AFEA00 0%, #64FEDA 100%)',
+            borderRadius: '15px',
+            border: '3px solid #6100E9',
+            boxShadow: '0 8px 25px rgba(175, 234, 0, 0.3)'
+          }}>
+            <h3 style={{
+              margin: '0 0 10px 0',
+              color: '#1A1A2E',
+              fontSize: '1.3em',
+              fontWeight: '700'
+            }}>
+              🎉 Album Complete! 🎉
+            </h3>
+            <button
+              onClick={generatePDF}
+              className="pdf-download-btn"
+              style={{
+                padding: '12px 30px',
+                backgroundColor: '#6100E9',
+                color: 'white',
+                border: 'none',
+                borderRadius: '25px',
+                cursor: 'pointer',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                boxShadow: '0 6px 20px rgba(97, 0, 233, 0.4)',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-3px) scale(1.05)';
+                e.target.style.boxShadow = '0 10px 30px rgba(97, 0, 233, 0.5)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0) scale(1)';
+                e.target.style.boxShadow = '0 6px 20px rgba(97, 0, 233, 0.4)';
+              }}
+            >
+              📄 Download PDF Album
+            </button>
+            <p style={{
+              margin: '10px 0 0 0',
+              fontSize: '14px',
+              color: '#1A1A2E',
+              fontStyle: 'italic'
+            }}>
+              Save your completed album as a PDF!
+            </p>
+          </div>
+        )}
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <p>Page {currentPage + 1} of {albumPages.length}</p>
@@ -861,21 +1103,19 @@ const handleDrop = async (e, slotName, pageId) => {
             })}
           </div>
         )}
-                {/* ADD THIS ENTIRE BLOCK RIGHT HERE */}
+
+        {/* Custom Spotify Logo Button */}
         {currentPageData.id === 1 && (
           <div 
-            className="spotify-link-container"
+            className="spotify-logo-button"
             onClick={() => window.open('https://open.spotify.com/album/3cLao7JVaEFsplFdY8TkJT', '_blank')}
+            title="Listen to REPRIR Team Soundtrack on Spotify"
           >
-            <div className="spotify-content">
-              <div className="spotify-icon">🎵</div>
-              <div className="spotify-text">
-                <h3>REPRIR TEAM SOUNDTRACK</h3>
-                <p>Listen on Spotify</p>
-                <div className="spotify-logo">♪ Spotify</div>
-              </div>
-              <div className="play-button">▶️</div>
-            </div>
+            <img 
+              src={require('./images/spotify-logo.png')} 
+              alt="Listen on Spotify"
+              className="spotify-logo-image"
+            />
           </div>
         )}
       </div>
@@ -1138,16 +1378,16 @@ const handleDrop = async (e, slotName, pageId) => {
                   ) : null}
 
                   <div style={{
-  aspectRatio: '241/305',
-  background: 'linear-gradient(135deg, #F0F4FF 0%, #ffffff 100%)',
-  border: '2px solid #E6F9F5',
-  display: cardImageUrl ? 'none' : 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  color: '#1A1A2E',
-  padding: '15px'
-}}>
+                    aspectRatio: '241/305',
+                    background: 'linear-gradient(135deg, #F0F4FF 0%, #ffffff 100%)',
+                    border: '2px solid #E6F9F5',
+                    display: cardImageUrl ? 'none' : 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    color: '#1A1A2E',
+                    padding: '15px'
+                  }}>
                     <h4>{userCard.cardData.name}</h4>
                     <p>{userCard.cardData.team}</p>
                     <p className="card-rarity">{userCard.cardData.rarity}</p>
