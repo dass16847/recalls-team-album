@@ -74,7 +74,7 @@ const getCardImageStyle = (cardName, context = 'album') => {
       // In album slot and flipbook: rotate 90 degrees and scale with specific ratios
       return {
         ...baseStyle,
-        objectFit: 'contain', // FIXED: was 'fit', now 'contain'
+        objectFit: 'fit', // FIXED: was 'fit', now 'contain'
         transform: 'rotate(90deg) scale(0.62, 1.70)', // Your preferred scaling
         transformOrigin: 'center center'
       };
