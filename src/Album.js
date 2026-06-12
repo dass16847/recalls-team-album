@@ -70,11 +70,11 @@ const getCardImageStyle = (cardName, context = 'album') => {
 
   // Special handling for AFZ SJO 16 card
   if (cardName === 'SJO 16 AFZ') {
-    if (context === 'album') {
-      // In album slot: rotate 90 degrees and scale with specific ratios
+    if (context === 'album' || context === 'flipbook') { // Add flipbook to horizontal contexts
+      // In album slot and flipbook: rotate 90 degrees and scale with specific ratios
       return {
         ...baseStyle,
-        objectFit: 'fit', // FIXED: was 'fit', now 'contain'
+        objectFit: 'contain', // FIXED: was 'fit', now 'contain'
         transform: 'rotate(90deg) scale(0.62, 1.70)', // Your preferred scaling
         transformOrigin: 'center center'
       };
@@ -750,7 +750,7 @@ const handleDrop = async (e, slotName, pageId) => {
                   cardImg.crossOrigin = 'anonymous';
 
                   try {
-                    await new Promise((resolve, reject) => {
+                                        await new Promise((resolve, reject) => {
                       cardImg.onload = () => {
                         // Apply card styling (like rotation for SJO 16 AFZ)
                         const cardStyle = getCardImageStyle(placedCard.cardData.name, 'album');
@@ -777,7 +777,7 @@ const handleDrop = async (e, slotName, pageId) => {
                           ctx.drawImage(cardImg, -slot.position.width / 2, -slot.position.height / 2, 
                                       slot.position.width, slot.position.height);
                         } else {
-                          // Normal card placement
+                          // Normal card placement - use exact album coordinates
                           ctx.drawImage(cardImg, slot.position.left, slot.position.top, 
                                       slot.position.width, slot.position.height);
                         }

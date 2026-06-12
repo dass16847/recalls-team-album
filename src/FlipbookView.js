@@ -109,10 +109,10 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
                     className="flipbook-card-slot"
                     style={{
                       position: 'absolute',
-                      top: `${slot.position.top * 0.5}px`, // Scale for flipbook
-                      left: `${slot.position.left * 0.5}px`,
-                      width: `${slot.position.width * 0.5}px`,
-                      height: `${slot.position.height * 0.5}px`
+                        top: `${slot.position.top * 0.67}px`, // Better scale for larger flipbook
+                      left: `${slot.position.left * 0.67}px`,
+                      width: `${slot.position.width * 0.67}px`,
+                      height: `${slot.position.height * 0.67}px`
                     }}
                   >
                     {placedCard && (
@@ -123,8 +123,8 @@ const FlipbookView = ({ albumPages, placedCards, getCardImageUrl, getCardImageSt
                             <img 
                               src={cardImageUrl} 
                               alt={placedCard.cardData.name}
-                              style={{
-                                ...getCardImageStyle(placedCard.cardData.name, 'flipbook'),
+                                                            style={{
+                                ...getCardImageStyle(placedCard.cardData.name, 'album'), // Use 'album' style for flipbook too
                                 width: '100%',
                                 height: '100%',
                                 borderRadius: '4px'
