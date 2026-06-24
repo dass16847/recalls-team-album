@@ -504,7 +504,7 @@ const acceptTrade = async (trade) => {
   textAlign: 'center',
   fontWeight: 'bold'
 }}>
-  {card.count > 1 ? `${card.count - 1} available for trade` : 'Can trade (already in album)'}
+  {card.count > 1 ? `${card.count - 1} available for trade` : 'Only one card in collection'}
 </p>
               </div>
             ))}
