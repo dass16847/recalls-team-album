@@ -56,8 +56,8 @@ const TradingPost = () => {
       }));
 
       // Only show cards with count > 1 (duplicates available for trade)
-      const duplicateCards = cards.filter(card => card.count > 1);
-      setUserCards(duplicateCards);
+      // Show all cards - users can trade any card they own
+    setUserCards(cards);
     } catch (error) {
       console.error('Error loading collection:', error);
     }
@@ -92,6 +92,12 @@ const TradingPost = () => {
       console.error('Error loading trades:', error);
     }
   };
+  // Helper function to check if a card is placed in the album
+const isCardInAlbum = (cardName) => {
+  // This would need to check against placed cards in album
+  // For now, we'll return false, but you can enhance this later
+  return false;
+};
 
 // Helper function to get card image URL with proper fallbacks
 const getCardImageUrl = (cardData) => {
@@ -344,11 +350,11 @@ const acceptTrade = async (trade) => {
         boxShadow: '0 8px 24px rgba(97,0,233,0.1)'
       }}>
         <h3 style={{ 
-          color: '#1A1A2E', 
-          marginBottom: '20px',
-          fontSize: '1.8rem',
-          textAlign: 'center'
-        }}>📦 Your Duplicate Cards (Available for Trading)</h3>
+  color: '#1A1A2E', 
+  marginBottom: '20px',
+  fontSize: '1.8rem',
+  textAlign: 'center'
+}}>📦 Your Cards Available for Trading</h3>
         {userCards.length === 0 ? (
           <div style={{
             textAlign: 'center',
@@ -358,14 +364,14 @@ const acceptTrade = async (trade) => {
             border: '2px solid #6100E9'
           }}>
             <p style={{ 
-              color: '#1A1A2E', 
-              fontStyle: 'italic',
-              fontSize: '18px',
-              fontWeight: 'bold',
-              margin: 0
-            }}>
-              You don't have any duplicate cards to trade yet. Open more packs to get duplicates!
-            </p>
+  color: '#1A1A2E', 
+  fontStyle: 'italic',
+  fontSize: '18px',
+  fontWeight: 'bold',
+  margin: 0
+}}>
+  You don't have any cards to trade yet. Open more packs to start collecting!
+</p>
           </div>
         ) : (
           <div style={{ 
@@ -396,24 +402,24 @@ const acceptTrade = async (trade) => {
                 }}
               >
                 <div style={{
-                  position: 'absolute',
-                  top: '10px',
-                  right: '10px',
-                  backgroundColor: '#64FEDA',
-                  color: '#1A1A2E',
-                  borderRadius: '50%',
-                  width: '30px',
-                  height: '30px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  border: '2px solid white',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
-                }}>
-                  {card.count}
-                </div>
+  position: 'absolute',
+  top: '10px',
+  right: '10px',
+  backgroundColor: card.count > 1 ? '#64FEDA' : '#FF8C00',
+  color: '#1A1A2E',
+  borderRadius: '50%',
+  width: '30px',
+  height: '30px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '14px',
+  fontWeight: 'bold',
+  border: '2px solid white',
+  boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
+}}>
+  {card.count > 1 ? card.count : '★'}
+</div>
 
                 {/* Fixed Card Image Display */}
                 <div style={{ 
@@ -492,14 +498,14 @@ const acceptTrade = async (trade) => {
                   {card.cardData?.rarity || 'Unknown'}
                 </p>
                 <p style={{ 
-                  margin: '10px 0 0 0', 
-                  fontSize: '13px', 
-                  color: '#6100E9',
-                  textAlign: 'center',
-                  fontWeight: 'bold'
-                }}>
-                  {card.count - 1} available for trade
-                </p>
+  margin: '10px 0 0 0', 
+  fontSize: '13px', 
+  color: card.count > 1 ? '#6100E9' : '#FF8C00',
+  textAlign: 'center',
+  fontWeight: 'bold'
+}}>
+  {card.count > 1 ? `${card.count - 1} available for trade` : 'Can trade (already in album)'}
+</p>
               </div>
             ))}
           </div>
