@@ -51,41 +51,41 @@ function PackOpening({ userPacks, onPackOpened }) {
     const rand = Math.random(); // Gets random number between 0 and 1
 
 // 98.89% chance for common cards
-if (rand < 0.9889) {
-  const commonCards = cards.filter(card => 
+if (rand < 0.9289) {
+  const commonCards = cards.filter(card =>
     card.rarity === 'Common' || card.rarity === 'common' || !card.rarity
   );
   if (commonCards.length > 0) {
     return commonCards[Math.floor(Math.random() * commonCards.length)];
   }
-} 
-// 0.56% chance for rare cards (98.89% to 99.45%)
-else if (rand < 0.9945) {
-  const rareCards = cards.filter(card => 
+}
+// 3.56% chance for rare cards (92.89% to 96.45%)
+else if (rand < 0.9645) {
+  const rareCards = cards.filter(card =>
     card.rarity === 'Rare' || card.rarity === 'rare'
   );
   if (rareCards.length > 0) {
     return rareCards[Math.floor(Math.random() * rareCards.length)];
   }
   // If no rare cards exist, give a common instead
-  const commonCards = cards.filter(card => 
+  const commonCards = cards.filter(card =>
     card.rarity === 'Common' || card.rarity === 'common' || !card.rarity
   );
   return commonCards[Math.floor(Math.random() * commonCards.length)];
-} 
-// 0.55% chance for epic cards (99.45% to 100%)
+}
+// 3.55% chance for epic cards (96.45% to 100%)
 else {
-  const epicCards = cards.filter(card => 
+  const epicCards = cards.filter(card =>
     card.rarity === 'Epic' || card.rarity === 'epic'
   );
   if (epicCards.length > 0) {
     return epicCards[Math.floor(Math.random() * epicCards.length)];
   }
-      // If no epic cards exist, give a common instead
-      const commonCards = cards.filter(card => 
-        card.rarity === 'Common' || card.rarity === 'common' || !card.rarity
-      );
-      return commonCards[Math.floor(Math.random() * commonCards.length)];
+  // If no epic cards exist, give a common instead
+  const commonCards = cards.filter(card =>
+    card.rarity === 'Common' || card.rarity === 'common' || !card.rarity
+  );
+  return commonCards[Math.floor(Math.random() * commonCards.length)];
     }
   };
 
