@@ -51,7 +51,7 @@ function PackOpening({ userPacks, onPackOpened }) {
     const rand = Math.random(); // Gets random number between 0 and 1
 
 // 98.89% chance for common cards
-if (rand < 0.9289) {
+if (rand < 0.4000) {
   const commonCards = cards.filter(card =>
     card.rarity === 'Common' || card.rarity === 'common' || !card.rarity
   );
@@ -60,7 +60,7 @@ if (rand < 0.9289) {
   }
 }
 // 3.56% chance for rare cards (92.89% to 96.45%)
-else if (rand < 0.9645) {
+else if (rand < 0.7000) {
   const rareCards = cards.filter(card =>
     card.rarity === 'Rare' || card.rarity === 'rare'
   );
